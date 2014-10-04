@@ -17,7 +17,7 @@ public protocol ReducibleType {
 
 
 /// Left-reduction of a reducible.
-func reduce<R : ReducibleType, Result>(collection: R, initial: Result, combine: (Result, R.Element) -> Either<Result, Result>) -> Result {
+public func reduce<R : ReducibleType, Result>(collection: R, initial: Result, combine: (Result, R.Element) -> Either<Result, Result>) -> Result {
 	var recur: ((R, Result, (Result, R.Element) -> Either<Result, Result>) -> Result)!
 	recur = { collection, initial, combine in
 		collection.reduceLeft(recur)(collection, initial, combine)
