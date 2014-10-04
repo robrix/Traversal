@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		D461ED5B19E08F4500DEF5AD /* Traversal.h in Headers */ = {isa = PBXBuildFile; fileRef = D461ED5A19E08F4500DEF5AD /* Traversal.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D461ED6119E08F4500DEF5AD /* Traversal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D461ED5519E08F4500DEF5AD /* Traversal.framework */; };
-		D461ED6819E08F4500DEF5AD /* TraversalTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D461ED6719E08F4500DEF5AD /* TraversalTests.swift */; };
+		D461ED6819E08F4500DEF5AD /* ReducibleOfTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D461ED6719E08F4500DEF5AD /* ReducibleOfTests.swift */; };
 		D461ED7619E091A800DEF5AD /* Box.swift in Sources */ = {isa = PBXBuildFile; fileRef = D461ED7519E091A800DEF5AD /* Box.swift */; };
 		D461ED7A19E091F400DEF5AD /* Either.swift in Sources */ = {isa = PBXBuildFile; fileRef = D461ED7919E091F400DEF5AD /* Either.swift */; };
 		D461ED7C19E0923800DEF5AD /* ReducibleType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D461ED7B19E0923800DEF5AD /* ReducibleType.swift */; };
@@ -32,7 +32,7 @@
 		D461ED5A19E08F4500DEF5AD /* Traversal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Traversal.h; sourceTree = "<group>"; };
 		D461ED6019E08F4500DEF5AD /* TraversalTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TraversalTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D461ED6619E08F4500DEF5AD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		D461ED6719E08F4500DEF5AD /* TraversalTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TraversalTests.swift; sourceTree = "<group>"; };
+		D461ED6719E08F4500DEF5AD /* ReducibleOfTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReducibleOfTests.swift; sourceTree = "<group>"; };
 		D461ED7519E091A800DEF5AD /* Box.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Box.swift; sourceTree = "<group>"; };
 		D461ED7919E091F400DEF5AD /* Either.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Either.swift; sourceTree = "<group>"; };
 		D461ED7B19E0923800DEF5AD /* ReducibleType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReducibleType.swift; sourceTree = "<group>"; };
@@ -100,7 +100,7 @@
 		D461ED6419E08F4500DEF5AD /* TraversalTests */ = {
 			isa = PBXGroup;
 			children = (
-				D461ED6719E08F4500DEF5AD /* TraversalTests.swift */,
+				D461ED6719E08F4500DEF5AD /* ReducibleOfTests.swift */,
 				D461ED6519E08F4500DEF5AD /* Supporting Files */,
 			);
 			path = TraversalTests;
@@ -232,7 +232,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D461ED6819E08F4500DEF5AD /* TraversalTests.swift in Sources */,
+				D461ED6819E08F4500DEF5AD /* ReducibleOfTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
