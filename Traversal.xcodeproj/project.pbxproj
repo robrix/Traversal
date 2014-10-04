@@ -13,6 +13,7 @@
 		D461ED7619E091A800DEF5AD /* Box.swift in Sources */ = {isa = PBXBuildFile; fileRef = D461ED7519E091A800DEF5AD /* Box.swift */; };
 		D461ED7A19E091F400DEF5AD /* Either.swift in Sources */ = {isa = PBXBuildFile; fileRef = D461ED7919E091F400DEF5AD /* Either.swift */; };
 		D461ED7C19E0923800DEF5AD /* ReducibleType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D461ED7B19E0923800DEF5AD /* ReducibleType.swift */; };
+		D461ED8019E095EC00DEF5AD /* ReducibleOf.swift in Sources */ = {isa = PBXBuildFile; fileRef = D461ED7F19E095EC00DEF5AD /* ReducibleOf.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -35,6 +36,7 @@
 		D461ED7519E091A800DEF5AD /* Box.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Box.swift; sourceTree = "<group>"; };
 		D461ED7919E091F400DEF5AD /* Either.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Either.swift; sourceTree = "<group>"; };
 		D461ED7B19E0923800DEF5AD /* ReducibleType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReducibleType.swift; sourceTree = "<group>"; };
+		D461ED7F19E095EC00DEF5AD /* ReducibleOf.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReducibleOf.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,6 +83,7 @@
 				D461ED7B19E0923800DEF5AD /* ReducibleType.swift */,
 				D461ED7519E091A800DEF5AD /* Box.swift */,
 				D461ED7919E091F400DEF5AD /* Either.swift */,
+				D461ED7F19E095EC00DEF5AD /* ReducibleOf.swift */,
 				D461ED5819E08F4500DEF5AD /* Supporting Files */,
 			);
 			path = Traversal;
@@ -218,6 +221,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D461ED8019E095EC00DEF5AD /* ReducibleOf.swift in Sources */,
 				D461ED7C19E0923800DEF5AD /* ReducibleType.swift in Sources */,
 				D461ED7A19E091F400DEF5AD /* Either.swift in Sources */,
 				D461ED7619E091A800DEF5AD /* Box.swift in Sources */,
