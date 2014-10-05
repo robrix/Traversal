@@ -12,6 +12,13 @@ public enum Either<T, U> {
 	}
 }
 
+func map<T, U, V>(either: Either<T, U>, f: U -> V) -> Either<T, V> {
+	switch either {
+	case let .Left(x): return .Left(x)
+	case let .Right(x): return .Right(Box(f(x.value)))
+	}
+}
+
 func map<T>(either: Either<T, T>, f: T -> T) -> T {
 	switch either {
 	case let .Left(x): return x.value
