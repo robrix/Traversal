@@ -18,11 +18,11 @@ public protocol ReducibleType {
 
 /// Left-reduction of a reducible.
 public func reduce<R : ReducibleType, Result>(collection: R, initial: Result, combine: (Result, R.Element) -> Either<Result, Result>) -> Result {
-	var recur: ((R, Result, (Result, R.Element) -> Either<Result, Result>) -> Result)!
-	recur = { collection, initial, combine in
-		collection.reduceLeft(recur)(collection, initial, combine)
-	}
-	return recur(collection, initial, combine)
+	return fix { recur in
+		{ collection, initial, combine in
+			collection.reduceLeft(recur)(collection, initial, combine)
+		}
+	} (collection, initial, combine)
 }
 
 
