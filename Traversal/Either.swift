@@ -18,3 +18,7 @@ func map<T>(either: Either<T, T>, f: T -> T) -> T {
 	case let .Right(x): return f(x.value)
 	}
 }
+
+func id<T>(x: T) -> T {
+	return x
+}
