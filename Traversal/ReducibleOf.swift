@@ -22,7 +22,7 @@ public struct ReducibleOf<T> : ReducibleType {
 			switch producer() {
 			case .None: return initial
 			case let .Some(x):
-				return map(combine(initial, x)) { recur(self, $0, combine) }
+				return map(combine(initial, x)) { recur(self, $0, combine) }.either(id, id)
 			}
 		}
 	}

@@ -19,13 +19,6 @@ func map<T, U, V>(either: Either<T, U>, f: U -> V) -> Either<T, V> {
 	}
 }
 
-func map<T>(either: Either<T, T>, f: T -> T) -> T {
-	switch either {
-	case let .Left(x): return x.value
-	case let .Right(x): return f(x.value)
-	}
-}
-
 func id<T>(x: T) -> T {
 	return x
 }
