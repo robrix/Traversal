@@ -6,10 +6,10 @@ public struct ReducibleOf<T> : ReducibleType {
 
 	/// Initializes with a sequence.
 	public init<S : SequenceType where S.Generator.Element == T>(_ sequence: S) {
-		producer = {
+		self.init({
 			var generator = sequence.generate()
 			return { generator.next() }
-		}
+		})
 	}
 
 
