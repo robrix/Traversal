@@ -26,6 +26,11 @@ public struct ReducibleOf<T> : ReducibleType {
 
 	// MARK: Private
 
+	/// Initializes with a function which produces generator functions.
+	private init(_ producer: () -> () -> T?) {
+		self.producer = producer
+	}
+
 	/// The function which produces the functions which are reduced over.
 	///
 	/// This indirection is required because GeneratorType is consumed by next(), requiring us to acquire a new generator for each reduction.
