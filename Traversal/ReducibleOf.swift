@@ -19,7 +19,7 @@ public struct ReducibleOf<T> : ReducibleType {
 	public func reduceLeft<Result>(recur: (ReducibleOf, Result, (Result, T) -> Either<Result, Result>) -> Result) -> (ReducibleOf, Result, (Result, T) -> Either<Result, Result>) -> Result {
 		var producer = self.producer()
 		return { collection, initial, combine in
-			return producer().map { combine(initial, $0).map{ recur(self, $0, combine) }.either(id, id) } ?? initial
+			return producer().map { combine(initial, $0).map{ recur(ReducibleOf { producer }, $0, combine) }.either(id, id) } ?? initial
 		}
 	}
 
