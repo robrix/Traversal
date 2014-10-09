@@ -4,4 +4,11 @@ import Traversal
 import XCTest
 
 class StreamTests: XCTestCase {
+	func testStreams() {
+		let sequence = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+		let reducible = ReducibleOf(sequence)
+		let stream = Stream(reducible)
+
+		XCTAssertEqual(first(stream)!, 1)
+	}
 }
