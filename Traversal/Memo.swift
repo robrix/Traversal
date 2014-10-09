@@ -5,18 +5,18 @@ public struct Memo<T> {
 
 	// MARK: Constructors
 
-	init(_ unevaluated: @autoclosure () -> T) {
+	public init(_ unevaluated: @autoclosure () -> T) {
 		state = MutableBox(.Unevaluated(unevaluated))
 	}
 
-	init(evaluated: T) {
+	public init(evaluated: T) {
 		self.init(state: .Evaluated(Box(evaluated)))
 	}
 
 
 	// MARK: Properties
 
-	var value: T {
+	public var value: T {
 		switch state.value {
 		case let .Evaluated(x): return x.value
 		case let .Unevaluated(f):
