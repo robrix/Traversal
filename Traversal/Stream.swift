@@ -24,7 +24,7 @@ public func dropFirst<T>(stream: Stream<T>) -> Stream<T> {
 
 extension Stream {
 	public init<R : ReducibleType where R.Element == T>(_ reducible: R) {
-		let recur: ((R, Stream, (Stream, T) -> Either<Stream, Stream>) -> Stream) = fix { recur in
+		let recur: (R, Stream, (Stream, T) -> Either<Stream, Stream>) -> Stream = fix { recur in
 			{ reducible, initial, combine in
 				switch initial {
 				case Nil: return Nil
