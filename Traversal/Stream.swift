@@ -38,3 +38,18 @@ extension Stream {
 		}
 	}
 }
+
+
+extension Stream : SequenceType {
+	public func generate() -> GeneratorOf<T> {
+		var stream = self
+		return GeneratorOf {
+			switch stream {
+			case Nil: return nil
+			case let Cons(each, rest):
+				stream = rest.value
+				return each.value
+			}
+		}
+	}
+}
