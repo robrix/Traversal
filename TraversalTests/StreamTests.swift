@@ -14,5 +14,12 @@ class StreamTests: XCTestCase {
 		XCTAssertEqual(first(dropFirst(stream))!, 2)
 		XCTAssertEqual(first(dropFirst(stream))!, 2)
 		XCTAssertEqual(first(dropFirst(dropFirst(dropFirst(stream))))!, 4)
+
+		var n = 0
+		for (a, b) in Zip2(stream, sequence) {
+			XCTAssertEqual(a, b)
+			n++
+		}
+		XCTAssertEqual(n, sequence.count)
 	}
 }
