@@ -10,5 +10,8 @@ class StreamTests: XCTestCase {
 		let stream = Stream(reducible)
 
 		XCTAssertEqual(first(stream)!, 1)
+		XCTAssertEqual(first(stream)!, 1)
+		XCTAssertEqual(first(dropFirst(stream))!, 2)
+		XCTAssertEqual(first(dropFirst(stream))!, 2)
 	}
 }
