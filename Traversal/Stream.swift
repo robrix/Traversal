@@ -7,6 +7,7 @@ public enum Stream<T> {
 }
 
 
+/// Returns the first element of `stream`, or nil if `stream` is `Nil`.
 public func first<T>(stream: Stream<T>) -> T? {
 	switch stream {
 	case .Nil: return nil
@@ -14,6 +15,7 @@ public func first<T>(stream: Stream<T>) -> T? {
 	}
 }
 
+/// Drops the first element of `stream`.
 public func dropFirst<T>(stream: Stream<T>) -> Stream<T> {
 	switch stream {
 	case .Nil: return .Nil
@@ -23,6 +25,7 @@ public func dropFirst<T>(stream: Stream<T>) -> Stream<T> {
 
 
 extension Stream {
+	/// Initializes with a ReducibleType.
 	public init<R : ReducibleType where R.Element == T>(_ reducible: R) {
 		let recur: (R, Stream, (Stream, T) -> Either<Stream, Stream>) -> Stream = fix { recur in
 			{ reducible, initial, combine in
@@ -40,6 +43,7 @@ extension Stream {
 }
 
 
+/// Stream conforms to SequenceType.
 extension Stream : SequenceType {
 	public func generate() -> GeneratorOf<T> {
 		var stream = self
