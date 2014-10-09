@@ -13,5 +13,6 @@ class StreamTests: XCTestCase {
 		XCTAssertEqual(first(stream)!, 1)
 		XCTAssertEqual(first(dropFirst(stream))!, 2)
 		XCTAssertEqual(first(dropFirst(stream))!, 2)
+		XCTAssertEqual(first(dropFirst(dropFirst(dropFirst(stream))))!, 4)
 	}
 }
