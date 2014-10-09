@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D44B19BA19E6F648005E7526 /* BoxType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44B19B919E6F648005E7526 /* BoxType.swift */; };
 		D461ED5B19E08F4500DEF5AD /* Traversal.h in Headers */ = {isa = PBXBuildFile; fileRef = D461ED5A19E08F4500DEF5AD /* Traversal.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D461ED6119E08F4500DEF5AD /* Traversal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D461ED5519E08F4500DEF5AD /* Traversal.framework */; };
 		D461ED6819E08F4500DEF5AD /* ReducibleOfTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D461ED6719E08F4500DEF5AD /* ReducibleOfTests.swift */; };
@@ -30,6 +31,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		D44B19B919E6F648005E7526 /* BoxType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoxType.swift; sourceTree = "<group>"; };
 		D461ED5519E08F4500DEF5AD /* Traversal.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Traversal.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D461ED5919E08F4500DEF5AD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D461ED5A19E08F4500DEF5AD /* Traversal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Traversal.h; sourceTree = "<group>"; };
@@ -88,6 +90,7 @@
 				D461ED5A19E08F4500DEF5AD /* Traversal.h */,
 				D461ED7B19E0923800DEF5AD /* ReducibleType.swift */,
 				D461ED7519E091A800DEF5AD /* Box.swift */,
+				D44B19B919E6F648005E7526 /* BoxType.swift */,
 				D461ED7919E091F400DEF5AD /* Either.swift */,
 				D461ED7F19E095EC00DEF5AD /* ReducibleOf.swift */,
 				D4C92F6E19E191F10054F0F6 /* Prelude.swift */,
@@ -230,6 +233,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D44B19BA19E6F648005E7526 /* BoxType.swift in Sources */,
 				D461ED8019E095EC00DEF5AD /* ReducibleOf.swift in Sources */,
 				D461ED7C19E0923800DEF5AD /* ReducibleType.swift in Sources */,
 				D461ED7A19E091F400DEF5AD /* Either.swift in Sources */,
