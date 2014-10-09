@@ -3,7 +3,7 @@
 /// An iterable stream.
 public enum Stream<T> {
 	case Nil
-	case Cons(Box<T>, @autoclosure () -> Stream<T>)
+	case Cons(Box<T>, Memo<Stream<T>>)
 }
 
 
@@ -17,7 +17,7 @@ public func first<T>(stream: Stream<T>) -> T? {
 public func dropFirst<T>(stream: Stream<T>) -> Stream<T> {
 	switch stream {
 	case .Nil: return .Nil
-	case let .Cons(_, rest): return rest()
+	case let .Cons(_, rest): return rest.value
 	}
 }
 
@@ -28,13 +28,13 @@ extension Stream {
 			{ reducible, initial, combine in
 				switch initial {
 				case Nil: return Nil
-				case let Cons(x, _): return Cons(x, reducible.reduceLeft(recur)(reducible, Nil, combine))
+				case let Cons(x, _): return Cons(x, Memo(reducible.reduceLeft(recur)(reducible, Nil, combine)))
 				}
 			}
 		}
 
 		self = reducible.reduceLeft(recur)(reducible, Nil) { into, each in
-			.Right(Box(Cons(Box(each), into)))
+			.Right(Box(Cons(Box(each), Memo(Nil))))
 		}
 	}
 }
