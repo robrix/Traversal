@@ -12,6 +12,11 @@ public struct ReducibleOf<T> : ReducibleType, SequenceType {
 		})
 	}
 
+	/// Initializes with a reducible.
+	public init<R: ReducibleType where R.Element == T>(_ reducible: R) {
+		self.init(Stream(reducible))
+	}
+
 
 	// MARK: ReducibleType
 
