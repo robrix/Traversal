@@ -1,5 +1,7 @@
 //  Copyright (c) 2014 Rob Rix. All rights reserved.
 
+import Box
+
 /// Deferred, memoized evaluation.
 public struct Memo<T> {
 
