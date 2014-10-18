@@ -3,7 +3,7 @@
 public struct Latch<T>: ReducibleType, ObservableType {
 	public var value: T {
 		didSet {
-			for observer in observers { observer(value) }
+			for observer in observers { observer() }
 		}
 	}
 
@@ -17,11 +17,9 @@ public struct Latch<T>: ReducibleType, ObservableType {
 
 	// MARK: Observation
 
-	public mutating func connect<S : SinkType where S.Element == T>(var sink: S) {
-		observers.append {
-			sink.put($0)
-		}
+	public mutating func connect(observer: () -> ()) {
+		observers.append(observer)
 	}
 
-	private var observers: [T -> ()] = []
+	private var observers: [() -> ()] = []
 }
