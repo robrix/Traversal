@@ -1,7 +1,11 @@
 //  Copyright (c) 2014 Rob Rix. All rights reserved.
 
 public struct Latch<T>: ReducibleType, ObservableType {
-	public var value: T
+	public var value: T {
+		didSet {
+			for observer in observers { observer(value) }
+		}
+	}
 
 	public init(value: T) {
 		self.value = value
