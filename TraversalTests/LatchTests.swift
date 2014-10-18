@@ -3,5 +3,5 @@
 import Traversal
 import XCTest
 
-class LatchTests: XCTest {
+class LatchTests: XCTestCase {
 }
