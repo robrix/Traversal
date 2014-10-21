@@ -21,7 +21,7 @@ public struct ReducibleOf<T> : ReducibleType, SequenceType {
 	// MARK: ReducibleType
 
 	/// Nonrecursive left reduction.
-	public func reduceLeft<Result>(recur: (ReducibleOf, Result, (Result, T) -> Either<Result, Result>) -> Result) -> (ReducibleOf, Result, (Result, T) -> Either<Result, Result>) -> Result {
+	public func reduceLeft<Result>(recur: Reducible<ReducibleOf, Result, T>.Enumerator) -> Reducible<ReducibleOf, Result, T>.Enumerator {
 		var producer = self.producer()
 		return { collection, initial, combine in
 			return producer().map { combine(initial, $0).map { recur(ReducibleOf { producer }, $0, combine) }.either(id, id) } ?? initial
