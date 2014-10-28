@@ -10,9 +10,9 @@ public struct Signal<T>: ObservableType {
 
 	// MARK: Reduction
 
-	public func reduceLeft<Result>(recur: Reducible<Signal, Result, T>.Enumerator) -> Reducible<Signal, Result, T>.Enumerator {
+	public func reduceLeft<Result>(recur: Reducible<Result, T>.Enumerator) -> Reducible<Result, T>.Enumerator {
 		var output = Stream(source)
-		return { _, initial, combine in combine(initial, first(output)!).either(id, id) }
+		return { initial, combine in combine(initial, first(output)!).either(id, id) }
 	}
 
 	// MARK: Observation

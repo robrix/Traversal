@@ -29,16 +29,16 @@ public func dropFirst<T>(stream: Stream<T>) -> Stream<T> {
 extension Stream {
 	/// Initializes with a ReducibleType.
 	public init<R : ReducibleType where R.Element == T>(_ reducible: R) {
-		let recur: (R, Stream, (Stream, T) -> Either<Stream, Stream>) -> Stream = fix { recur in
-			{ reducible, initial, combine in
+		let recur: (Stream, (Stream, T) -> Either<Stream, Stream>) -> Stream = fix { recur in
+			{ initial, combine in
 				switch initial {
 				case Nil: return Nil
-				case let Cons(x, _): return Cons(x, Memo(reducible.reduceLeft(recur)(reducible, Nil, combine)))
+				case let Cons(x, _): return Cons(x, Memo(reducible.reduceLeft(recur)(Nil, combine)))
 				}
 			}
 		}
 
-		self = reducible.reduceLeft(recur)(reducible, Nil) { into, each in
+		self = reducible.reduceLeft(recur)(Nil) { into, each in
 			.Right(Box(Cons(Box(each), Memo(Nil))))
 		}
 	}

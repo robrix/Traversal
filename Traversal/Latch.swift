@@ -11,8 +11,8 @@ public struct Latch<T>: ReducibleType, ObservableType {
 		self.value = value
 	}
 
-	public func reduceLeft<Result>(recur: Reducible<Latch, Result, T>.Enumerator) -> Reducible<Latch, Result, T>.Enumerator {
-		return { latch, initial, combine in combine(initial, latch.value).either(id, id) }
+	public func reduceLeft<Result>(recur: Reducible<Result, T>.Enumerator) -> Reducible<Result, T>.Enumerator {
+		return { initial, combine in combine(initial, self.value).either(id, id) }
 	}
 
 	// MARK: Observation

@@ -7,8 +7,8 @@ public struct SourceOf<T>: ObservableType {
 
 	// MARK: ReducibleType
 
-	public func reduceLeft<Result>(recur: Reducible<SourceOf, Result, T>.Enumerator) -> Reducible<SourceOf, Result, T>.Enumerator {
-		return { source, initial, combine in combine(initial, source.sample()).either(id, id) }
+	public func reduceLeft<Result>(recur: Reducible<Result, T>.Enumerator) -> Reducible<Result, T>.Enumerator {
+		return { initial, combine in combine(initial, self.sample()).either(id, id) }
 	}
 
 	// MARK: Observation
