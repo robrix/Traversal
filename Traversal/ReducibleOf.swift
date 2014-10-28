@@ -1,7 +1,7 @@
 //  Copyright (c) 2014 Rob Rix. All rights reserved.
 
 /// A reducible over a sequence.
-public struct ReducibleOf<T> : ReducibleType, SequenceType {
+public struct ReducibleOf<T>: ReducibleType, SequenceType {
 	// MARK: Lifecycle
 
 	/// Initializes with a sequence.
