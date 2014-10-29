@@ -6,7 +6,6 @@ import XCTest
 class ReducibleOfTests: XCTestCase {
 	func testReduction() {
 		let sequence = [1, 2, 3, 4, 5, 6, 7, 8, 9]
-		let reducible = ReducibleOf(sequence)
-		XCTAssertEqual(Traversal.reduce(ReducibleOf(sequence), 0, (+)), 45)
+		XCTAssertEqual(Traversal.reduce(ReducibleOf(sequence: sequence), 0, (+)), 45)
 	}
 }
