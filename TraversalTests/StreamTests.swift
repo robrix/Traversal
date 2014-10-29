@@ -20,6 +20,7 @@ class StreamTests: XCTestCase {
 			XCTAssertEqual(a, b)
 			n++
 		}
+		XCTAssertEqual(Array(stream), sequence)
 		XCTAssertEqual(n, sequence.count)
 	}
 }
