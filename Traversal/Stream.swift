@@ -4,8 +4,8 @@ import Box
 
 /// An iterable stream.
 public enum Stream<T> {
-	case Nil
 	case Cons(Box<T>, Memo<Stream<T>>)
+	case Nil
 }
 
 
