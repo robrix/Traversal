@@ -1,6 +1,13 @@
 //  Copyright (c) 2014 Rob Rix. All rights reserved.
 
 public struct Signal<T>: ObservableType {
+	public init<O: ObservableType>(inout _ observable: O, _ map: O.Element -> T) {
+		var input = Stream(observable)
+		let s = SourceOf { map(first(input)!) }
+		observable.connect { s.invalidate() }
+		source = s
+	}
+
 	public init<R: ReducibleType>(_ reducible: R, _ map: R.Element -> T) {
 		var input = Stream(reducible)
 		source = SourceOf {
