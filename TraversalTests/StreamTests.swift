@@ -55,4 +55,7 @@ class StreamTests: XCTestCase {
 		XCTAssertNil(first(dropFirst(dropFirst(dropFirst(dropFirst(dropFirst(stream)))))))
 	}
 
+	func testStreamReduction() {
+		XCTAssertEqual(Traversal.reduce(Stream(ReducibleOf(sequence: [1, 2, 3, 4])), 0, +), 10)
+	}
 }
