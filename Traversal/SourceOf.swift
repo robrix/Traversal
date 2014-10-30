@@ -1,15 +1,15 @@
 //  Copyright (c) 2014 Rob Rix. All rights reserved.
 
 public struct SourceOf<T>: ObservableType {
-	public init(_ sample: () -> T) {
-		self.sample = sample
+	public init(_ sampler: () -> T) {
+		self.sampler = sampler
 	}
 
 	// MARK: ReducibleType
 
 	public func reducer<Result>() -> Reducible<Result, T>.Enumerator -> Reducible<Result, T>.Enumerator {
 		return { recur in
-			{ initial, combine in combine(initial, self.sample()).either(id, id) }
+			{ initial, combine in combine(initial, self.sampler()).either(id, id) }
 		}
 	}
 
@@ -25,6 +25,6 @@ public struct SourceOf<T>: ObservableType {
 
 	// MARK: Implementation details
 
-	private let sample: () -> T
+	private let sampler: () -> T
 	private var observers: [() -> ()] = []
 }
