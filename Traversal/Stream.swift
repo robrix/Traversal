@@ -20,8 +20,10 @@ public func first<T>(stream: Stream<T>) -> T? {
 /// Drops the first element of `stream`.
 public func dropFirst<T>(stream: Stream<T>) -> Stream<T> {
 	switch stream {
-	case .Nil: return .Nil
-	case let .Cons(_, rest): return rest.value
+	case .Nil:
+		return .Nil
+	case let .Cons(_, rest):
+		return rest.value
 	}
 }
 
@@ -52,10 +54,11 @@ extension Stream : SequenceType {
 		var stream = self
 		return GeneratorOf {
 			switch stream {
-			case Nil: return nil
 			case let Cons(each, rest):
 				stream = rest.value
 				return each.value
+			case Nil:
+				return nil
 			}
 		}
 	}
