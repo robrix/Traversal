@@ -11,3 +11,8 @@ func id<T>(x: T) -> T {
 public func fix<A, B>(f: (A -> B) -> A -> B) -> A -> B {
 	return { x in f(fix(f))(x) }
 }
+
+/// Returns a function which accepts & ignores a parameter, always returning `x` instead.
+public func const<T, U>(x: U)(T) -> U {
+	return x
+}
