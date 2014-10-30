@@ -2,7 +2,7 @@
 
 public struct Signal<T>: ObservableType {
 	public init<R: ReducibleType>(_ reducible: R, _ map: R.Element -> T) {
-		var input = Stream<R.Element>(reducible)
+		var input = Stream(reducible)
 		source = SourceOf {
 			map(first(input)!)
 		}
