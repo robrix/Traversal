@@ -11,10 +11,7 @@ public struct Signal<T>: ObservableType {
 	// MARK: Reduction
 
 	public func reducer<Result>() -> Reducible<Result, T>.Enumerator -> Reducible<Result, T>.Enumerator {
-		var output = Stream(source)
-		return { recur in
-			{ initial, combine in combine(initial, first(output)!).either(id, id) }
-		}
+		return source.reducer()
 	}
 
 	// MARK: Observation
