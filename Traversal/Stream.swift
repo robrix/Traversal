@@ -71,3 +71,18 @@ extension Stream: ReducibleType {
 	}
 }
 
+/// Stream conforms to Printable.
+extension Stream: Printable {
+	public var description: String {
+		return "(" + join(" ", internalDescription) + ")"
+	}
+
+	private var internalDescription: [String] {
+		switch self {
+		case let Cons(x, rest):
+			return [toString(x.value)] + rest.value.internalDescription
+		default:
+			return []
+		}
+	}
+}
