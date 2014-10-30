@@ -49,7 +49,7 @@ extension Stream {
 
 
 /// Stream conforms to SequenceType.
-extension Stream : SequenceType {
+extension Stream: SequenceType {
 	public func generate() -> GeneratorOf<T> {
 		var stream = self
 		return GeneratorOf {
