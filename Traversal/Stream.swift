@@ -55,3 +55,19 @@ extension Stream: SequenceType {
 		}
 	}
 }
+
+/// Stream conforms to ReducibleType.
+extension Stream: ReducibleType {
+	public func reducer<Result>() -> Reducible<Result, T>.Enumerator -> Reducible<Result, T>.Enumerator {
+		var stream = self
+		return { recur in
+			{ initial, combine in
+				first(stream).map {
+					stream = dropFirst(stream)
+					return combine(initial, $0).either(const(initial)) { recur($0, combine) }
+				} ?? initial
+			}
+		}
+	}
+}
+
