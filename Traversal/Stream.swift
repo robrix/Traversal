@@ -59,6 +59,7 @@ extension Stream: SequenceType {
 /// Stream conforms to ReducibleType.
 extension Stream: ReducibleType {
 	public func reducer<Result>() -> Reducible<Result, T>.Enumerator -> Reducible<Result, T>.Enumerator {
+		// Unlike Oleg’s definitions, we don’t use a monadic type and express the sequential control flow via repeated binds. Therefore, we hide a tiny bit of mutable state in here—a variable which we advance manually. I can live with this for now, because I am a monster.
 		var stream = self
 		return { recur in
 			{ initial, combine in
