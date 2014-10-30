@@ -1,11 +1,11 @@
 //  Copyright (c) 2014 Rob Rix. All rights reserved.
 
 /// A reducible over a sequence.
-public struct ReducibleOf<T> : ReducibleType, SequenceType {
+public struct ReducibleOf<T>: ReducibleType, SequenceType {
 	// MARK: Lifecycle
 
 	/// Initializes with a sequence.
-	public init<S : SequenceType where S.Generator.Element == T>(_ sequence: S) {
+	public init<S : SequenceType where S.Generator.Element == T>(sequence: S) {
 		self.init({
 			var generator = sequence.generate()
 			return { generator.next() }
@@ -14,17 +14,19 @@ public struct ReducibleOf<T> : ReducibleType, SequenceType {
 
 	/// Initializes with a reducible.
 	public init<R: ReducibleType where R.Element == T>(_ reducible: R) {
-		self.init(Stream(reducible))
+		self.init(sequence: Stream(reducible))
 	}
 
 
 	// MARK: ReducibleType
 
 	/// Nonrecursive left reduction.
-	public func reduceLeft<Result>(recur: (ReducibleOf, Result, (Result, T) -> Either<Result, Result>) -> Result) -> (ReducibleOf, Result, (Result, T) -> Either<Result, Result>) -> Result {
+	public func reducer<Result>() -> Reducible<Result, T>.Enumerator -> Reducible<Result, T>.Enumerator {
 		var producer = self.producer()
-		return { collection, initial, combine in
-			return producer().map { combine(initial, $0).map { recur(ReducibleOf { producer }, $0, combine) }.either(id, id) } ?? initial
+		return { recur in
+			{ initial, combine in
+				producer().map { combine(initial, $0).map { recur($0, combine) }.either(id, id) } ?? initial
+			}
 		}
 	}
 

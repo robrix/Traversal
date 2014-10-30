@@ -29,6 +29,13 @@ public struct Memo<T> {
 	}
 
 
+	// MARK: Methods
+
+	func map<U>(f: T -> U) -> Memo<U> {
+		return Memo<U>(f(value))
+	}
+
+
 	// MARK: Implementation details
 
 	private init(state: MemoState<T>) {
