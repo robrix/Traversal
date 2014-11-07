@@ -20,6 +20,7 @@
 		D430A1A21A0D37D8004D8A26 /* ConvolveTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D430A1A11A0D37D8004D8A26 /* ConvolveTests.swift */; };
 		D44B19B619E6F3A7005E7526 /* Memo.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44B19B519E6F3A7005E7526 /* Memo.swift */; };
 		D44B19BC19E6FC82005E7526 /* MemoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44B19BB19E6FC82005E7526 /* MemoTests.swift */; };
+		D45B60E61A0D43680009D607 /* Join.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45B60E51A0D43670009D607 /* Join.swift */; };
 		D461ED5B19E08F4500DEF5AD /* Traversal.h in Headers */ = {isa = PBXBuildFile; fileRef = D461ED5A19E08F4500DEF5AD /* Traversal.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D461ED6119E08F4500DEF5AD /* Traversal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D461ED5519E08F4500DEF5AD /* Traversal.framework */; };
 		D461ED6819E08F4500DEF5AD /* ReducibleOfTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D461ED6719E08F4500DEF5AD /* ReducibleOfTests.swift */; };
@@ -57,6 +58,7 @@
 		D430A1A11A0D37D8004D8A26 /* ConvolveTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConvolveTests.swift; sourceTree = "<group>"; };
 		D44B19B519E6F3A7005E7526 /* Memo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Memo.swift; sourceTree = "<group>"; };
 		D44B19BB19E6FC82005E7526 /* MemoTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemoTests.swift; sourceTree = "<group>"; };
+		D45B60E51A0D43670009D607 /* Join.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Join.swift; sourceTree = "<group>"; };
 		D461ED5519E08F4500DEF5AD /* Traversal.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Traversal.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D461ED5919E08F4500DEF5AD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D461ED5A19E08F4500DEF5AD /* Traversal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Traversal.h; sourceTree = "<group>"; };
@@ -102,6 +104,7 @@
 				D430A1941A0D0719004D8A26 /* FlattenMap.swift */,
 				D430A1981A0D1A9C004D8A26 /* Concat.swift */,
 				D430A19F1A0D2F0F004D8A26 /* Convolve.swift */,
+				D45B60E51A0D43670009D607 /* Join.swift */,
 			);
 			name = Reducers;
 			sourceTree = "<group>";
@@ -284,6 +287,7 @@
 				D461ED8019E095EC00DEF5AD /* ReducibleOf.swift in Sources */,
 				D461ED7C19E0923800DEF5AD /* ReducibleType.swift in Sources */,
 				D430A1711A02B3FE004D8A26 /* Map.swift in Sources */,
+				D45B60E61A0D43680009D607 /* Join.swift in Sources */,
 				D461ED7A19E091F400DEF5AD /* Either.swift in Sources */,
 				D430A1951A0D0719004D8A26 /* FlattenMap.swift in Sources */,
 				D430A18F1A0D0133004D8A26 /* Filter.swift in Sources */,
