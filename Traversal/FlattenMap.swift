@@ -36,3 +36,9 @@ public struct FlattenMapReducibleView<Base: ReducibleType, T: ReducibleType>: Re
 public func flattenMap<Base: ReducibleType, T: ReducibleType>(reducible: Base, map: Base.Element -> T) -> FlattenMapReducibleView<Base, T> {
 	return FlattenMapReducibleView(reducible: reducible, map: map)
 }
+
+public func flattenMap<Base: ReducibleType, T: SequenceType>(reducible: Base, map: Base.Element -> T) -> FlattenMapReducibleView<Base, ReducibleOf<T.Generator.Element>> {
+	return FlattenMapReducibleView(reducible: reducible) {
+		ReducibleOf(sequence: map($0))
+	}
+}
