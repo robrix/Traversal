@@ -9,6 +9,9 @@ public enum Either<T, U> {
 	case Left(Box<T>)
 	case Right(Box<U>)
 
+
+	// MARK: API
+
 	/// Returns a new `Either` by returning `Left` or applying `f` to the value of `Right`.
 	func map<V>(f: U -> V) -> Either<T, V> {
 		switch self {
