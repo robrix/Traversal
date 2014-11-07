@@ -7,7 +7,7 @@ class FlattenMapTests: XCTestCase {
 	func testFlattenMapAsConcat() {
 		let sequence = [[1], [2], [3, 4], [5, 6], [], [7, 8, 9]]
 		let reducible = ReducibleOf(sequence: sequence)
-		let flattenMapped = flattenMap(reducible, id)
-		XCTAssertEqual(reduce(flattenMapped, 0, +), 45)
+		let concatenated = flattenMap(reducible, id)
+		XCTAssertEqual(reduce(concatenated, 0, +), 45)
 	}
 }
