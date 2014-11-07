@@ -16,6 +16,27 @@ public enum Stream<T> {
 		}
 		self = reduce(Nil, combine)
 	}
+
+
+	// MARK: Accessing
+
+	public var first: T? {
+		switch self {
+		case let Cons(x, _):
+			return x.value
+		case Nil:
+			return nil
+		}
+	}
+
+	public var rest: Stream {
+		switch self {
+		case let Cons(_, rest):
+			return rest.value
+		case Nil:
+			return Nil
+		}
+	}
 }
 
 
