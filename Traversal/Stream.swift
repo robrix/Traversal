@@ -42,7 +42,7 @@ public enum Stream<T> {
 
 // MARK: API
 
-/// Returns the first element of `stream`, or nil if `stream` is `Nil`.
+/// Returns the first element of `stream`, or `nil` if `stream` is `Nil`.
 public func first<T>(stream: Stream<T>) -> T? {
 	switch stream {
 	case let .Cons(x, _):
