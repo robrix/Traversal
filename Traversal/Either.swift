@@ -12,16 +12,20 @@ public enum Either<T, U> {
 	/// Returns a new `Either` by returning `Left` or applying `f` to the value of `Right`.
 	func map<V>(f: U -> V) -> Either<T, V> {
 		switch self {
-		case let .Left(x): return .Left(x)
-		case let .Right(x): return .Right(Box(f(x.value)))
+		case let .Left(x):
+			return .Left(x)
+		case let .Right(x):
+			return .Right(Box(f(x.value)))
 		}
 	}
 
 	/// Returns the result of applying `f` to the value of `Left`, or `g` to the value of `Right`.
 	func either<V>(f: T -> V, g: U -> V) -> V {
 		switch self {
-		case let .Left(x): return f(x.value)
-		case let .Right(x): return g(x.value)
+		case let .Left(x):
+			return f(x.value)
+		case let .Right(x):
+			return g(x.value)
 		}
 	}
 }
