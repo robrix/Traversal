@@ -89,8 +89,8 @@ extension Stream: ReducibleType {
 		var stream = self
 		return { recur in
 			{ initial, combine in
-				first(stream).map {
-					stream = dropFirst(stream)
+				stream.first.map {
+					stream = stream.rest
 					return combine(initial, $0).either(const(initial)) { recur($0, combine) }
 				} ?? initial
 			}
