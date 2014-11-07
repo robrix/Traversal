@@ -1,5 +1,10 @@
 //  Copyright (c) 2014 Rob Rix. All rights reserved.
 
+/// A type representing an alternative of one of two types.
+///
+/// By convention, and where applicable, `Left` is used to indicate failure, while `Right` is used to indicate success. (Mnemonic: “right” is a synonym for “correct.”)
+///
+/// Otherwise, it is implied that `Left` and `Right` are effectively unordered alternatives of equal standing.
 public enum Either<T, U> {
 	case Left(Box<T>)
 	case Right(Box<U>)
