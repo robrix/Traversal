@@ -18,6 +18,20 @@ public enum Stream<T> {
 	}
 
 
+	/// Initializes with a generating function.
+	public init(_ f: () -> T?) {
+		self = Stream.construct(f)()
+	}
+
+
+	/// Maps a generator of `T?` into a generator of `Stream<T>`.
+	public static func construct(generate: () -> T?) -> () -> Stream<T> {
+		return fix { recur in
+			{ generate().map { Cons(Box($0), Memo(recur())) } ?? Nil }
+		}
+	}
+
+
 	// MARK: Properties
 
 	public var first: T? {
