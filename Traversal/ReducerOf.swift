@@ -12,6 +12,7 @@ public struct ReducerOf<Base: ReducibleType, T: ReducibleType>: ReducibleType {
 		self.map = map
 	}
 
+
 	// MARK: ReducibleType
 
 	public func reducer<Result>() -> Reducible<Result, T.Element>.Enumerator -> Reducible<Result, T.Element>.Enumerator {
@@ -30,6 +31,7 @@ public struct ReducerOf<Base: ReducibleType, T: ReducibleType>: ReducibleType {
 		}
 	}
 
+
 	// MARK: Private
 
 	private let reducible: Base
@@ -42,6 +44,7 @@ public struct ReducerOf<Base: ReducibleType, T: ReducibleType>: ReducibleType {
 		}
 	}
 }
+
 
 // MARK: Imports
 
