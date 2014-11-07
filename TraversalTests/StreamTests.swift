@@ -62,4 +62,9 @@ class StreamTests: XCTestCase {
 	func testConstructsNilFromGeneratorOfConstantNil() {
 		XCTAssertTrue(Stream<Int> { nil } == Stream<Int>.Nil)
 	}
+
+	func testConstructsConsFromGeneratorOfConstantNonNil() {
+		let x: Int? = 1
+		XCTAssertEqual(Stream { x }.first!, x!)
+	}
 }
