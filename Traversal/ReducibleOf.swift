@@ -17,6 +17,18 @@ public struct ReducibleOf<T>: ReducibleType, SequenceType {
 		self.init(sequence: Stream(reducible))
 	}
 
+	/// Initializes with a single element.
+	public init(element: T) {
+		self.init({
+			var x: T? = element
+			return {
+				let y = x
+				x = nil
+				return y
+			}
+		})
+	}
+
 
 	// MARK: ReducibleType
 
