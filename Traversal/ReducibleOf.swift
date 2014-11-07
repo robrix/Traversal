@@ -29,6 +29,11 @@ public struct ReducibleOf<T>: ReducibleType, SequenceType {
 		})
 	}
 
+	/// Initializes an empty reducible.
+	public init() {
+		self.init({ { nil } })
+	}
+
 
 	// MARK: ReducibleType
 
