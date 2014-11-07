@@ -4,8 +4,22 @@
 public enum Stream<T> {
 	case Cons(Box<T>, Memo<Stream<T>>)
 	case Nil
+
+
+	// MARK: Lifecycle
+
+	/// Initializes with a ReducibleType.
+	public init<R : ReducibleType where R.Element == T>(_ reducible: R) {
+		let reduce: Reducible<Stream, T>.Enumerator = reducible.reducer()({ initial, _ in initial })
+		let combine = fix { combine in
+			{ into, each in .Right(Box(Cons(Box(each), Memo(reduce(into, combine))))) }
+		}
+		self = reduce(Nil, combine)
+	}
 }
 
+
+// MARK: API
 
 /// Returns the first element of `stream`, or nil if `stream` is `Nil`.
 public func first<T>(stream: Stream<T>) -> T? {
@@ -26,19 +40,8 @@ public func dropFirst<T>(stream: Stream<T>) -> Stream<T> {
 }
 
 
-extension Stream {
-	/// Initializes with a ReducibleType.
-	public init<R : ReducibleType where R.Element == T>(_ reducible: R) {
-		let reduce: Reducible<Stream, T>.Enumerator = reducible.reducer()({ initial, _ in initial })
-		let combine = fix { combine in
-			{ into, each in .Right(Box(Cons(Box(each), Memo(reduce(into, combine))))) }
-		}
-		self = reduce(Nil, combine)
-	}
-}
+// MARK: SequenceType conformance.
 
-
-/// Stream conforms to SequenceType.
 extension Stream: SequenceType {
 	public func generate() -> GeneratorOf<T> {
 		var stream = self
@@ -54,7 +57,9 @@ extension Stream: SequenceType {
 	}
 }
 
-/// Stream conforms to ReducibleType.
+
+// MARK: ReducibleType conformance.
+
 extension Stream: ReducibleType {
 	public func reducer<Result>() -> Reducible<Result, T>.Enumerator -> Reducible<Result, T>.Enumerator {
 		// Unlike Oleg’s definitions, we don’t use a monadic type and express the sequential control flow via repeated binds. Therefore, we hide a tiny bit of mutable state in here—a variable which we advance manually. I can live with this for now, because I am a monster.
@@ -70,7 +75,8 @@ extension Stream: ReducibleType {
 	}
 }
 
-/// Stream conforms to Printable.
+
+// MARK: Printable conformance.
 extension Stream: Printable {
 	public var description: String {
 		return "(" + join(" ", internalDescription) + ")"
