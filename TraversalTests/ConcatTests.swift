@@ -10,4 +10,10 @@ class ConcatTests: XCTestCase {
 		let concatenated = concat(reducible)
 		XCTAssertEqual(reduce(concatenated, 0, +), 10)
 	}
+
+	func testInfixConcatenation() {
+		let concatenated = ReducibleOf(sequence: [10, 5, 3]) ++ ReducibleOf(sequence: [2, 20, 20])
+		let mapped = Traversal.map(concatenated, toString)
+		XCTAssertEqual(Traversal.reduce(mapped, "", +), "105322020")
+	}
 }
