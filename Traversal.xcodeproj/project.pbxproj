@@ -90,11 +90,11 @@
 		D430A18D1A0D0122004D8A26 /* Reducers */ = {
 			isa = PBXGroup;
 			children = (
+				D430A19A1A0D1B44004D8A26 /* ReducerOf.swift */,
 				D430A1701A02B3FE004D8A26 /* Map.swift */,
 				D430A18E1A0D0133004D8A26 /* Filter.swift */,
 				D430A1941A0D0719004D8A26 /* FlattenMap.swift */,
 				D430A1981A0D1A9C004D8A26 /* Concat.swift */,
-				D430A19A1A0D1B44004D8A26 /* ReducerOf.swift */,
 			);
 			name = Reducers;
 			sourceTree = "<group>";
