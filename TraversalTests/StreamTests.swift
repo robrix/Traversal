@@ -69,8 +69,10 @@ class StreamTests: XCTestCase {
 	}
 
 	func testConstructsFiniteStreamFromGeneratorOfFiniteSequence() {
-		let s = [1, 2, 3]
-		var generator = s.generate()
-		XCTAssertTrue(Stream(generator.next) == Stream(ReducibleOf(sequence: s)))
+		let sequence = [1, 2, 3]
+		var generator = sequence.generate()
+		let stream = Stream(generator.next)
+		XCTAssertTrue(stream == Stream(ReducibleOf(sequence: sequence)))
+		XCTAssertEqual(Traversal.reduce(stream, 0, +), 6)
 	}
 }
