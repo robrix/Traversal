@@ -19,4 +19,13 @@ class FlattenMapTests: XCTestCase {
 		}
 		XCTAssertEqual(reduce(filtered, 0, +), 25)
 	}
+
+	func testFlattenMapAsMap() {
+		let sequence = [1, 2, 3, 4]
+		let reducible = ReducibleOf(sequence: sequence)
+		let mapped = flattenMap(reducible) {
+			[ $0 * 2 ]
+		}
+		XCTAssertEqual(reduce(mapped, 0, +), 20)
+	}
 }
