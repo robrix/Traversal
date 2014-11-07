@@ -39,6 +39,7 @@ public struct FilterReducibleView<Base: ReducibleType>: ReducibleType {
 	}
 }
 
+/// Returns a reducer filtering out any elements of `reducible` which are not matched by `predicate`.
 public func filter<R: ReducibleType>(reducible: R, predicate: R.Element -> Bool) -> FilterReducibleView<R> {
 	return FilterReducibleView(reducible: reducible, predicate: predicate)
 }
