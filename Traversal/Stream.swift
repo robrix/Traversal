@@ -18,7 +18,7 @@ public enum Stream<T> {
 	}
 
 
-	// MARK: Accessing
+	// MARK: Properties
 
 	public var first: T? {
 		switch self {
