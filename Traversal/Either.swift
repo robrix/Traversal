@@ -16,6 +16,7 @@ public enum Either<T, U> {
 		}
 	}
 
+	/// Returns the result of applying `f` to the value of `Left`, or `g` to the value of `Right`.
 	func either<V>(f: T -> V, g: U -> V) -> V {
 		switch self {
 		case let .Left(x): return f(x.value)
