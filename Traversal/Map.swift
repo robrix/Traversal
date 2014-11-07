@@ -18,7 +18,7 @@ public struct MapReducibleView<Base: ReducibleType, T>: ReducibleType {
 			var reduce: Reducible<Result, Base.Element>.Enumerator!
 			return { initial, combine in
 				if reduce == nil {
-					reduce = reducer { initial, c in
+					reduce = reducer { initial, _ in
 						recur(initial, combine)
 					}
 				}
