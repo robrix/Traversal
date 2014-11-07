@@ -42,3 +42,7 @@ public func flattenMap<Base: ReducibleType, T: SequenceType>(reducible: Base, ma
 		ReducibleOf(sequence: map($0))
 	}
 }
+
+public func concat<Base: ReducibleType where Base.Element: SequenceType>(reducible: Base) -> FlattenMapReducibleView<Base, ReducibleOf<Base.Element.Generator.Element>> {
+	return flattenMap(reducible, id)
+}
