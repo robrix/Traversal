@@ -46,6 +46,23 @@ public struct Memo<T> {
 }
 
 
+// MARK: Equality.
+
+/// Equality of `Memo`s of `Equatable` types.
+///
+/// We cannot declare that `Memo<T: Equatable>` conforms to `Equatable`, so this is a relatively ad hoc definition.
+func == <T: Equatable> (lhs: Memo<T>, rhs: Memo<T>) -> Bool {
+	return lhs.value == rhs.value
+}
+
+/// Inequality of `Memo`s of `Equatable` types.
+///
+/// We cannot declare that `Memo<T: Equatable>` conforms to `Equatable`, so this is a relatively ad hoc definition.
+func != <T: Equatable> (lhs: Memo<T>, rhs: Memo<T>) -> Bool {
+	return lhs.value != rhs.value
+}
+
+
 // MARK: Private
 
 /// Private state for memoization.
