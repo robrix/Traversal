@@ -1,7 +1,5 @@
 //  Copyright (c) 2014 Rob Rix. All rights reserved.
 
-import Box
-
 /// An iterable stream.
 public enum Stream<T> {
 	case Cons(Box<T>, Memo<Stream<T>>)
@@ -87,3 +85,8 @@ extension Stream: Printable {
 		}
 	}
 }
+
+
+// MARK: Imports
+
+import Box

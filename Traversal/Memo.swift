@@ -1,7 +1,5 @@
 //  Copyright (c) 2014 Rob Rix. All rights reserved.
 
-import Box
-
 /// Deferred, memoized evaluation.
 public struct Memo<T> {
 
@@ -54,3 +52,8 @@ private enum MemoState<T> {
 	case Evaluated(Box<T>)
 	case Unevaluated(@autoclosure () -> T)
 }
+
+
+// MARK: Imports
+
+import Box
