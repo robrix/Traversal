@@ -24,20 +24,20 @@ public enum Stream<T> {
 /// Returns the first element of `stream`, or nil if `stream` is `Nil`.
 public func first<T>(stream: Stream<T>) -> T? {
 	switch stream {
-	case .Nil:
-		return nil
 	case let .Cons(x, _):
 		return x.value
+	case .Nil:
+		return nil
 	}
 }
 
 /// Drops the first element of `stream`.
 public func dropFirst<T>(stream: Stream<T>) -> Stream<T> {
 	switch stream {
-	case .Nil:
-		return .Nil
 	case let .Cons(_, rest):
 		return rest.value
+	case .Nil:
+		return .Nil
 	}
 }
 
