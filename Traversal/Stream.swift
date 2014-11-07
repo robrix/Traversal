@@ -131,6 +131,38 @@ extension Stream: Printable {
 }
 
 
+// MARK: Equality.
+
+/// Equality of `Stream`s of `Equatable` types.
+///
+/// We cannot declare that `Stream<T: Equatable>` conforms to `Equatable`, so this is defined ad hoc.
+public func == <T: Equatable> (lhs: Stream<T>, rhs: Stream<T>) -> Bool {
+	switch (lhs, rhs) {
+	case let (.Cons(x, xs), .Cons(y, ys)) where x == y:
+		return xs.value == ys.value
+	case (.Nil, .Nil):
+		return true
+	default:
+		return false
+	}
+}
+
+
+/// Inequality of `Stream`s of `Equatable` types.
+///
+/// We cannot declare that `Stream<T: Equatable>` conforms to `Equatable`, so this is defined ad hoc.
+public func != <T: Equatable> (lhs: Stream<T>, rhs: Stream<T>) -> Bool {
+	switch (lhs, rhs) {
+	case let (.Cons(x, xs), .Cons(y, ys)) where x == y:
+		return xs.value != ys.value
+	case (.Nil, .Nil):
+		return false
+	default:
+		return true
+	}
+}
+
+
 // MARK: Imports
 
 import Box
