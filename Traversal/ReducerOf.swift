@@ -9,7 +9,7 @@ public struct ReducerOf<Base: ReducibleType, T: ReducibleType>: ReducibleType {
 	// MARK: Lifecycle
 
 	/// Initializes with a base `reducible` and a `map` from the elements of `reducible` to some inhabitant of `ReducibleType`.
-	public init(reducible: Base, map: Base.Element -> T) {
+	public init(_ reducible: Base, _ map: Base.Element -> T) {
 		self.reducible = reducible
 		self.map = map
 	}
