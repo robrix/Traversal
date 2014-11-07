@@ -43,3 +43,16 @@ public struct FilterReducibleView<Base: ReducibleType>: ReducibleType {
 public func filter<R: ReducibleType>(reducible: R, predicate: R.Element -> Bool) -> FilterReducibleView<R> {
 	return FilterReducibleView(reducible: reducible, predicate: predicate)
 }
+
+
+/// A predicate which accepts all values.
+public func acceptAll<T>(x: T) -> Bool { return true }
+
+/// A predicate which rejects all values.
+public func rejectAll<T>(x: T) -> Bool { return false }
+
+/// A predicate which accepts only `nil` values.
+public func acceptNil<T>(x: T?) -> Bool { return x == nil }
+
+/// A predicate which accepts only non-`nil` values.
+public func rejectNil<T>(x: T?) -> Bool { return x != nil }
