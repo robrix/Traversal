@@ -114,6 +114,7 @@ extension Stream: ReducibleType {
 
 
 // MARK: Printable conformance.
+
 extension Stream: Printable {
 	public var description: String {
 		return "(" + join(" ", internalDescription) + ")"
