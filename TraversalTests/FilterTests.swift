@@ -17,4 +17,11 @@ class FilterTests: XCTestCase {
 		let filtered = Traversal.filter(reducible, rejectAll)
 		XCTAssertEqual(reduce(filtered, 0, +), 0)
 	}
+
+	func testFilterAcceptingSome() {
+		let sequence: [Int?] = [1, nil, 3, nil]
+		let reducible = ReducibleOf(sequence: sequence)
+		let filtered = Traversal.filter(reducible, rejectNil)
+		XCTAssertEqual(reduce(filtered, 0) { $0 + ($1 ?? 0) }, 4)
+	}
 }
