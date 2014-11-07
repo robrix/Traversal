@@ -19,14 +19,7 @@ public struct ReducibleOf<T>: ReducibleType, SequenceType {
 
 	/// Initializes with a single element.
 	public init(element: T) {
-		self.init({
-			var x: T? = element
-			return {
-				let y = x
-				x = nil
-				return y
-			}
-		})
+		self.init(sequence: GeneratorOfOne(element))
 	}
 
 	/// Initializes an empty reducible.
