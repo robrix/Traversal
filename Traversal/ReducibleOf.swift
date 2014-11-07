@@ -17,6 +17,16 @@ public struct ReducibleOf<T>: ReducibleType, SequenceType {
 		self.init(sequence: Stream(reducible))
 	}
 
+	/// Initializes with a single element.
+	public init(element: T) {
+		self.init(sequence: GeneratorOfOne(element))
+	}
+
+	/// Initializes an empty reducible.
+	public init() {
+		self.init({ { nil } })
+	}
+
 
 	// MARK: ReducibleType
 
