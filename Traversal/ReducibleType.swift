@@ -1,7 +1,5 @@
 //  Copyright (c) 2014 Rob Rix. All rights reserved.
 
-import Box
-
 /// A collection which can be left-reduced nonrecursively.
 public protocol ReducibleType {
 	/// The type of the collection’s elements.
@@ -44,3 +42,8 @@ public struct Reducible<Result, Element> {
 	/// The type of the reduce function.
 	typealias Enumerator = (Result, Iteratee) -> Result
 }
+
+
+// MARK: Imports
+
+import Box
