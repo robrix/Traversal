@@ -2,8 +2,7 @@
 
 /// Deferred, memoized evaluation.
 public struct Memo<T> {
-
-	// MARK: Constructors
+	// MARK: Lifecycle
 
 	public init(_ unevaluated: @autoclosure () -> T) {
 		state = MutableBox(.Unevaluated(unevaluated))
@@ -27,14 +26,14 @@ public struct Memo<T> {
 	}
 
 
-	// MARK: Methods
+	// MARK: API
 
 	func map<U>(f: T -> U) -> Memo<U> {
 		return Memo<U>(f(value))
 	}
 
 
-	// MARK: Implementation details
+	// MARK: Private
 
 	private init(state: MemoState<T>) {
 		self.init(state: MutableBox(state))
@@ -46,6 +45,25 @@ public struct Memo<T> {
 	private let state: MutableBox<MemoState<T>>
 }
 
+
+// MARK: Equality.
+
+/// Equality of `Memo`s of `Equatable` types.
+///
+/// We cannot declare that `Memo<T: Equatable>` conforms to `Equatable`, so this is defined ad hoc.
+func == <T: Equatable> (lhs: Memo<T>, rhs: Memo<T>) -> Bool {
+	return lhs.value == rhs.value
+}
+
+/// Inequality of `Memo`s of `Equatable` types.
+///
+/// We cannot declare that `Memo<T: Equatable>` conforms to `Equatable`, so this is defined ad hoc.
+func != <T: Equatable> (lhs: Memo<T>, rhs: Memo<T>) -> Bool {
+	return lhs.value != rhs.value
+}
+
+
+// MARK: Private
 
 /// Private state for memoization.
 private enum MemoState<T> {

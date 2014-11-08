@@ -9,7 +9,7 @@ public enum Stream<T> {
 	// MARK: Lifecycle
 
 	/// Initializes with a ReducibleType.
-	public init<R : ReducibleType where R.Element == T>(_ reducible: R) {
+	public init<R: ReducibleType where R.Element == T>(_ reducible: R) {
 		let reduce: Reducible<Stream, T>.Enumerator = reducible.reducer()({ initial, _ in initial })
 		let combine = fix { combine in
 			{ into, each in .Right(Box(Cons(Box(each), Memo(reduce(into, combine))))) }
@@ -18,7 +18,21 @@ public enum Stream<T> {
 	}
 
 
-	// MARK: Accessing
+	/// Initializes with a generating function.
+	public init(_ f: () -> T?) {
+		self = Stream.construct(f)()
+	}
+
+
+	/// Maps a generator of `T?` into a generator of `Stream<T>`.
+	public static func construct(generate: () -> T?) -> () -> Stream<T> {
+		return fix { recur in
+			{ generate().map { Cons(Box($0), Memo(recur())) } ?? Nil }
+		}
+	}
+
+
+	// MARK: Properties
 
 	public var first: T? {
 		switch self {
@@ -100,6 +114,7 @@ extension Stream: ReducibleType {
 
 
 // MARK: Printable conformance.
+
 extension Stream: Printable {
 	public var description: String {
 		return "(" + join(" ", internalDescription) + ")"
@@ -112,6 +127,38 @@ extension Stream: Printable {
 		default:
 			return []
 		}
+	}
+}
+
+
+// MARK: Equality.
+
+/// Equality of `Stream`s of `Equatable` types.
+///
+/// We cannot declare that `Stream<T: Equatable>` conforms to `Equatable`, so this is defined ad hoc.
+public func == <T: Equatable> (lhs: Stream<T>, rhs: Stream<T>) -> Bool {
+	switch (lhs, rhs) {
+	case let (.Cons(x, xs), .Cons(y, ys)) where x == y:
+		return xs.value == ys.value
+	case (.Nil, .Nil):
+		return true
+	default:
+		return false
+	}
+}
+
+
+/// Inequality of `Stream`s of `Equatable` types.
+///
+/// We cannot declare that `Stream<T: Equatable>` conforms to `Equatable`, so this is defined ad hoc.
+public func != <T: Equatable> (lhs: Stream<T>, rhs: Stream<T>) -> Bool {
+	switch (lhs, rhs) {
+	case let (.Cons(x, xs), .Cons(y, ys)) where x == y:
+		return xs.value != ys.value
+	case (.Nil, .Nil):
+		return false
+	default:
+		return true
 	}
 }
 

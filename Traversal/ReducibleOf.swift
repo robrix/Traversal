@@ -6,8 +6,13 @@ public struct ReducibleOf<T>: ReducibleType, SequenceType {
 
 	/// Initializes with a sequence.
 	public init<S : SequenceType where S.Generator.Element == T>(sequence: S) {
+		self.init({ sequence.generate() })
+	}
+
+	/// Initializes with a function producing generators.
+	public init<G: GeneratorType where G.Element == T>(_ generate: () -> G) {
 		self.init({
-			var generator = sequence.generate()
+			var generator = generate()
 			return { generator.next() }
 		})
 	}
