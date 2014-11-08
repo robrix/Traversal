@@ -31,8 +31,6 @@
 		D462EB9919E4C8F700ADAAC9 /* Stream.swift in Sources */ = {isa = PBXBuildFile; fileRef = D462EB9819E4C8F700ADAAC9 /* Stream.swift */; };
 		D470AC6019E87B54003DA6C6 /* Box.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D470AC5F19E87B54003DA6C6 /* Box.framework */; };
 		D470AC6119E87B80003DA6C6 /* Box.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D470AC5F19E87B54003DA6C6 /* Box.framework */; };
-		D476AFE219F1EC0D0075EFFF /* Latch.swift in Sources */ = {isa = PBXBuildFile; fileRef = D476AFE119F1EC0D0075EFFF /* Latch.swift */; };
-		D476AFE619F21F310075EFFF /* LatchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D476AFE519F21F310075EFFF /* LatchTests.swift */; };
 		D476AFE819F228670075EFFF /* ObservableType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D476AFE719F228670075EFFF /* ObservableType.swift */; };
 		D476AFEE19F22D890075EFFF /* SourceOf.swift in Sources */ = {isa = PBXBuildFile; fileRef = D476AFED19F22D890075EFFF /* SourceOf.swift */; };
 		D476AFF019F230780075EFFF /* Signal.swift in Sources */ = {isa = PBXBuildFile; fileRef = D476AFEF19F230780075EFFF /* Signal.swift */; };
@@ -77,8 +75,6 @@
 		D461ED7F19E095EC00DEF5AD /* ReducibleOf.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReducibleOf.swift; sourceTree = "<group>"; };
 		D462EB9819E4C8F700ADAAC9 /* Stream.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Stream.swift; sourceTree = "<group>"; };
 		D470AC5F19E87B54003DA6C6 /* Box.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Box.framework; path = "../../../../Library/Developer/Xcode/DerivedData/Traversal-dlyjhvwonwhswzdbfpsuoweyfpdp/Build/Products/Debug/Box.framework"; sourceTree = "<group>"; };
-		D476AFE119F1EC0D0075EFFF /* Latch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Latch.swift; sourceTree = "<group>"; };
-		D476AFE519F21F310075EFFF /* LatchTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LatchTests.swift; sourceTree = "<group>"; };
 		D476AFE719F228670075EFFF /* ObservableType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObservableType.swift; sourceTree = "<group>"; };
 		D476AFED19F22D890075EFFF /* SourceOf.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SourceOf.swift; sourceTree = "<group>"; };
 		D476AFEF19F230780075EFFF /* Signal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Signal.swift; sourceTree = "<group>"; };
@@ -124,7 +120,6 @@
 		D430A19C1A0D2AD2004D8A26 /* Signals */ = {
 			isa = PBXGroup;
 			children = (
-				D476AFE119F1EC0D0075EFFF /* Latch.swift */,
 				D476AFE719F228670075EFFF /* ObservableType.swift */,
 				D476AFED19F22D890075EFFF /* SourceOf.swift */,
 				D476AFEF19F230780075EFFF /* Signal.swift */,
@@ -179,7 +174,6 @@
 		D461ED6419E08F4500DEF5AD /* TraversalTests */ = {
 			isa = PBXGroup;
 			children = (
-				D476AFE519F21F310075EFFF /* LatchTests.swift */,
 				D461ED6719E08F4500DEF5AD /* ReducibleOfTests.swift */,
 				D4E2C50E19E6385700A4C55A /* StreamTests.swift */,
 				D44B19BB19E6FC82005E7526 /* MemoTests.swift */,
@@ -320,7 +314,6 @@
 				D430A18F1A0D0133004D8A26 /* Filter.swift in Sources */,
 				D430A19B1A0D1B44004D8A26 /* ReducerOf.swift in Sources */,
 				D430A1991A0D1A9C004D8A26 /* Concat.swift in Sources */,
-				D476AFE219F1EC0D0075EFFF /* Latch.swift in Sources */,
 				D4C92F6F19E191F10054F0F6 /* Prelude.swift in Sources */,
 				D476AFE819F228670075EFFF /* ObservableType.swift in Sources */,
 				D462EB9919E4C8F700ADAAC9 /* Stream.swift in Sources */,
@@ -340,7 +333,6 @@
 				D45B60E91A0D46CB0009D607 /* JoinTests.swift in Sources */,
 				D430A1771A06341E004D8A26 /* MapTests.swift in Sources */,
 				D430A1A21A0D37D8004D8A26 /* ConvolveTests.swift in Sources */,
-				D476AFE619F21F310075EFFF /* LatchTests.swift in Sources */,
 				D461ED6819E08F4500DEF5AD /* ReducibleOfTests.swift in Sources */,
 				D430A1971A0D0B20004D8A26 /* FlattenMapTests.swift in Sources */,
 			);
