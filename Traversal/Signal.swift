@@ -1,6 +1,8 @@
 //  Copyright (c) 2014 Rob Rix. All rights reserved.
 
 public struct Signal<T>: ObservableType {
+	// MARK: Lifecycle
+
 	public init<O: ObservableType>(inout _ observable: O, _ map: O.Element -> T) {
 		var input = Stream(observable)
 		let s = SourceOf { map(first(input)!) }
@@ -15,19 +17,22 @@ public struct Signal<T>: ObservableType {
 		}
 	}
 
-	// MARK: Reduction
+
+	// MARK: ReducibleType
 
 	public func reducer<Result>() -> Reducible<Result, T>.Enumerator -> Reducible<Result, T>.Enumerator {
 		return source.reducer()
 	}
 
-	// MARK: Observation
+
+	// MARK: ObservableType
 
 	public mutating func connect(observer: () -> ()) {
 		source.connect(observer)
 	}
 
-	// MARK: Implementation details
+
+	// MARK: Private
 
 	private var source: SourceOf<T>
 }

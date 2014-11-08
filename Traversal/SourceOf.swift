@@ -1,9 +1,12 @@
 //  Copyright (c) 2014 Rob Rix. All rights reserved.
 
 public struct SourceOf<T>: ObservableType {
+	// MARK: Lifecycle
+
 	public init(_ sampler: () -> T) {
 		self.sampler = sampler
 	}
+
 
 	// MARK: ReducibleType
 
@@ -13,7 +16,8 @@ public struct SourceOf<T>: ObservableType {
 		}
 	}
 
-	// MARK: Observation
+
+	// MARK: ObservableType
 
 	public func invalidate() {
 		for observer in observers { observer() }
@@ -23,7 +27,8 @@ public struct SourceOf<T>: ObservableType {
 		observers.append(observer)
 	}
 
-	// MARK: Implementation details
+
+	// MARK: Private
 
 	private let sampler: () -> T
 	private var observers: [() -> ()] = []
