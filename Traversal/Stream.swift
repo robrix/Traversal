@@ -10,7 +10,7 @@ public enum Stream<T> {
 
 	/// Initializes with a ReducibleType.
 	public init<R: ReducibleType where R.Element == T>(_ reducible: R) {
-		let reduce: Reducible<Stream, T>.Enumerator = reducible.reducer()({ initial, _ in initial })
+		let reduce: Reducible<Stream, T>.Enumerator = (reducible.reducer()) { initial, _ in initial }
 		let combine = fix { combine in
 			{ into, each in .Right(Box(Cons(Box(each), Memo(reduce(into, combine))))) }
 		}
