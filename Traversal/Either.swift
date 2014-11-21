@@ -10,6 +10,23 @@ public enum Either<T, U>: Printable {
 	case Right(Box<U>)
 
 
+	// MARK: Lifecycle
+
+	/// Constructs a `Left`.
+	///
+	/// Suitable for partial application.
+	public static func left(value: T) -> Either {
+		return Left(Box(value))
+	}
+
+	/// Constructs a `Right`.
+	///
+	/// Suitable for partial application.
+	public static func right(value: U) -> Either {
+		return Right(Box(value))
+	}
+
+
 	// MARK: API
 
 	/// Returns a new `Either` by returning `Left` or applying `f` to the value of `Right`.
