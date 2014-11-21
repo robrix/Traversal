@@ -2,7 +2,7 @@
 
 /// An iterable stream.
 public enum Stream<T> {
-	case Cons(Box<T>, Memo<Stream<T>>)
+	case Cons(T, Memo<Stream<T>>)
 	case Nil
 
 
@@ -12,7 +12,7 @@ public enum Stream<T> {
 	public init<R: ReducibleType where R.Element == T>(_ reducible: R) {
 		let reduce: Reducible<Stream, T>.Enumerator = reducible.reducer()({ initial, _ in initial })
 		let combine = fix { combine in
-			{ into, each in .Right(Box(Cons(Box(each), Memo(reduce(into, combine))))) }
+			{ into, each in .Right(Box(Cons(each, Memo(reduce(into, combine))))) }
 		}
 		self = reduce(Nil, combine)
 	}
@@ -27,7 +27,7 @@ public enum Stream<T> {
 	/// Maps a generator of `T?` into a generator of `Stream<T>`.
 	public static func construct(generate: () -> T?) -> () -> Stream<T> {
 		return fix { recur in
-			{ generate().map { Cons(Box($0), Memo(recur())) } ?? Nil }
+			{ generate().map { Cons($0, Memo(recur())) } ?? Nil }
 		}
 	}
 
@@ -37,7 +37,7 @@ public enum Stream<T> {
 	public var first: T? {
 		switch self {
 		case let Cons(x, _):
-			return x.value
+			return x
 		case Nil:
 			return nil
 		}
@@ -76,7 +76,7 @@ extension Stream: SequenceType {
 			switch stream {
 			case let Cons(each, rest):
 				stream = rest.value
-				return each.value
+				return each
 			case Nil:
 				return nil
 			}
@@ -113,7 +113,7 @@ extension Stream: Printable {
 	private var internalDescription: [String] {
 		switch self {
 		case let Cons(x, rest):
-			return [toString(x.value)] + rest.value.internalDescription
+			return [toString(x)] + rest.value.internalDescription
 		default:
 			return []
 		}

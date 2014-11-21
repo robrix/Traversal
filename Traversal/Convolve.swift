@@ -9,7 +9,7 @@ public func convolve<R0: ReducibleType, R1: ReducibleType>(r0: R0, r1: R1) -> St
 		switch (streams.0, streams.1) {
 		case let (.Cons(x, xs), .Cons(y, ys)):
 			streams = (xs.value, ys.value)
-			return (x.value, y.value)
+			return (x, y)
 		default:
 			return nil
 		}
@@ -26,7 +26,7 @@ public func convolve<R0: ReducibleType, R1: ReducibleType, R2: ReducibleType>(r0
 		switch (streams.0, streams.1, streams.2) {
 		case let (.Cons(x, xs), .Cons(y, ys), .Cons(z, zs)):
 			streams = (xs.value, ys.value, zs.value)
-			return (x.value, y.value, z.value)
+			return (x, y, z)
 		default:
 			return nil
 		}
