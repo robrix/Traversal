@@ -1,7 +1,7 @@
 //  Copyright (c) 2014 Rob Rix. All rights reserved.
 
 /// A reducible over a sequence.
-public struct ReducibleOf<T>: ReducibleType {
+public struct ReducibleOf<T>: ReducibleType, Printable {
 	// MARK: Lifecycle
 
 	/// Initializes with a sequence.
@@ -43,6 +43,13 @@ public struct ReducibleOf<T>: ReducibleType {
 				producer().map { combine(initial, $0).map { recur($0, combine) }.either(id, id) } ?? initial
 			}
 		}
+	}
+
+
+	// MARK: Printable
+
+	public var description: String {
+		return "ReducibleOf(\(Stream(self).description))"
 	}
 
 
