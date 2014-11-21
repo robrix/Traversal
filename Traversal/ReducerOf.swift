@@ -46,12 +46,5 @@ public struct ReducerOf<Base: ReducibleType, T: ReducibleType>: ReducibleType {
 
 /// Transducer for flatten maps.
 private func flattenMapping<Result, U, T: ReducibleType>(map: U -> T)(combine: Reducible<Result, T.Element>.Iteratee) -> Reducible<Result, U>.Iteratee {
-	return { into, each in
-		return .Right(Box(reduce(map(each), into, combine)))
-	}
+	return { into, each in .right(reduce(map(each), into, combine)) }
 }
-
-
-// MARK: Imports
-
-import Box
