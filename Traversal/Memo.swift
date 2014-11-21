@@ -5,7 +5,11 @@ public struct Memo<T> {
 	// MARK: Lifecycle
 
 	public init(_ unevaluated: @autoclosure () -> T) {
-		state = MutableBox(.Unevaluated(unevaluated))
+		self.init(unevaluated: unevaluated)
+	}
+
+	public init(unevaluated: () -> T) {
+		self.init(state: .Unevaluated(unevaluated))
 	}
 
 	public init(evaluated: T) {
