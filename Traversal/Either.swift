@@ -5,7 +5,7 @@
 /// By convention, and where applicable, `Left` is used to indicate failure, while `Right` is used to indicate success. (Mnemonic: “right” is a synonym for “correct.”)
 ///
 /// Otherwise, it is implied that `Left` and `Right` are effectively unordered alternatives of equal standing.
-public enum Either<T, U> {
+public enum Either<T, U>: Printable {
 	case Left(Box<T>)
 	case Right(Box<U>)
 
@@ -30,6 +30,13 @@ public enum Either<T, U> {
 		case let .Right(x):
 			return g(x.value)
 		}
+	}
+
+
+	// MARK: Printable
+
+	public var description: String {
+		return either({ ".Left(\($0))"}, { ".Right(\($0))" })
 	}
 }
 
