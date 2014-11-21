@@ -15,7 +15,7 @@ infix operator ++ {
 
 /// Returns a reducer concatenating the elements of `lhs` and `rhs`.
 public func ++ <R1: ReducibleType, R2: ReducibleType where R1.Element == R2.Element> (lhs: R1, rhs: R2) -> ReducibleOf<R1.Element> {
-	var generators = (ReducibleOf(lhs).generate(), ReducibleOf(rhs).generate())
+	var generators = (Stream(lhs).generate(), Stream(rhs).generate())
 	return ReducibleOf {
 		GeneratorOf {
 			generators.0.next() ?? generators.1.next()
