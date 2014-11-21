@@ -117,16 +117,16 @@ extension Stream: ReducibleType {
 
 extension Stream: Printable {
 	public var description: String {
-		return "(" + join(" ", internalDescription) + ")"
-	}
-
-	private var internalDescription: [String] {
-		switch self {
-		case let Cons(x, rest):
-			return [toString(x.value)] + rest.value.internalDescription
-		default:
-			return []
+		let internalDescription: Stream -> [String] = fix { internalDescription in {
+				switch $0 {
+				case let Cons(x, rest):
+					return [toString(x.value)] + internalDescription(rest.value)
+				default:
+					return []
+				}
+			}
 		}
+		return "(" + join(" ", internalDescription(self)) + ")"
 	}
 }
 
