@@ -15,9 +15,9 @@ public enum Either<T, U>: Printable {
 	/// Returns a new `Either` by returning `Left` or applying `f` to the value of `Right`.
 	func map<V>(f: U -> V) -> Either<T, V> {
 		switch self {
-		case let .Left(x):
+		case let Left(x):
 			return .Left(x)
-		case let .Right(x):
+		case let Right(x):
 			return .Right(Box(f(x.value)))
 		}
 	}
