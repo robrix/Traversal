@@ -12,7 +12,7 @@ public enum Stream<T> {
 	public init<R: ReducibleType where R.Element == T>(_ reducible: R) {
 		let reduce: Reducible<Stream, T>.Enumerator = (reducible.reducer()) { initial, _ in initial }
 		let combine = fix { combine in
-			{ into, each in .Right(Box(Cons(Box(each), Memo(reduce(into, combine))))) }
+			{ into, each in .right(cons(each, Memo(reduce(into, combine)))) }
 		}
 		self = reduce(Nil, combine)
 	}
@@ -27,7 +27,7 @@ public enum Stream<T> {
 	/// Maps a generator of `T?` into a generator of `Stream<T>`.
 	public static func construct(generate: () -> T?) -> () -> Stream<T> {
 		return fix { recur in
-			{ generate().map { Cons(Box($0), Memo(recur())) } ?? Nil }
+			{ generate().map { cons($0, Memo(recur())) } ?? Nil }
 		}
 	}
 
