@@ -68,7 +68,7 @@ func != <T: Equatable> (lhs: Memo<T>, rhs: Memo<T>) -> Bool {
 /// Private state for memoization.
 private enum MemoState<T> {
 	case Evaluated(Box<T>)
-	case Unevaluated(@autoclosure () -> T)
+	case Unevaluated(() -> T)
 }
 
 
