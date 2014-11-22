@@ -86,4 +86,10 @@ class StreamTests: XCTestCase {
 		let mapped = Traversal.map(Stream(ReducibleOf(sequence: [1, 2, 3])), { $0 * 2 })
 		XCTAssertEqual(reduce(mapped, 0, +), 12)
 	}
+
+	func testCons() {
+		let stream = cons(0, Stream.Nil)
+		XCTAssertEqual(first(stream)!, 0)
+		XCTAssert(dropFirst(stream) == Stream.Nil)
+	}
 }
