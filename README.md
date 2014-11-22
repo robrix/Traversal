@@ -3,6 +3,16 @@
 This is a Swift framework providing a single collection interface, `ReducibleType`, suitable for representing the traversal of collections.
 
 
+## Why Traversal?
+
+- Simplicity: one protocol, `ReducibleType`, provides both enumeration and iteration.
+- Ease of use: enumerate with `reduce` & iterate with `Stream`.
+- Interoperability: `ReducibleOf` makes a reducible from `SequenceType`; [`sequence(…)`](https://github.com/robrix/Traversal/pull/20) (in development) supports `for`…`in` (and other clients of `SequenceType`) with any `ReducibleType`.
+- Ease of adoption: `Stream`, `ReducibleOf`, & `sequence` support any `SequenceType` provider or client; `ReducibleType` is similar to recursive `reduce`.
+- Stability: `Stream` is pure; retrieving the current element does not advance/mutate the stream; memoizes, avoiding repeated effects in impure producers.
+- Scope: `Stream` evaluates lazily; `reduce` can be halted early; supports unbounded collections.
+
+
 ## Why not `SequenceType`/`GeneratorType`?
 
 Swift has abstractions for representing the traversal of collections: `SequenceType` produces instances of `GeneratorType` which are iterated by repeated calls to `next()`. However, these abstractions have several drawbacks:
@@ -15,16 +25,6 @@ Swift has abstractions for representing the traversal of collections: `SequenceT
 3. _Iteration_ (sequential access by client code calling into API) is generally less efficient than _enumeration_ (sequential access by API calling into client code).
 
 In contrast, Traversal’s `ReducibleType` interface does not depend on mutable state, and provides a consistent and stable basis for both enumeration _and_ iteration at the caller’s discretion.
-
-
-## Why Traversal?
-
-- Simplicity: one protocol, `ReducibleType`, provides both enumeration and iteration.
-- Ease of use: enumerate with `reduce` & iterate with `Stream`.
-- Interoperability: `ReducibleOf` makes a reducible from `SequenceType`; [`sequence(…)`](https://github.com/robrix/Traversal/pull/20) (in development) supports `for`…`in` (and other clients of `SequenceType`) with any `ReducibleType`.
-- Ease of adoption: `Stream`, `ReducibleOf`, & `sequence` support any `SequenceType` provider or client; `ReducibleType` is similar to recursive `reduce`.
-- Stability: `Stream` is pure; retrieving the current element does not advance/mutate the stream; memoizes, avoiding repeated effects in impure producers.
-- Scope: `Stream` evaluates lazily; `reduce` can be halted early; supports unbounded collections.
 
 
 ## Building Traversal
