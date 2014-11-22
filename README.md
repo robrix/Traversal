@@ -19,12 +19,12 @@ In contrast, Traversal’s `ReducibleType` interface does not depend on mutable 
 
 ## Why Traversal?
 
-- Simple: one protocol, `ReducibleType`, provides both enumeration and iteration.
-- Easy to use: enumerate with `reduce` & iterate with `Stream`.
-- Interoperable: `ReducibleOf` makes a reducible from `SequenceType`; [`sequence(…)`](https://github.com/robrix/Traversal/pull/20) (in development) supports `for`…`in` (and other clients of `SequenceType`) with any `ReducibleType`.
-- Easy to adopt: `Stream`, `ReducibleOf`, & `sequence` support any `SequenceType` provider or client; `ReducibleType` is similar to recursive `reduce`.
-- Stable iteration: `Stream` is pure; retrieving the current element does not advance/mutate the stream; memoizes, avoiding repeated effects in impure producers.
-- Unbounded collections: `Stream` evaluates lazily; `reduce` can be halted early.
+- Simplicity: one protocol, `ReducibleType`, provides both enumeration and iteration.
+- Ease of use: enumerate with `reduce` & iterate with `Stream`.
+- Interoperability: `ReducibleOf` makes a reducible from `SequenceType`; [`sequence(…)`](https://github.com/robrix/Traversal/pull/20) (in development) supports `for`…`in` (and other clients of `SequenceType`) with any `ReducibleType`.
+- Ease of adoption: `Stream`, `ReducibleOf`, & `sequence` support any `SequenceType` provider or client; `ReducibleType` is similar to recursive `reduce`.
+- Stability: `Stream` is pure; retrieving the current element does not advance/mutate the stream; memoizes, avoiding repeated effects in impure producers.
+- Scope: `Stream` evaluates lazily; `reduce` can be halted early; supports unbounded collections.
 
 
 ## Building Traversal
