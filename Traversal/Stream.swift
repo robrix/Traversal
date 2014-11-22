@@ -55,6 +55,12 @@ public enum Stream<T> {
 
 // MARK: API
 
+/// Constructs a `Stream` from `first` and its `@autoclosure`’d continuation.
+public func cons<T>(first: T, rest: @autoclosure () -> Stream<T>) -> Stream<T> {
+	return .Cons(Box(first), Memo(unevaluated: rest))
+}
+
+
 /// Returns the first element of `stream`, or `nil` if `stream` is `Nil`.
 public func first<T>(stream: Stream<T>) -> T? {
 	return stream.first
