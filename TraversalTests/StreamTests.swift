@@ -77,7 +77,7 @@ class StreamTests: XCTestCase {
 		var generator = sequence.generate()
 		let stream = Stream(generator.next)
 		XCTAssertTrue(stream == Stream(ReducibleOf(sequence: sequence)))
-		XCTAssertEqual(Traversal.reduce(stream, 0, +), 6)
+		XCTAssertEqual(Traversal.reduce(map(stream, toString), "", +), "123")
 	}
 
 	func testMapping() {
