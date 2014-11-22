@@ -15,16 +15,18 @@ This is a Swift framework providing a single collection interface, `ReducibleTyp
 
 ## Why not `SequenceType`/`GeneratorType`?
 
-Swift has abstractions for representing the traversal of collections: `SequenceType` produces instances of `GeneratorType` which are iterated by repeated calls to `next()`. However, these abstractions have several drawbacks:
+Swift’s `SequenceType` & `GeneratorType` interfaces support sequential traversal. However, they have several key drawbacks:
 
-1. It’s [fragile to use](http://www.openradar.me/18453000) in practice, owing to its reliance on mutable state. In particular, its interface alone does not provide access to the current element; you can only ever retrieve the next one (mutating the generator in the process).
-2. Related to this, there are ad hoc constraints on their used which are not captured in the type system and which may differ between implementations. For example, copies of generators cannot in general be advanced separately, as that may invalidate the other copies. Instead, multiple generators must be retrieved from the base sequence. However, the comments note that even this may not suffice:
+1. [Fragility](http://www.openradar.me/18453000): *requires* mutable state; no access to the current element without mutating.
+2. Difficulty of adoption: `SequenceType` can be hard to implement; requirement to mutate makes debugging harder.
+3. Difficulty of use: advancing is subtle; correct backtracking requires (essentially) `Stream`; no access to the current element without mutating.
+4. Complexity: ad hoc constraints which the compiler cannot enforce; constraints may differ between implementations; copies of generators are legal but should not be advanced separately; untenable promotion to even more complex `CollectionType` instead; per the comments:
 
 	> Any code that uses multiple generators (or `for`…`in` loops) over a single *sequence* should have static knowledge that the specific *sequence* is multi-pass, either because its concrete type is known or because it is constrained to `CollectionType`. Also, the generators must be obtained by distinct calls to the *sequence's* `generate()` method, rather than by copying.
 
-3. _Iteration_ (sequential access by client code calling into API) is generally less efficient than _enumeration_ (sequential access by API calling into client code).
+5. Poor locality of reference: _Iteration_ (sequential access by client code calling into API) is generally less efficient than _enumeration_ (sequential access by API calling into client code).
 
-In contrast, Traversal’s `ReducibleType` interface does not depend on mutable state, and provides a consistent and stable basis for both enumeration _and_ iteration at the caller’s discretion.
+In contrast, Traversal’s `ReducibleType` interface does not depend on mutable state, enabling pure implementations, and provides a consistent and reliable basis for both enumeration _and_ iteration at the caller’s discretion, with only a single method to implement.
 
 
 ## Building Traversal
