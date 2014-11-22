@@ -60,6 +60,11 @@ public func cons<T>(first: T, rest: @autoclosure () -> Stream<T>) -> Stream<T> {
 	return .Cons(Box(first), Memo(unevaluated: rest))
 }
 
+/// Constructs a `Stream` from `first` and its `Memo`ized continuation.
+public func cons<T>(first: T, rest: Memo<Stream<T>>) -> Stream<T> {
+	return .Cons(Box(first), rest)
+}
+
 
 /// Returns the first element of `stream`, or `nil` if `stream` is `Nil`.
 public func first<T>(stream: Stream<T>) -> T? {
