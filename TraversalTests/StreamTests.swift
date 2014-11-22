@@ -17,8 +17,9 @@ class StreamTests: XCTestCase {
 
 		var n = 0
 		for (a, b) in Zip2(stream, sequence) {
-			XCTAssertEqual(a, b)
 			n++
+			XCTAssertEqual(a, b)
+			XCTAssertEqual(n, a)
 		}
 		XCTAssertEqual(Array(stream), sequence)
 		XCTAssertEqual(n, sequence.count)
