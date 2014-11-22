@@ -59,6 +59,10 @@ class StreamTests: XCTestCase {
 		XCTAssertEqual(Traversal.reduce(Stream(ReducibleOf(sequence: [1, 2, 3, 4])), 0, +), 10)
 	}
 
+	func testStreamReductionIsLeftReduce() {
+		XCTAssertEqual(Traversal.reduce(Stream(ReducibleOf(sequence: ["1", "2", "3"])), "0", +), "0123")
+	}
+
 	func testConstructsNilFromGeneratorOfConstantNil() {
 		XCTAssertTrue(Stream<Int> { nil } == Stream<Int>.Nil)
 	}
