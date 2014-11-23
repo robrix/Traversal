@@ -92,4 +92,11 @@ class StreamTests: XCTestCase {
 		XCTAssertEqual(first(stream)!, 0)
 		XCTAssert(dropFirst(stream) == Stream.Nil)
 	}
+
+	func testStreamToReducibleOfToStream() {
+		let stream = cons(1, cons(2, cons(3, Stream.Nil)))
+		XCTAssert([] + stream == [1, 2, 3])
+		XCTAssert([] + sequence(ReducibleOf(stream)) == [] + stream)
+		XCTAssert(Stream(ReducibleOf(stream)) == stream)
+	}
 }
