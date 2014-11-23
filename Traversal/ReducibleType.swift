@@ -32,7 +32,6 @@ public func reduce<R: ReducibleType, Result>(collection: R, initial: Result, com
 
 /// Typealiases used by ReducibleType.
 ///
-/// \param Self     The type implementing ReducibleType.
 /// \param Result   The initial/result type of a reduction.
 /// \param Element  The type of the elements of Self. Must be provided explicitly because conforming Self to ReducibleType fails typechecking.
 public struct Reducible<Result, Element> {
