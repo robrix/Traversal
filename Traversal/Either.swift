@@ -30,7 +30,7 @@ public enum Either<T, U>: Printable {
 	// MARK: API
 
 	/// Returns a new `Either` by returning `Left` or applying `f` to the value of `Right`.
-	func map<V>(f: U -> V) -> Either<T, V> {
+	public func map<V>(f: U -> V) -> Either<T, V> {
 		switch self {
 		case let Left(x):
 			return .Left(x)
@@ -40,7 +40,7 @@ public enum Either<T, U>: Printable {
 	}
 
 	/// Returns the result of applying `f` to the value of `Left`, or `g` to the value of `Right`.
-	func either<V>(f: T -> V, _ g: U -> V) -> V {
+	public func either<V>(f: T -> V, _ g: U -> V) -> V {
 		switch self {
 		case let .Left(x):
 			return f(x.value)
