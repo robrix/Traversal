@@ -1,6 +1,11 @@
 //  Copyright (c) 2014 Rob Rix. All rights reserved.
 
-/// Returns a reducer concatenating the elements of `reducible`.
+/// Returns a reducer concatenating the `ReducibleType` elements of `reducible`.
+public func concat<R: ReducibleType where R.Element: ReducibleType>(reducible: R) -> ReducerOf<R, R.Element> {
+	return flattenMap(reducible, id)
+}
+
+/// Returns a reducer concatenating the `SequenceType` elements of `reducible`.
 public func concat<Base: ReducibleType where Base.Element: SequenceType>(reducible: Base) -> ReducerOf<Base, ReducibleOf<Base.Element.Generator.Element>> {
 	return flattenMap(reducible, id)
 }
