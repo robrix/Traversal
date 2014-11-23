@@ -3,7 +3,7 @@
 /// A reducible over other reducibles.
 ///
 /// This is a meta-reducer used to implement `flattenMap`, `map`, `filter`, and `concat`.
-public struct ReducerOf<Base: ReducibleType, T: ReducibleType>: ReducibleType {
+public struct ReducerOf<Base: ReducibleType, T: ReducibleType>: ReducibleType, Printable {
 	// MARK: Lifecycle
 
 	/// Initializes with a base `reducible` and a `map` from the elements of `reducible` to some inhabitant of `ReducibleType`.
@@ -34,6 +34,13 @@ public struct ReducerOf<Base: ReducibleType, T: ReducibleType>: ReducibleType {
 				return reduce(initial, c)
 			}
 		}
+	}
+
+
+	// MARK: Printable
+
+	public var description: String {
+		return "ReducerOf(\(reducible))"
 	}
 
 
