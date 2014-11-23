@@ -14,4 +14,8 @@ final class ReducerOfTests: XCTestCase {
 	func testReducesEachElement() {
 		XCTAssertEqual(reduce(reducer, 0, +), 15)
 	}
+
+	func testReducesInOrder() {
+		XCTAssertEqual(reduce(reducer, "", { $0 + toString($1) }), "122334")
+	}
 }
