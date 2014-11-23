@@ -3,7 +3,30 @@
 import Traversal
 import XCTest
 
+struct ReducibleOfThree<T>: ReducibleType {
+	let elements: (T, T, T)
+
+	typealias Element = T
+	func reducer<Result>() -> ((Result, (Result, Element) -> Either<Result, Result>) -> Result) -> ((Result, (Result, Element) -> Either<Result, Result>) -> Result) {
+		var generator1 = GeneratorOfOne(elements.0)
+		var generator2 = GeneratorOfOne(elements.1)
+		var generator3 = GeneratorOfOne(elements.2)
+		return { recur in
+			{ initial, combine in
+				(generator1.next() ?? generator2.next() ?? generator3.next()).map { combine(initial, $0).either(id, id) } ?? initial
+			}
+		}
+	}
+}
+
 class StreamTests: XCTestCase {
+	func testConstructionWithReducibleType() {
+		let stream = Stream(ReducibleOfThree(elements: (cons(1, cons(2, Stream.Nil)), cons(2, cons(3, Stream.Nil)), cons(3, cons(4, Stream.Nil)))))
+		XCTAssertEqual(Traversal.reduce(stream, "0") { into, each in
+			Traversal.reduce(each, into) { $0 + toString($1) }
+		}, "0122334")
+	}
+
 	func testStreams() {
 		let sequence = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 		let reducible = ReducibleOf(sequence: sequence)
