@@ -5,14 +5,15 @@ import XCTest
 
 class ReducibleOfTests: XCTestCase {
 	func testConstructionFromSequenceType() {
-		let sequence = [1, 2, 3, 4, 5, 6, 7, 8, 9]
-		XCTAssertEqual(Traversal.reduce(ReducibleOf(sequence: sequence), 0, +), 45)
+		let sequence = [1, 2, 3, 4]
+		XCTAssertEqual(reduce(ReducibleOf(sequence: sequence), 0, +), 10)
+		XCTAssertEqual(reduce(map(ReducibleOf(sequence: sequence), toString), "0", +), "01234")
 	}
 
 	func testConstructionFromReducibleType() {
 		let sequence = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 		let reducible = ReducibleOf(sequence: sequence)
 		let outer = ReducibleOf(reducible)
-		XCTAssertEqual(Traversal.reduce(outer, 0, +), 45)
+		XCTAssertEqual(reduce(outer, 0, +), 45)
 	}
 }
