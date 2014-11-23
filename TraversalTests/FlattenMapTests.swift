@@ -28,4 +28,11 @@ class FlattenMapTests: XCTestCase {
 		}
 		XCTAssertEqual(reduce(mapped, 0, +), 20)
 	}
+
+	func testFlattenMapTraversesElementsInOrder() {
+		let flattenMapped = flattenMap(ReducibleOf(sequence: [[1, 2], [3], [], [4]])) {
+			ReducibleOf(sequence: map($0, toString))
+		}
+		XCTAssertEqual(reduce(flattenMapped, "0", +), "01234")
+	}
 }

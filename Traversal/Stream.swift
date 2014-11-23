@@ -10,11 +10,10 @@ public enum Stream<T> {
 
 	/// Initializes with a ReducibleType.
 	public init<R: ReducibleType where R.Element == T>(_ reducible: R) {
-		let reduce: Reducible<Stream, T>.Enumerator = reducible.reducer()({ initial, _ in initial })
-		let combine = fix { combine in
-			{ into, each in .Right(Box(Cons(Box(each), Memo(reduce(into, combine))))) }
-		}
-		self = reduce(Nil, combine)
+		let reduce: Reducible<Stream, T>.Enumerator = (reducible.reducer()) { initial, _ in initial }
+		self = reduce(Nil, fix { combine in
+			{ into, each in .right(cons(each, Memo(reduce(into, combine)))) }
+		})
 	}
 
 
@@ -27,7 +26,7 @@ public enum Stream<T> {
 	/// Maps a generator of `T?` into a generator of `Stream<T>`.
 	public static func construct(generate: () -> T?) -> () -> Stream<T> {
 		return fix { recur in
-			{ generate().map { Cons(Box($0), Memo(recur())) } ?? Nil }
+			{ generate().map { cons($0, Memo(recur())) } ?? Nil }
 		}
 	}
 
@@ -56,24 +55,25 @@ public enum Stream<T> {
 
 // MARK: API
 
+/// Constructs a `Stream` from `first` and its `@autoclosure`’d continuation.
+public func cons<T>(first: T, rest: @autoclosure () -> Stream<T>) -> Stream<T> {
+	return .Cons(Box(first), Memo(unevaluated: rest))
+}
+
+/// Constructs a `Stream` from `first` and its `Memo`ized continuation.
+public func cons<T>(first: T, rest: Memo<Stream<T>>) -> Stream<T> {
+	return .Cons(Box(first), rest)
+}
+
+
 /// Returns the first element of `stream`, or `nil` if `stream` is `Nil`.
 public func first<T>(stream: Stream<T>) -> T? {
-	switch stream {
-	case let .Cons(x, _):
-		return x.value
-	case .Nil:
-		return nil
-	}
+	return stream.first
 }
 
 /// Drops the first element of `stream`.
 public func dropFirst<T>(stream: Stream<T>) -> Stream<T> {
-	switch stream {
-	case let .Cons(_, rest):
-		return rest.value
-	case .Nil:
-		return .Nil
-	}
+	return stream.rest
 }
 
 
@@ -105,7 +105,7 @@ extension Stream: ReducibleType {
 			{ initial, combine in
 				stream.first.map {
 					stream = stream.rest
-					return combine(initial, $0).either(const(initial)) { recur($0, combine) }
+					return combine(initial, $0).either(id, { recur($0, combine) })
 				} ?? initial
 			}
 		}
@@ -117,16 +117,16 @@ extension Stream: ReducibleType {
 
 extension Stream: Printable {
 	public var description: String {
-		return "(" + join(" ", internalDescription) + ")"
-	}
-
-	private var internalDescription: [String] {
-		switch self {
-		case let Cons(x, rest):
-			return [toString(x.value)] + rest.value.internalDescription
-		default:
-			return []
+		let internalDescription: Stream -> [String] = fix { internalDescription in {
+				switch $0 {
+				case let Cons(x, rest):
+					return [toString(x.value)] + internalDescription(rest.value)
+				default:
+					return []
+				}
+			}
 		}
+		return "(" + join(" ", internalDescription(self)) + ")"
 	}
 }
 

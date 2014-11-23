@@ -7,7 +7,7 @@ This is a Swift framework providing a single collection interface, `ReducibleTyp
 
 - **Simplicity:** one protocol, `ReducibleType`, provides both enumeration and iteration.
 - **Ease of use:** enumerate with `reduce` & iterate with `Stream`.
-- **Interoperability:** `ReducibleOf` makes a reducible from `SequenceType`; [`sequence(…)`](https://github.com/robrix/Traversal/pull/20) (in development) supports `for`…`in` (and other clients of `SequenceType`) with any `ReducibleType`.
+- **Interoperability:** `ReducibleOf` makes a reducible from `SequenceType`; `sequence()` supports `for`…`in` (and other clients of `SequenceType`) with any `ReducibleType`.
 - **Ease of adoption:** `Stream`, `ReducibleOf`, & `sequence` support any `SequenceType` provider or client; `ReducibleType` is similar to recursive `reduce`.
 - **Consistency:** `Stream` is pure; retrieving the current element does not advance/mutate the stream; memoizes, avoiding repeated effects in impure producers.
 - **Scope:** `Stream` evaluates lazily; `reduce` can be halted early; supports unbounded collections.

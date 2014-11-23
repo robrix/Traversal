@@ -5,31 +5,55 @@
 /// By convention, and where applicable, `Left` is used to indicate failure, while `Right` is used to indicate success. (Mnemonic: “right” is a synonym for “correct.”)
 ///
 /// Otherwise, it is implied that `Left` and `Right` are effectively unordered alternatives of equal standing.
-public enum Either<T, U> {
+public enum Either<T, U>: Printable {
 	case Left(Box<T>)
 	case Right(Box<U>)
+
+
+	// MARK: Lifecycle
+
+	/// Constructs a `Left`.
+	///
+	/// Suitable for partial application.
+	public static func left(value: T) -> Either {
+		return Left(Box(value))
+	}
+
+	/// Constructs a `Right`.
+	///
+	/// Suitable for partial application.
+	public static func right(value: U) -> Either {
+		return Right(Box(value))
+	}
 
 
 	// MARK: API
 
 	/// Returns a new `Either` by returning `Left` or applying `f` to the value of `Right`.
-	func map<V>(f: U -> V) -> Either<T, V> {
+	public func map<V>(f: U -> V) -> Either<T, V> {
 		switch self {
-		case let .Left(x):
+		case let Left(x):
 			return .Left(x)
-		case let .Right(x):
+		case let Right(x):
 			return .Right(Box(f(x.value)))
 		}
 	}
 
 	/// Returns the result of applying `f` to the value of `Left`, or `g` to the value of `Right`.
-	func either<V>(f: T -> V, g: U -> V) -> V {
+	public func either<V>(f: T -> V, _ g: U -> V) -> V {
 		switch self {
 		case let .Left(x):
 			return f(x.value)
 		case let .Right(x):
 			return g(x.value)
 		}
+	}
+
+
+	// MARK: Printable
+
+	public var description: String {
+		return either({ ".Left(\($0))"}, { ".Right(\($0))" })
 	}
 }
 

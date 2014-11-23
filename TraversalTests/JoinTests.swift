@@ -5,7 +5,7 @@ import XCTest
 
 class JoinTests: XCTestCase {
 	func testJoining() {
-		let joined = Traversal.join(1, ReducibleOf(sequence: [1, 2, 3]))
-		XCTAssertEqual(reduce(joined, 0, +), 8)
+		let joined = join(", ", map(ReducibleOf(sequence: [1, 2, 3]), toString))
+		XCTAssertEqual(reduce(joined, "0", +), "01, 2, 3")
 	}
 }
