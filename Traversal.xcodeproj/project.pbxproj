@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D408804C1A22677200BB9997 /* ReducerOfTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D408804B1A22677200BB9997 /* ReducerOfTests.swift */; };
 		D430A1711A02B3FE004D8A26 /* Map.swift in Sources */ = {isa = PBXBuildFile; fileRef = D430A1701A02B3FE004D8A26 /* Map.swift */; };
 		D430A1771A06341E004D8A26 /* MapTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D430A1761A06341E004D8A26 /* MapTests.swift */; };
 		D430A18F1A0D0133004D8A26 /* Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D430A18E1A0D0133004D8A26 /* Filter.swift */; };
@@ -48,6 +49,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		D408804B1A22677200BB9997 /* ReducerOfTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReducerOfTests.swift; sourceTree = "<group>"; };
 		D430A1701A02B3FE004D8A26 /* Map.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Map.swift; sourceTree = "<group>"; };
 		D430A1761A06341E004D8A26 /* MapTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapTests.swift; sourceTree = "<group>"; };
 		D430A18E1A0D0133004D8A26 /* Filter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Filter.swift; sourceTree = "<group>"; };
@@ -172,6 +174,7 @@
 				D430A1A11A0D37D8004D8A26 /* ConvolveTests.swift */,
 				D45B60E81A0D46CB0009D607 /* JoinTests.swift */,
 				D4D3E32B1A1EBC28001A9ED4 /* SequenceTests.swift */,
+				D408804B1A22677200BB9997 /* ReducerOfTests.swift */,
 				D461ED6519E08F4500DEF5AD /* Supporting Files */,
 			);
 			path = TraversalTests;
@@ -319,6 +322,7 @@
 				D44B19BC19E6FC82005E7526 /* MemoTests.swift in Sources */,
 				D45B60E91A0D46CB0009D607 /* JoinTests.swift in Sources */,
 				D430A1771A06341E004D8A26 /* MapTests.swift in Sources */,
+				D408804C1A22677200BB9997 /* ReducerOfTests.swift in Sources */,
 				D430A1A21A0D37D8004D8A26 /* ConvolveTests.swift in Sources */,
 				D461ED6819E08F4500DEF5AD /* ReducibleOfTests.swift in Sources */,
 				D4D3E32C1A1EBC28001A9ED4 /* SequenceTests.swift in Sources */,
