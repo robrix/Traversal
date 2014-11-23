@@ -40,7 +40,7 @@ public struct ReducibleOf<T>: ReducibleType, Printable {
 		var producer = self.producer()
 		return { recur in
 			{ initial, combine in
-				producer().map { combine(initial, $0).map { recur($0, combine) }.either(id, id) } ?? initial
+				producer().map { combine(initial, $0).either(id, { recur($0, combine) }) } ?? initial
 			}
 		}
 	}
