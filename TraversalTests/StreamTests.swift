@@ -130,11 +130,21 @@ class StreamTests: XCTestCase {
 	}
 
 	let fibonacci: Stream<Int> = fix { fib in
-		{ x, y in Stream.cons(x + y, Memo(fib(y, x + y))) }
+		{ x, y in Stream.cons(x + y, fib(y, x + y)) }
 	}(0, 1)
 
 	func testTake() {
-		let stream = take(fibonacci, 3)
+		let stream = fibonacci.take(3)
 		XCTAssertTrue(stream == Stream([1, 2, 3]))
+	}
+
+	func testTakeOfZeroIsNil() {
+		let stream = fibonacci.take(0)
+		XCTAssertTrue(stream == .Nil)
+	}
+
+	func testTakeOfNegativeIsNil() {
+		let stream = fibonacci.take(-1)
+		XCTAssertTrue(stream == .Nil)
 	}
 }
