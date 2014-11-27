@@ -81,6 +81,16 @@ public func dropFirst<T>(stream: Stream<T>) -> Stream<T> {
 	return stream.rest
 }
 
+/// Returns a `Stream` of the first `n` elements of `stream`.
+///
+/// If `n` <= 0, returns the empty `Stream`.
+public func take<T>(stream: Stream<T>, n: Int) -> Stream<T> {
+	if n <= 0 { return .Nil }
+	return fix { rest in
+		{ s in s.first.map { .cons($0, Memo(rest(take(s.rest, n - 1)))) } ?? .Nil }
+	}(stream)
+}
+
 
 // MARK: SequenceType conformance.
 

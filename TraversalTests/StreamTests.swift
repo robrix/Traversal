@@ -128,4 +128,13 @@ class StreamTests: XCTestCase {
 		XCTAssert([] + sequence(ReducibleOf(stream)) == [] + stream)
 		XCTAssert(Stream(ReducibleOf(stream)) == stream)
 	}
+
+	let fibonacci: Stream<Int> = fix { fib in
+		{ x, y in Stream.cons(x + y, Memo(fib(y, x + y))) }
+	}(0, 1)
+
+	func testTake() {
+		let stream = take(fibonacci, 3)
+		XCTAssertTrue(stream == Stream([1, 2, 3]))
+	}
 }
