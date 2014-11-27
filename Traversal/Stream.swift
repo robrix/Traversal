@@ -12,7 +12,7 @@ public enum Stream<T> {
 	public init<R: ReducibleType where R.Element == T>(_ reducible: R) {
 		let reduce: Reducible<Stream, T>.Enumerator = (reducible.reducer()) { initial, _ in initial }
 		self = reduce(Nil, fix { combine in
-			{ into, each in .right(cons(each, Memo(reduce(into, combine)))) }
+			{ into, each in .right(.cons(each, Memo(reduce(into, combine)))) }
 		})
 	}
 
@@ -22,12 +22,28 @@ public enum Stream<T> {
 		self = Stream.construct(f)()
 	}
 
+	/// Initializes with a `SequenceType`.
+	public init<S: SequenceType where S.Generator.Element == T>(_ sequence: S) {
+		var generator = sequence.generate()
+		self.init({ generator.next() })
+	}
 
-	/// Maps a generator of `T?` into a generator of `Stream<T>`.
+
+	/// Maps a generator of `T?` into a generator of `Stream`.
 	public static func construct(generate: () -> T?) -> () -> Stream<T> {
 		return fix { recur in
-			{ generate().map { cons($0, Memo(recur())) } ?? Nil }
+			{ generate().map { self.cons($0, Memo(recur())) } ?? Nil }
 		}
+	}
+
+	/// Constructs a `Stream` from `first` and its `@autoclosure`’d continuation.
+	public static func cons(first: T, _ rest: @autoclosure () -> Stream) -> Stream {
+		return Cons(Box(first), Memo(unevaluated: rest))
+	}
+
+	/// Constructs a `Stream` from `first` and its `Memo`ized continuation.
+	public static func cons(first: T, _ rest: Memo<Stream>) -> Stream {
+		return Cons(Box(first), rest)
 	}
 
 
@@ -50,21 +66,40 @@ public enum Stream<T> {
 			return Nil
 		}
 	}
+
+
+	// MARK: Combinators
+
+	/// Returns a `Stream` of the first `n` elements of the receiver.
+	///
+	/// If `n` <= 0, returns the empty `Stream`.
+	public func take(n: Int) -> Stream {
+		if n <= 0 { return Nil }
+
+		let rest = self.rest
+		return first.map { .cons($0, rest.take(n - 1)) } ?? Nil
+	}
+
+	/// Returns a `Stream` without the first `n` elements of `stream`.
+	///
+	/// If `n` <= 0, returns the receiver.
+	///
+	/// If `n` <= the length of the receiver, returns the empty `Stream`.
+	public func drop(n: Int) -> Stream {
+		if n <= 0 { return self }
+		return rest.drop(n - 1)
+	}
+
+
+	/// Returns a `Stream` produced by mapping the elements of the receiver with `f`.
+	public func map<U>(f: T -> U) -> Stream<U> {
+		let rest = self.rest
+		return first.map { .cons(f($0), rest.map(f)) } ?? Stream<U>.Nil
+	}
 }
 
 
 // MARK: API
-
-/// Constructs a `Stream` from `first` and its `@autoclosure`’d continuation.
-public func cons<T>(first: T, rest: @autoclosure () -> Stream<T>) -> Stream<T> {
-	return .Cons(Box(first), Memo(unevaluated: rest))
-}
-
-/// Constructs a `Stream` from `first` and its `Memo`ized continuation.
-public func cons<T>(first: T, rest: Memo<Stream<T>>) -> Stream<T> {
-	return .Cons(Box(first), rest)
-}
-
 
 /// Returns the first element of `stream`, or `nil` if `stream` is `Nil`.
 public func first<T>(stream: Stream<T>) -> T? {
