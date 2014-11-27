@@ -21,14 +21,14 @@ struct ReducibleOfThree<T>: ReducibleType {
 
 class StreamTests: XCTestCase {
 	func testConstructionWithReducibleType() {
-		let stream = Stream(ReducibleOfThree(elements: (Stream.cons(1, Stream.cons(2, Stream.Nil)), Stream.cons(2, Stream.cons(3, Stream.Nil)), Stream.cons(3, Stream.cons(4, Stream.Nil)))))
+		let stream = Stream(ReducibleOfThree(elements: (Stream([1, 2]), Stream([2, 3]), Stream([3, 4]))))
 		XCTAssertEqual(Traversal.reduce(stream, "0") { into, each in
 			Traversal.reduce(each, into) { $0 + toString($1) }
 		}, "0122334")
 	}
 
 	func testConstructionWithReducerOf() {
-		let stream = Stream(ReducibleOfThree(elements: (Stream.cons(1, Stream.cons(2, Stream.Nil)), Stream.cons(2, Stream.cons(3, Stream.Nil)), Stream.cons(3, Stream.cons(4, Stream.Nil)))))
+		let stream = Stream(ReducibleOfThree(elements: (Stream([1, 2]), Stream([2, 3]), Stream([3, 4]))))
 		XCTAssertEqual(Traversal.reduce(Stream(ReducerOf(stream, id)), "0") { $0 + toString($1)}, "0122334")
 	}
 
