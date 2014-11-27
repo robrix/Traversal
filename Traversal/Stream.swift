@@ -22,6 +22,12 @@ public enum Stream<T> {
 		self = Stream.construct(f)()
 	}
 
+	/// Initializes with a `SequenceType`.
+	public init<S: SequenceType where S.Generator.Element == T>(_ sequence: S) {
+		var generator = sequence.generate()
+		self.init({ generator.next() })
+	}
+
 
 	/// Maps a generator of `T?` into a generator of `Stream`.
 	public static func construct(generate: () -> T?) -> () -> Stream<T> {
