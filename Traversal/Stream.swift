@@ -70,6 +70,9 @@ public enum Stream<T> {
 
 	// MARK: Combinators
 
+	/// Returns a `Stream` of the first `n` elements of the receiver.
+	///
+	/// If `n` <= 0, returns the empty `Stream`.
 	public func take(n: Int) -> Stream {
 		if n <= 0 { return Nil }
 
