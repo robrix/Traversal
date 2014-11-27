@@ -23,11 +23,21 @@ public enum Stream<T> {
 	}
 
 
-	/// Maps a generator of `T?` into a generator of `Stream<T>`.
+	/// Maps a generator of `T?` into a generator of `Stream`.
 	public static func construct(generate: () -> T?) -> () -> Stream<T> {
 		return fix { recur in
-			{ generate().map { cons($0, Memo(recur())) } ?? Nil }
+			{ generate().map { self.cons($0, Memo(recur())) } ?? Nil }
 		}
+	}
+
+	/// Constructs a `Stream` from `first` and its `@autoclosure`’d continuation.
+	public static func cons(first: T, _ rest: @autoclosure () -> Stream) -> Stream {
+		return Cons(Box(first), Memo(unevaluated: rest))
+	}
+
+	/// Constructs a `Stream` from `first` and its `Memo`ized continuation.
+	public static func cons(first: T, _ rest: Memo<Stream>) -> Stream {
+		return Cons(Box(first), rest)
 	}
 
 
