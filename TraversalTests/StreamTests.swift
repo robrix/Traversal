@@ -79,8 +79,8 @@ class StreamTests: XCTestCase {
 		for each in stream {}
 		XCTAssertEqual(effects, 5)
 
-		XCTAssertEqual(first(stream)!, 1)
-		XCTAssertEqual(first(dropFirst(dropFirst(dropFirst(dropFirst(stream)))))!, 5)
+		XCTAssertEqual(first(stream) ?? -1, 1)
+		XCTAssertEqual(first(dropFirst(dropFirst(dropFirst(dropFirst(stream))))) ?? -1, 5)
 		XCTAssertNil(first(dropFirst(dropFirst(dropFirst(dropFirst(dropFirst(stream)))))))
 		XCTAssertEqual(effects, 5)
 	}
@@ -100,7 +100,7 @@ class StreamTests: XCTestCase {
 
 	func testConstructsConsFromGeneratorOfConstantNonNil() {
 		let x: Int? = 1
-		XCTAssertEqual(Stream { x }.first!, x!)
+		XCTAssertEqual(Stream { x }.first ?? -1, 1)
 	}
 
 	func testConstructsFiniteStreamFromGeneratorOfFiniteSequence() {
