@@ -162,4 +162,8 @@ class StreamTests: XCTestCase {
 		let stream = Stream([1, 2, 3])
 		XCTAssertTrue(stream.drop(-1) == stream)
 	}
+
+	func testMap() {
+		XCTAssertEqual(Array(fibonacci.map { $0 * $0 }.take(3)), [1, 4, 9])
+	}
 }

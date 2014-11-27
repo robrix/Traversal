@@ -89,6 +89,13 @@ public enum Stream<T> {
 		if n <= 0 { return self }
 		return rest.drop(n - 1)
 	}
+
+
+	/// Returns a `Stream` produced by mapping the elements of the receiver with `f`.
+	public func map<U>(f: T -> U) -> Stream<U> {
+		let rest = self.rest
+		return first.map { .cons(f($0), rest.map(f)) } ?? Stream<U>.Nil
+	}
 }
 
 
