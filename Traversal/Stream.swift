@@ -79,6 +79,16 @@ public enum Stream<T> {
 		let rest = self.rest
 		return first.map { .cons($0, rest.take(n - 1)) } ?? Nil
 	}
+
+	/// Returns a `Stream` without the first `n` elements of `stream`.
+	///
+	/// If `n` <= 0, returns the receiver.
+	///
+	/// If `n` <= the length of the receiver, returns the empty `Stream`.
+	public func drop(n: Int) -> Stream {
+		if n <= 0 { return self }
+		return rest.drop(n - 1)
+	}
 }
 
 

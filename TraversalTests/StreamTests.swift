@@ -147,4 +147,19 @@ class StreamTests: XCTestCase {
 		let stream = fibonacci.take(-1)
 		XCTAssertTrue(stream == .Nil)
 	}
+
+	func testDrop() {
+		let stream = fibonacci.drop(3)
+		XCTAssertEqual(stream.first ?? -1, 5)
+	}
+
+	func testDropOfZeroIsSelf() {
+		let stream = Stream([1, 2, 3])
+		XCTAssertTrue(stream.drop(0) == stream)
+	}
+
+	func testDropOfNegativeIsSelf() {
+		let stream = Stream([1, 2, 3])
+		XCTAssertTrue(stream.drop(-1) == stream)
+	}
 }
