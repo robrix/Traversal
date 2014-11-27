@@ -21,14 +21,14 @@ struct ReducibleOfThree<T>: ReducibleType {
 
 class StreamTests: XCTestCase {
 	func testConstructionWithReducibleType() {
-		let stream = Stream(ReducibleOfThree(elements: (cons(1, cons(2, Stream.Nil)), cons(2, cons(3, Stream.Nil)), cons(3, cons(4, Stream.Nil)))))
+		let stream = Stream(ReducibleOfThree(elements: (Stream.cons(1, Stream.cons(2, Stream.Nil)), Stream.cons(2, Stream.cons(3, Stream.Nil)), Stream.cons(3, Stream.cons(4, Stream.Nil)))))
 		XCTAssertEqual(Traversal.reduce(stream, "0") { into, each in
 			Traversal.reduce(each, into) { $0 + toString($1) }
 		}, "0122334")
 	}
 
 	func testConstructionWithReducerOf() {
-		let stream = Stream(ReducibleOfThree(elements: (cons(1, cons(2, Stream.Nil)), cons(2, cons(3, Stream.Nil)), cons(3, cons(4, Stream.Nil)))))
+		let stream = Stream(ReducibleOfThree(elements: (Stream.cons(1, Stream.cons(2, Stream.Nil)), Stream.cons(2, Stream.cons(3, Stream.Nil)), Stream.cons(3, Stream.cons(4, Stream.Nil)))))
 		XCTAssertEqual(Traversal.reduce(Stream(ReducerOf(stream, id)), "0") { $0 + toString($1)}, "0122334")
 	}
 
@@ -91,7 +91,7 @@ class StreamTests: XCTestCase {
 
 	func testStreamReductionIsLeftReduce() {
 		XCTAssertEqual(Traversal.reduce(Stream(ReducibleOf(sequence: ["1", "2", "3"])), "0", +), "0123")
-		XCTAssertEqual(Traversal.reduce(cons("1", cons("2", cons("3", Stream.Nil))), "0", +), "0123")
+		XCTAssertEqual(Traversal.reduce(Stream.cons("1", Stream.cons("2", Stream.cons("3", Stream.Nil))), "0", +), "0123")
 	}
 
 	func testConstructsNilFromGeneratorOfConstantNil() {
@@ -117,13 +117,13 @@ class StreamTests: XCTestCase {
 	}
 
 	func testCons() {
-		let stream = cons(0, Stream.Nil)
+		let stream = Stream.cons(0, Stream.Nil)
 		XCTAssertEqual(first(stream)!, 0)
 		XCTAssert(dropFirst(stream) == Stream.Nil)
 	}
 
 	func testStreamToReducibleOfToStream() {
-		let stream = cons(1, cons(2, cons(3, Stream.Nil)))
+		let stream = Stream.cons(1, Stream.cons(2, Stream.cons(3, Stream.Nil)))
 		XCTAssert([] + stream == [1, 2, 3])
 		XCTAssert([] + sequence(ReducibleOf(stream)) == [] + stream)
 		XCTAssert(Stream(ReducibleOf(stream)) == stream)

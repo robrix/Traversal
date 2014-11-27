@@ -12,7 +12,7 @@ public enum Stream<T> {
 	public init<R: ReducibleType where R.Element == T>(_ reducible: R) {
 		let reduce: Reducible<Stream, T>.Enumerator = (reducible.reducer()) { initial, _ in initial }
 		self = reduce(Nil, fix { combine in
-			{ into, each in .right(cons(each, Memo(reduce(into, combine)))) }
+			{ into, each in .right(.cons(each, Memo(reduce(into, combine)))) }
 		})
 	}
 
@@ -64,17 +64,6 @@ public enum Stream<T> {
 
 
 // MARK: API
-
-/// Constructs a `Stream` from `first` and its `@autoclosure`’d continuation.
-public func cons<T>(first: T, rest: @autoclosure () -> Stream<T>) -> Stream<T> {
-	return .Cons(Box(first), Memo(unevaluated: rest))
-}
-
-/// Constructs a `Stream` from `first` and its `Memo`ized continuation.
-public func cons<T>(first: T, rest: Memo<Stream<T>>) -> Stream<T> {
-	return .Cons(Box(first), rest)
-}
-
 
 /// Returns the first element of `stream`, or `nil` if `stream` is `Nil`.
 public func first<T>(stream: Stream<T>) -> T? {
