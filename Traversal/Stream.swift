@@ -72,9 +72,9 @@ public enum Stream<T> {
 
 	public func take(n: Int) -> Stream {
 		if n <= 0 { return Nil }
-		return fix { rest in
-			{ s in s.first.map { .cons($0, rest(s.rest.take(n - 1))) } ?? Nil }
-		}(self)
+
+		let rest = self.rest
+		return first.map { .cons($0, rest.take(n - 1)) } ?? Nil
 	}
 }
 
