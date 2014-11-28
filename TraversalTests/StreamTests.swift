@@ -7,7 +7,7 @@ struct ReducibleOfThree<T>: ReducibleType {
 	let elements: (T, T, T)
 
 	typealias Element = T
-	func reducer<Result>() -> ((Result, (Result, Element) -> Either<Result, Result>) -> Result) -> ((Result, (Result, Element) -> Either<Result, Result>) -> Result) {
+	func reducer<Result>() -> Reducible<Result, Element>.Enumerator -> Reducible<Result, Element>.Enumerator {
 		var generator1 = GeneratorOfOne(elements.0)
 		var generator2 = GeneratorOfOne(elements.1)
 		var generator3 = GeneratorOfOne(elements.2)
