@@ -36,13 +36,13 @@ public func reduce<R: ReducibleType, Result>(collection: R, initial: Result, com
 /// \param Element  The type of the elements of Self. Must be provided explicitly because conforming Self to ReducibleType fails typechecking.
 public struct Reducible<Result, Element> {
 	/// The type of the function combining a working value and successive elements of Self which allows early termination.
-	typealias Iteratee = (Result, Element) -> Either<Result, Result>
+	public typealias Iteratee = (Result, Element) -> Either<Result, Result>
 
 	/// The type of the function combining a working value and successive elements of Self which does not allow early termination.
-	typealias Combine = (Result, Element) -> Result
+	public typealias Combine = (Result, Element) -> Result
 
 	/// The type of the reduce function.
-	typealias Enumerator = (Result, Iteratee) -> Result
+	public typealias Enumerator = (Result, Iteratee) -> Result
 }
 
 
