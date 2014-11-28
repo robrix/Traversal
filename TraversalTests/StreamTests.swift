@@ -37,11 +37,11 @@ class StreamTests: XCTestCase {
 		let reducible = ReducibleOf(sequence: sequence)
 		let stream = Stream(reducible)
 
-		XCTAssertEqual(first(stream)!, 1)
-		XCTAssertEqual(first(stream)!, 1)
-		XCTAssertEqual(first(dropFirst(stream))!, 2)
-		XCTAssertEqual(first(dropFirst(stream))!, 2)
-		XCTAssertEqual(first(dropFirst(dropFirst(dropFirst(stream))))!, 4)
+		XCTAssertEqual(first(stream) ?? -1, 1)
+		XCTAssertEqual(first(stream) ?? -1, 1)
+		XCTAssertEqual(first(dropFirst(stream)) ?? -1, 2)
+		XCTAssertEqual(first(dropFirst(stream)) ?? -1, 2)
+		XCTAssertEqual(first(dropFirst(dropFirst(dropFirst(stream)))) ?? -1, 4)
 
 		var n = 0
 		for (a, b) in Zip2(stream, sequence) {
@@ -118,7 +118,7 @@ class StreamTests: XCTestCase {
 
 	func testCons() {
 		let stream = Stream.cons(0, Stream.Nil)
-		XCTAssertEqual(first(stream)!, 0)
+		XCTAssertEqual(first(stream) ?? -1, 0)
 		XCTAssert(dropFirst(stream) == Stream.Nil)
 	}
 
