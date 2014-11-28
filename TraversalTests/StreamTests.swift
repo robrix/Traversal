@@ -21,14 +21,14 @@ struct ReducibleOfThree<T>: ReducibleType {
 
 class StreamTests: XCTestCase {
 	func testConstructionWithReducibleType() {
-		let stream = Stream(ReducibleOfThree(elements: (Stream.cons(1, Stream.cons(2, Stream.Nil)), Stream.cons(2, Stream.cons(3, Stream.Nil)), Stream.cons(3, Stream.cons(4, Stream.Nil)))))
+		let stream = Stream(ReducibleOfThree(elements: (Stream([1, 2]), Stream([2, 3]), Stream([3, 4]))))
 		XCTAssertEqual(Traversal.reduce(stream, "0") { into, each in
 			Traversal.reduce(each, into) { $0 + toString($1) }
 		}, "0122334")
 	}
 
 	func testConstructionWithReducerOf() {
-		let stream = Stream(ReducibleOfThree(elements: (Stream.cons(1, Stream.cons(2, Stream.Nil)), Stream.cons(2, Stream.cons(3, Stream.Nil)), Stream.cons(3, Stream.cons(4, Stream.Nil)))))
+		let stream = Stream(ReducibleOfThree(elements: (Stream([1, 2]), Stream([2, 3]), Stream([3, 4]))))
 		XCTAssertEqual(Traversal.reduce(Stream(ReducerOf(stream, id)), "0") { $0 + toString($1)}, "0122334")
 	}
 
@@ -37,11 +37,11 @@ class StreamTests: XCTestCase {
 		let reducible = ReducibleOf(sequence: sequence)
 		let stream = Stream(reducible)
 
-		XCTAssertEqual(first(stream)!, 1)
-		XCTAssertEqual(first(stream)!, 1)
-		XCTAssertEqual(first(dropFirst(stream))!, 2)
-		XCTAssertEqual(first(dropFirst(stream))!, 2)
-		XCTAssertEqual(first(dropFirst(dropFirst(dropFirst(stream))))!, 4)
+		XCTAssertEqual(first(stream) ?? -1, 1)
+		XCTAssertEqual(first(stream) ?? -1, 1)
+		XCTAssertEqual(first(dropFirst(stream)) ?? -1, 2)
+		XCTAssertEqual(first(dropFirst(stream)) ?? -1, 2)
+		XCTAssertEqual(first(dropFirst(dropFirst(dropFirst(stream)))) ?? -1, 4)
 
 		var n = 0
 		for (a, b) in Zip2(stream, sequence) {
@@ -118,7 +118,7 @@ class StreamTests: XCTestCase {
 
 	func testCons() {
 		let stream = Stream.cons(0, Stream.Nil)
-		XCTAssertEqual(first(stream)!, 0)
+		XCTAssertEqual(first(stream) ?? -1, 0)
 		XCTAssert(dropFirst(stream) == Stream.Nil)
 	}
 
