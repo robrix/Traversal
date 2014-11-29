@@ -121,13 +121,6 @@ class StreamTests: XCTestCase {
 		XCTAssert(dropFirst(stream) == Stream.Nil)
 	}
 
-	func testStreamToReducibleOfToStream() {
-		let stream = Stream.cons(1, Stream.cons(2, Stream.cons(3, Stream.Nil)))
-		XCTAssert([] + stream == [1, 2, 3])
-		XCTAssert([] + sequence(ReducibleOf(stream)) == [] + stream)
-		XCTAssert(Stream(ReducibleOf(stream)) == stream)
-	}
-
 	let fibonacci: Stream<Int> = fix { fib in
 		{ x, y in Stream.cons(x + y, fib(y, x + y)) }
 	}(0, 1)
