@@ -10,10 +10,15 @@ public enum Stream<T> {
 
 	/// Initializes with a ReducibleType.
 	public init<R: ReducibleType where R.Element == T>(_ reducible: R) {
-		let reduce: Reducible<R, Stream, T>.Enumerator = (reducible.reducer()) { _, initial, _ in initial }
-		self = reduce(reducible, Nil, fix { combine in
-			{ .right(.cons($1, Memo(reduce(reducible, $0, combine)))) }
-		})
+		let reducer: Reducible<R, Stream, T>.Enumerator -> Reducible<R, Stream, T>.Enumerator = reducible.reducer()
+		let reduce: Reducible<R, Stream, T>.Enumerator = fix { recur in
+			reducer { reducible, initial, combine in
+				initial.first.map { .cons($0, Memo(recur(reducible, Nil, combine))) } ?? Nil
+			}
+		}
+		self = reduce(reducible, Nil) {
+			.right(.unit($1))
+		}
 	}
 
 
