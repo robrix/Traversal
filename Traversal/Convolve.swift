@@ -4,15 +4,12 @@
 ///
 /// This is effectively a generalization of `map` to two reducibles.
 public func convolve<R0: ReducibleType, R1: ReducibleType>(r0: R0, r1: R1) -> Stream<(R0.Element, R1.Element)> {
-	var streams = (Stream(r0), Stream(r1))
-	return Stream {
-		switch (streams.0, streams.1) {
-		case let (.Cons(x, xs), .Cons(y, ys)):
-			streams = (xs.value, ys.value)
-			return (x.value, y.value)
-		default:
-			return nil
-		}
+	let streams = (Stream(r0), Stream(r1))
+	switch (streams.0, streams.1) {
+	case let (.Cons(x, xs), .Cons(y, ys)):
+		return .cons((x.value, y.value), Memo(convolve(xs.value, ys.value)))
+	default:
+		return .Nil
 	}
 }
 
