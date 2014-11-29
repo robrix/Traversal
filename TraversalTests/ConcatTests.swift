@@ -5,39 +5,39 @@ import XCTest
 
 class ConcatTests: XCTestCase {
 	func test0aryConcat() {
-		let reducible = ReducibleOf(sequence: [ ReducibleOf(sequence: []) ])
+		let reducible = Stream([ Stream([]) ])
 		XCTAssertEqual(reduce(map(concat(reducible), toString), "", +), "")
 	}
 
 	func test1aryConcat() {
-		let reducible = ReducibleOf(sequence: [ ReducibleOf(sequence: [1]) ])
+		let reducible = Stream([ Stream([1]) ])
 		XCTAssertEqual(reduce(map(concat(reducible), toString), "", +), "1")
 	}
 
 	func test2aryConcat() {
-		let reducible = concat(ReducibleOf(sequence: [ ReducibleOf(sequence: [1, 2]) ]))
+		let reducible = concat(Stream([ Stream([1, 2]) ]))
 		XCTAssertEqual(reduce(reducible, "0") { $0 + toString($1) }, "012")
 	}
 
 	func test2arySplitConcat() {
-		let reducible = ReducibleOf(sequence: [ ReducibleOf(sequence: [1]), ReducibleOf(sequence: [2]) ])
+		let reducible = Stream([ Stream([1]), Stream([2]) ])
 		XCTAssertEqual(reduce(map(concat(reducible), toString), "0", +), "012")
 	}
 
 	func test3aryConcat() {
-		let reducible = ReducibleOf(sequence: [ ReducibleOf(sequence: [1, 2, 3]) ])
+		let reducible = Stream([ Stream([1, 2, 3]) ])
 		XCTAssertEqual(reduce(map(concat(reducible), toString), "0", +), "0123")
 	}
 
 	func test3arySplitConcat() {
-		let reducible = ReducibleOf(sequence: [ ReducibleOf(sequence: [1]), ReducibleOf(sequence: [2]), ReducibleOf(sequence: [3]) ])
+		let reducible = Stream([ Stream([1]), Stream([2]), Stream([3]) ])
 		XCTAssertEqual(reduce(map(concat(reducible), toString), "0", +), "0123")
 	}
 	
 	func testConcatOverReducibles() {
 		let sequence = [[1, 2], [3], [], [4]]
-		let reducible = ReducibleOf(sequence: map(sequence) {
-			ReducibleOf(sequence: $0)
+		let reducible = Stream(map(sequence) {
+			Stream($0)
 		})
 		let concatenated = concat(reducible)
 		XCTAssertEqual(reduce(concatenated, 0, +), 10)
@@ -47,8 +47,8 @@ class ConcatTests: XCTestCase {
 	}
 
 	func testInfixConcatenation() {
-		let concatenated = ReducibleOf(sequence: [10, 5, 3]) ++ ReducibleOf(sequence: [2, 20, 20])
-		let mapped = join(", ", map(concatenated, toString))
+		let concatenated = Stream([10, 5, 3]) ++ Stream([2, 20, 20])
+		let mapped = join(", ", Traversal.map(concatenated, toString))
 		XCTAssertEqual(reduce(mapped, "0", +), "010, 5, 3, 2, 20, 20")
 	}
 }

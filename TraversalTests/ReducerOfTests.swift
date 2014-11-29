@@ -4,18 +4,18 @@ import Traversal
 import XCTest
 
 final class ReducerOfTests: XCTestCase {
-	let reducible = ReducibleOf(sequence: [[1, 2], [2, 3], [3, 4]])
-	lazy var reducer: ReducerOf<ReducibleOf<[Int]>, ReducibleOf<Int>> = {
+	let reducible = Stream([[1, 4], [2, 5], [3, 6]])
+	lazy var reducer: ReducerOf<Stream<[Int]>, Stream<Int>> = {
 		return ReducerOf(self.reducible) {
-			ReducibleOf(sequence: $0)
+			Stream($0)
 		}
 	}()
 
 	func testReducesEachElement() {
-		XCTAssertEqual(reduce(reducer, 0, +), 15)
+		XCTAssertEqual(reduce(reducer, 0, +), 21)
 	}
 
 	func testReducesInOrder() {
-		XCTAssertEqual(reduce(reducer, "", { $0 + toString($1) }), "122334")
+		XCTAssertEqual(reduce(reducer, "0", { $0 + toString($1) }), "0142536")
 	}
 }

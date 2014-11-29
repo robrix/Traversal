@@ -13,7 +13,7 @@ class FlattenMapTests: XCTestCase {
 
 	func testFlattenMapAsFilter() {
 		let sequence = [1, 2, 3, 4, 5, 6, 7, 8, 9]
-		let reducible = ReducibleOf(sequence: sequence)
+		let reducible = Stream(sequence)
 		let filtered = flattenMap(reducible) {
 			$0 % 2 == 0 ? Stream.Nil : Stream.cons($0, Memo(.Nil))
 		}
@@ -22,7 +22,7 @@ class FlattenMapTests: XCTestCase {
 
 	func testFlattenMapAsMap() {
 		let sequence = [1, 2, 3, 4]
-		let reducible = ReducibleOf(sequence: sequence)
+		let reducible = Stream(sequence)
 		let mapped = flattenMap(reducible) {
 			Stream.cons($0 * 2, Memo(.Nil))
 		}

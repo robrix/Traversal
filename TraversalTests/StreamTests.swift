@@ -33,8 +33,7 @@ class StreamTests: XCTestCase {
 
 	func testStreams() {
 		let sequence = [1, 2, 3, 4, 5, 6, 7, 8, 9]
-		let reducible = ReducibleOf(sequence: sequence)
-		let stream = Stream(reducible)
+		let stream = Stream(sequence)
 
 		XCTAssertEqual(first(stream) ?? -1, 1)
 		XCTAssertEqual(first(stream) ?? -1, 1)
@@ -66,7 +65,7 @@ class StreamTests: XCTestCase {
 
 		XCTAssertEqual(effects, 0)
 
-		let stream = Stream(ReducibleOf(sequence: sequence))
+		let stream = Stream(sequence)
 		XCTAssertEqual(effects, 1)
 
 		first(stream)
@@ -85,11 +84,11 @@ class StreamTests: XCTestCase {
 	}
 
 	func testStreamReduction() {
-		XCTAssertEqual(Traversal.reduce(Stream(ReducibleOf(sequence: [1, 2, 3, 4])), 0, +), 10)
+		XCTAssertEqual(Traversal.reduce(Stream([1, 2, 3, 4]), 0, +), 10)
 	}
 
 	func testStreamReductionIsLeftReduce() {
-		XCTAssertEqual(Traversal.reduce(Stream(ReducibleOf(sequence: ["1", "2", "3"])), "0", +), "0123")
+		XCTAssertEqual(Traversal.reduce(Stream(["1", "2", "3"]), "0", +), "0123")
 		XCTAssertEqual(Traversal.reduce(Stream.cons("1", Stream.cons("2", Stream.cons("3", Stream.Nil))), "0", +), "0123")
 	}
 
@@ -105,13 +104,14 @@ class StreamTests: XCTestCase {
 	func testConstructsFiniteStreamFromGeneratorOfFiniteSequence() {
 		let sequence = [1, 2, 3]
 		var generator = sequence.generate()
-		let stream = Stream(generator.next)
-		XCTAssertTrue(stream == Stream(ReducibleOf(sequence: sequence)))
-		XCTAssertEqual(Traversal.reduce(map(stream, toString), "", +), "123")
+		let stream = Stream { generator.next() }
+		XCTAssertEqual(Array(stream), sequence)
+		XCTAssertEqual(Traversal.reduce(stream, 0, +), 6)
+		XCTAssertEqual(Traversal.reduce(map(stream, toString), "0", +), "0123")
 	}
 
 	func testMapping() {
-		let mapped = Traversal.map(Stream(ReducibleOf(sequence: [1, 2, 3])), { $0 * 2 })
+		let mapped = Traversal.map(Stream([1, 2, 3]), { $0 * 2 })
 		XCTAssertEqual(reduce(mapped, 0, +), 12)
 	}
 
