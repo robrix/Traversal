@@ -34,16 +34,6 @@ class ConcatTests: XCTestCase {
 		XCTAssertEqual(reduce(map(concat(reducible), toString), "0", +), "0123")
 	}
 	
-	func testConcatOverSequences() {
-		let sequence = [[1, 2], [3], [], [4]]
-		let reducible = ReducibleOf(sequence: sequence)
-		let concatenated = concat(reducible)
-		XCTAssertEqual(reduce(concatenated, 0, +), 10)
-		let mapped = map(concatenated, toString)
-		let joined = join(", ", mapped)
-		XCTAssertEqual(reduce(joined, "0", +), "01, 2, 3, 4")
-	}
-
 	func testConcatOverReducibles() {
 		let sequence = [[1, 2], [3], [], [4]]
 		let reducible = ReducibleOf(sequence: map(sequence) {

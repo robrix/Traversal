@@ -1,13 +1,9 @@
 //  Copyright (c) 2014 Rob Rix. All rights reserved.
 
 /// Returns a reducer filtering out any elements of `reducible` which are not matched by `predicate`.
-public func filter<Base: ReducibleType>(reducible: Base, predicate: Base.Element -> Bool) -> ReducerOf<Base, ReducibleOf<Base.Element>> {
-	let x = SequenceOf { GeneratorOfOne(1) }
-	let y = SequenceOf<Int> { GeneratorOf { nil } }
-	return flattenMap(reducible) { each in
-		predicate(each) ?
-			SequenceOf { GeneratorOfOne(each) }
-		:	SequenceOf { GeneratorOf { nil } }
+public func filter<Base: ReducibleType>(reducible: Base, predicate: Base.Element -> Bool) -> ReducerOf<Base, Stream<Base.Element>> {
+	return flattenMap(reducible) {
+		predicate($0) ? .unit($0) : .Nil
 	}
 }
 

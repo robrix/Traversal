@@ -5,11 +5,6 @@ public func concat<R: ReducibleType where R.Element: ReducibleType>(reducible: R
 	return flattenMap(reducible, id)
 }
 
-/// Returns a reducer concatenating the `SequenceType` elements of `reducible`.
-public func concat<Base: ReducibleType where Base.Element: SequenceType>(reducible: Base) -> ReducerOf<Base, ReducibleOf<Base.Element.Generator.Element>> {
-	return flattenMap(reducible, id)
-}
-
 
 // MARK: Infix concatenation.
 
