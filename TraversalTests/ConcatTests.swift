@@ -46,9 +46,24 @@ class ConcatTests: XCTestCase {
 		XCTAssertEqual(reduce(joined, "0", +), "01, 2, 3, 4")
 	}
 
+	func testInfixConcatenationOfNilAndNilIsNil() {
+		XCTAssertEqual([Int]() + (Stream<Int>.Nil ++ Stream<Int>.Nil), [])
+	}
+
+	func testInfixConcatenationOfNilAndXIsX() {
+		XCTAssertEqual([Int]() + (Stream.Nil ++ Stream.unit(0)), [0])
+	}
+
+	func testInfixConcatenationOfXAndNilIsX() {
+		XCTAssertEqual([Int]() + (Stream.unit(0) ++ Stream.Nil), [0])
+	}
+
+	func testInfixConcatenationOfXAndyIsXY() {
+		XCTAssertEqual([Int]() + (Stream.unit(0) ++ Stream.unit(1)), [0, 1])
+	}
+
 	func testInfixConcatenation() {
-		let concatenated = Stream([10, 5, 3]) ++ Stream([2, 20, 20])
-		let mapped = join(", ", Traversal.map(concatenated, toString))
-		XCTAssertEqual(reduce(mapped, "0", +), "010, 5, 3, 2, 20, 20")
+		let concatenated = Stream([1, 2, 3]) ++ Stream([4, 5, 6])
+		XCTAssertEqual(Traversal.reduce(concatenated, "0", { $0 + toString($1) }), "0123456")
 	}
 }
