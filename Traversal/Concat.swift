@@ -15,8 +15,7 @@ infix operator ++ {
 
 /// Returns a reducer concatenating the elements of `lhs` and `rhs`.
 public func ++ <R1: ReducibleType, R2: ReducibleType where R1.Element == R2.Element> (lhs: R1, rhs: R2) -> Stream<R1.Element> {
-	var generators = (Stream(lhs).generate(), Stream(rhs).generate())
-	return Stream(GeneratorOf {
-		generators.0.next() ?? generators.1.next()
-	})
+	return Stream(lhs).destructure().map { x, xs in
+		.cons(x, Memo(xs.value ++ rhs))
+	} ?? Stream(rhs)
 }
