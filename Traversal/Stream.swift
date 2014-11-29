@@ -122,13 +122,9 @@ extension Stream: SequenceType {
 	public func generate() -> GeneratorOf<T> {
 		var stream = self
 		return GeneratorOf {
-			switch stream {
-			case let Cons(each, rest):
-				stream = rest.value
-				return each.value
-			case Nil:
-				return nil
-			}
+			let first = stream.first
+			stream = stream.rest
+			return first
 		}
 	}
 }
