@@ -46,6 +46,11 @@ public enum Stream<T> {
 		return Cons(Box(first), rest)
 	}
 
+	/// Constructs a unary `Stream` of `x`.
+	public static func unit(x: T) -> Stream {
+		return Cons(Box(x), Memo(.Nil))
+	}
+
 
 	// MARK: Properties
 
