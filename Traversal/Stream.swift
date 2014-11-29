@@ -50,20 +50,20 @@ public enum Stream<T> {
 	// MARK: Properties
 
 	public var first: T? {
-		switch self {
-		case let Cons(x, _):
-			return x.value
-		case Nil:
-			return nil
-		}
+		return destructure()?.0
 	}
 
 	public var rest: Stream {
+		return destructure()?.1.value ?? Nil
+	}
+
+
+	public func destructure() -> (T, Memo<Stream>)? {
 		switch self {
-		case let Cons(_, rest):
-			return rest.value
+		case let Cons(x, rest):
+			return (x.value, rest)
 		case Nil:
-			return Nil
+			return nil
 		}
 	}
 
@@ -76,8 +76,7 @@ public enum Stream<T> {
 	public func take(n: Int) -> Stream {
 		if n <= 0 { return Nil }
 
-		let rest = self.rest
-		return first.map { .cons($0, rest.take(n - 1)) } ?? Nil
+		return destructure().map { .cons($0, $1.value.take(n - 1)) } ?? Nil
 	}
 
 	/// Returns a `Stream` without the first `n` elements of `stream`.
@@ -87,14 +86,14 @@ public enum Stream<T> {
 	/// If `n` <= the length of the receiver, returns the empty `Stream`.
 	public func drop(n: Int) -> Stream {
 		if n <= 0 { return self }
+
 		return rest.drop(n - 1)
 	}
 
 
 	/// Returns a `Stream` produced by mapping the elements of the receiver with `f`.
 	public func map<U>(f: T -> U) -> Stream<U> {
-		let rest = self.rest
-		return first.map { .cons(f($0), rest.map(f)) } ?? Stream<U>.Nil
+		return destructure().map { .cons(f($0), $1.value.map(f)) } ?? .Nil
 	}
 }
 
