@@ -6,13 +6,12 @@ import XCTest
 struct ReducibleOfThree<T>: ReducibleType {
 	let elements: (T, T, T)
 
-	typealias Element = T
-	func reducer<Result>() -> Reducible<Result, Element>.Enumerator -> Reducible<Result, Element>.Enumerator {
+	func reducer<Result>() -> Reducible<ReducibleOfThree, Result, T>.Enumerator -> Reducible<ReducibleOfThree, Result, T>.Enumerator {
 		var generator1 = GeneratorOfOne(elements.0)
 		var generator2 = GeneratorOfOne(elements.1)
 		var generator3 = GeneratorOfOne(elements.2)
 		return { recur in
-			{ initial, combine in
+			{ _, initial, combine in
 				(generator1.next() ?? generator2.next() ?? generator3.next()).map { combine(initial, $0).either(id, id) } ?? initial
 			}
 		}

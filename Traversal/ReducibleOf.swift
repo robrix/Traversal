@@ -36,11 +36,14 @@ public struct ReducibleOf<T>: ReducibleType, Printable {
 	// MARK: ReducibleType
 
 	/// Nonrecursive left reduction.
-	public func reducer<Result>() -> Reducible<Result, T>.Enumerator -> Reducible<Result, T>.Enumerator {
-		var producer = self.producer()
+	public func reducer<Result>() -> Reducible<ReducibleOf, Result, T>.Enumerator -> Reducible<ReducibleOf, Result, T>.Enumerator {
+		let advance: (() -> T?) -> (T?, () -> T?) = {
+			return ($0(), $0)
+		}
 		return { recur in
-			{ initial, combine in
-				producer().map { combine(initial, $0).either(id, { recur($0, combine) }) } ?? initial
+			{ collection, initial, combine in
+				let scan = advance(collection.producer())
+				return scan.0.map { combine(initial, $0).either(id, { recur(ReducibleOf { scan.1 }, $0, combine) }) } ?? initial
 			}
 		}
 	}

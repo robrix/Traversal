@@ -10,9 +10,9 @@ public enum Stream<T> {
 
 	/// Initializes with a ReducibleType.
 	public init<R: ReducibleType where R.Element == T>(_ reducible: R) {
-		let reduce: Reducible<Stream, T>.Enumerator = (reducible.reducer()) { initial, _ in initial }
-		self = reduce(Nil, fix { combine in
-			{ into, each in .right(.cons(each, Memo(reduce(into, combine)))) }
+		let reduce: Reducible<R, Stream, T>.Enumerator = (reducible.reducer()) { _, initial, _ in initial }
+		self = reduce(reducible, Nil, fix { combine in
+			{ .right(.cons($1, Memo(reduce(reducible, $0, combine)))) }
 		})
 	}
 
@@ -132,14 +132,11 @@ extension Stream: SequenceType {
 // MARK: ReducibleType conformance.
 
 extension Stream: ReducibleType {
-	public func reducer<Result>() -> Reducible<Result, T>.Enumerator -> Reducible<Result, T>.Enumerator {
-		// Unlike Oleg’s definitions, we don’t use a monadic type and express the sequential control flow via repeated binds. Therefore, we hide a tiny bit of mutable state in here—a variable which we advance manually. I can live with this for now, because I am a monster.
-		var stream = self
+	public func reducer<Result>() -> Reducible<Stream, Result, T>.Enumerator -> Reducible<Stream, Result, T>.Enumerator {
 		return { recur in
-			{ initial, combine in
+			{ stream, initial, combine in
 				stream.first.map {
-					stream = stream.rest
-					return combine(initial, $0).either(id, { recur($0, combine) })
+					combine(initial, $0).either(id, { recur(stream.rest, $0, combine) })
 				} ?? initial
 			}
 		}
