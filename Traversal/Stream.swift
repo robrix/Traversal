@@ -121,6 +121,12 @@ public enum Stream<T> {
 	public func foldRight<Result>(seed: Result, _ combine: (T, Result) -> Result) -> Result {
 		return destructure().map { combine($0, $1.value.foldRight(seed, combine)) } ?? seed
 	}
+
+
+	/// Produces a `Stream` by mapping the elements of the receiver into reducibles and concatenating their elements.
+	public func flattenMap<R: ReducibleType>(f: T -> R) -> Stream<R.Element> {
+		return foldRight(.Nil, curry(++) .. Stream<R.Element>.with .. f)
+	}
 }
 
 
