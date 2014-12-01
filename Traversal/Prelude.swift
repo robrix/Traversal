@@ -13,6 +13,8 @@ public func fix<A, B>(f: (A -> B) -> A -> B) -> A -> B {
 }
 
 
+// MARK: Composition
+
 infix operator .. { associativity right }
 
 /// Unary function composition.
@@ -62,6 +64,8 @@ public func .. <T, U, V, W, X>(f: (V, W) -> X, g: (T, U) -> V) -> (T, U, W) -> X
 	return curry(f) .. curry(g)
 }
 
+
+// MARK: Currying
 
 /// Binary currying.
 public func curry<T, U, V>(f: (T, U) -> V) -> T -> U -> V {
