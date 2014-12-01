@@ -11,3 +11,12 @@ public func id<T>(x: T) -> T {
 public func fix<A, B>(f: (A -> B) -> A -> B) -> A -> B {
 	return { x in f(fix(f))(x) }
 }
+
+
+infix operator .. { associativity right }
+
+/// Unary function composition.
+public func .. <T, U, V>(f: U -> V, g: T -> U) -> T -> V {
+	return { f(g($0)) }
+}
+
