@@ -105,6 +105,17 @@ public enum Stream<T> {
 	public func map<U>(f: T -> U) -> Stream<U> {
 		return destructure().map { .cons(f($0), $1.value.map(f)) } ?? .Nil
 	}
+
+
+	/// Folds the receiver starting from a given `seed` using the left-associative function `combine`.
+	public func foldLeft<Result>(seed: Result, _ combine: (Result, T) -> Result) -> Result {
+		return destructure().map { $1.value.foldLeft(combine(seed, $0), combine) } ?? seed
+	}
+
+	/// Folds the receiver ending with a given `seed` using the right-associative function `combine`.
+	public func foldRight<Result>(seed: Result, _ combine: (T, Result) -> Result) -> Result {
+		return destructure().map { combine($0, $1.value.foldRight(seed, combine)) } ?? seed
+	}
 }
 
 
