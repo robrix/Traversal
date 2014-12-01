@@ -8,7 +8,7 @@ class FlattenMapTests: XCTestCase {
 		let sequence = [[1], [2], [3, 4], [5, 6], [], [7, 8, 9]]
 		let reducible = Stream(sequence)
 		let concatenated = flattenMap(reducible, { Stream($0) })
-		XCTAssertEqual(reduce(concatenated, 0, +), 45)
+		XCTAssertEqual(Traversal.reduce(concatenated, 0, +), 45)
 	}
 
 	func testFlattenMapAsFilter() {
@@ -17,7 +17,7 @@ class FlattenMapTests: XCTestCase {
 		let filtered = flattenMap(reducible) {
 			$0 % 2 == 0 ? Stream.Nil : Stream.cons($0, Memo(.Nil))
 		}
-		XCTAssertEqual(reduce(filtered, 0, +), 25)
+		XCTAssertEqual(Traversal.reduce(filtered, 0, +), 25)
 	}
 
 	func testFlattenMapAsMap() {
@@ -26,13 +26,13 @@ class FlattenMapTests: XCTestCase {
 		let mapped = flattenMap(reducible) {
 			Stream.cons($0 * 2, Memo(.Nil))
 		}
-		XCTAssertEqual(reduce(mapped, 0, +), 20)
+		XCTAssertEqual(Traversal.reduce(mapped, 0, +), 20)
 	}
 
 	func testFlattenMapTraversesElementsInOrder() {
 		let flattenMapped = flattenMap(Stream([[1, 2], [3], [], [4]])) {
 			Stream(map($0, toString))
 		}
-		XCTAssertEqual(reduce(flattenMapped, "0", +), "01234")
+		XCTAssertEqual(Traversal.reduce(flattenMapped, "0", +), "01234")
 	}
 }

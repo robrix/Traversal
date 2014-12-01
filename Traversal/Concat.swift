@@ -1,7 +1,7 @@
 //  Copyright (c) 2014 Rob Rix. All rights reserved.
 
 /// Returns a reducer concatenating the `ReducibleType` elements of `reducible`.
-public func concat<R: ReducibleType where R.Element: ReducibleType>(reducible: R) -> ReducerOf<R, R.Element> {
+public func concat<R: ReducibleType where R.Element: ReducibleType>(reducible: R) -> Stream<R.Element.Element> {
 	return flattenMap(reducible, id)
 }
 

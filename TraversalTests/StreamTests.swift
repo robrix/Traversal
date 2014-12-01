@@ -112,7 +112,7 @@ class StreamTests: XCTestCase {
 
 	func testMapping() {
 		let mapped = Traversal.map(Stream([1, 2, 3]), { $0 * 2 })
-		XCTAssertEqual(reduce(mapped, 0, +), 12)
+		XCTAssertEqual(Traversal.reduce(mapped, 0, +), 12)
 	}
 
 	func testCons() {

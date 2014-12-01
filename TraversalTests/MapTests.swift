@@ -8,13 +8,13 @@ class MapTests: XCTestCase {
 		let sequence = [1, 2, 3, 4]
 		let reducible = Stream(sequence)
 		let mapped = Traversal.map(reducible, id)
-		XCTAssertEqual(reduce(mapped, 0, +), 10)
+		XCTAssertEqual(Traversal.reduce(mapped, 0, +), 10)
 	}
 
 	func testMappingToAnotherType() {
 		let sequence = [1, 2, 3, 4]
 		let reducible = Stream(sequence)
 		let mapped = Traversal.map(reducible) { [$0] }
-		XCTAssertEqual(reduce(mapped, []) { $0 + $1 }, sequence)
+		XCTAssertEqual(Traversal.reduce(mapped, []) { $0 + $1 }, sequence)
 	}
 }

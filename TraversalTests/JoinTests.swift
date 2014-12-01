@@ -5,7 +5,7 @@ import XCTest
 
 class JoinTests: XCTestCase {
 	func testJoining() {
-		let joined = join(", ", Traversal.map(Stream([1, 2, 3]), toString))
-		XCTAssertEqual(reduce(joined, "0", +), "01, 2, 3")
+		let joined = Traversal.join(", ", Traversal.map(Stream([1, 2, 3]), toString))
+		XCTAssertEqual(Traversal.reduce(joined, "0", +), "01, 2, 3")
 	}
 }
