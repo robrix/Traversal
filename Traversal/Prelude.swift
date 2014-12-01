@@ -20,3 +20,24 @@ public func .. <T, U, V>(f: U -> V, g: T -> U) -> T -> V {
 	return { f(g($0)) }
 }
 
+
+/// Unary/binary function composition (curried).
+public func .. <T, U, V, W>(f: V -> W, g: T -> U -> V) -> (T, U) -> W {
+	return uncurry { f .. g($0) }
+}
+
+/// Unary/binary function composition (uncurried).
+public func .. <T, U, V, W>(f: V -> W, g: (T, U) -> V) -> (T, U) -> W {
+	return f .. curry(g)
+}
+
+/// Binary/unary function composition (curried).
+public func .. <T, U, V, W>(f: U -> V -> W, g: T -> U) -> (T, V) -> W {
+	return uncurry(f .. g)
+}
+
+/// Binary/unary function composition (uncurried).
+public func .. <T, U, V, W>(f: (U, V) -> W, g: T -> U) -> (T, V) -> W {
+	return curry(f) .. g
+}
+
