@@ -62,3 +62,16 @@ public func .. <T, U, V, W, X>(f: (V, W) -> X, g: (T, U) -> V) -> (T, U, W) -> X
 	return curry(f) .. curry(g)
 }
 
+
+/// Binary currying.
+public func curry<T, U, V>(f: (T, U) -> V) -> T -> U -> V {
+	return { x in { y in f(x, y) } }
+}
+
+/// Binary uncurrying.
+public func uncurry<T, U, V>(f: T -> U -> V) -> (T, U) -> V {
+	return { x, y in
+		f(x)(y)
+	}
+}
+
