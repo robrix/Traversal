@@ -41,3 +41,24 @@ public func .. <T, U, V, W>(f: (U, V) -> W, g: T -> U) -> (T, V) -> W {
 	return curry(f) .. g
 }
 
+
+/// Binary/binary function composition (curried, curried).
+public func .. <T, U, V, W, X>(f: V -> W -> X, g: T -> U -> V) -> (T, U, W) -> X {
+	return uncurry { f .. g($0) }
+}
+
+/// Binary/binary function composition (curried, uncurried).
+public func .. <T, U, V, W, X>(f: V -> W -> X, g: (T, U) -> V) -> (T, U, W) -> X {
+	return f .. curry(g)
+}
+
+/// Binary/binary function composition (uncurried, curried).
+public func .. <T, U, V, W, X>(f: (V, W) -> X, g: T -> U -> V) -> (T, U, W) -> X {
+	return curry(f) .. g
+}
+
+/// Binary/binary function composition (uncurried, uncurried).
+public func .. <T, U, V, W, X>(f: (V, W) -> X, g: (T, U) -> V) -> (T, U, W) -> X {
+	return curry(f) .. curry(g)
+}
+
