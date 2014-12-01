@@ -26,11 +26,6 @@ class StreamTests: XCTestCase {
 		}, "0122334")
 	}
 
-	func testConstructionWithReducerOf() {
-		let stream = Stream(ReducibleOfThree(elements: (Stream([1, 4]), Stream([2, 5]), Stream([3, 6]))))
-		XCTAssertEqual(Traversal.reduce(Stream(ReducerOf(stream, id)), "0") { $0 + toString($1)}, "0142536")
-	}
-
 	func testStreams() {
 		let sequence = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 		let stream = Stream(sequence)

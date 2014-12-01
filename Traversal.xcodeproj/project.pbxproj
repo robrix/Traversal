@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		D408804C1A22677200BB9997 /* ReducerOfTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D408804B1A22677200BB9997 /* ReducerOfTests.swift */; };
 		D430A1711A02B3FE004D8A26 /* Map.swift in Sources */ = {isa = PBXBuildFile; fileRef = D430A1701A02B3FE004D8A26 /* Map.swift */; };
 		D430A1771A06341E004D8A26 /* MapTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D430A1761A06341E004D8A26 /* MapTests.swift */; };
 		D430A18F1A0D0133004D8A26 /* Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D430A18E1A0D0133004D8A26 /* Filter.swift */; };
@@ -15,7 +14,6 @@
 		D430A1951A0D0719004D8A26 /* FlattenMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = D430A1941A0D0719004D8A26 /* FlattenMap.swift */; };
 		D430A1971A0D0B20004D8A26 /* FlattenMapTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D430A1961A0D0B20004D8A26 /* FlattenMapTests.swift */; };
 		D430A1991A0D1A9C004D8A26 /* Concat.swift in Sources */ = {isa = PBXBuildFile; fileRef = D430A1981A0D1A9C004D8A26 /* Concat.swift */; };
-		D430A19B1A0D1B44004D8A26 /* ReducerOf.swift in Sources */ = {isa = PBXBuildFile; fileRef = D430A19A1A0D1B44004D8A26 /* ReducerOf.swift */; };
 		D430A19E1A0D2DC5004D8A26 /* ConcatTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D430A19D1A0D2DC5004D8A26 /* ConcatTests.swift */; };
 		D430A1A01A0D2F0F004D8A26 /* Convolve.swift in Sources */ = {isa = PBXBuildFile; fileRef = D430A19F1A0D2F0F004D8A26 /* Convolve.swift */; };
 		D430A1A21A0D37D8004D8A26 /* ConvolveTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D430A1A11A0D37D8004D8A26 /* ConvolveTests.swift */; };
@@ -47,7 +45,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		D408804B1A22677200BB9997 /* ReducerOfTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReducerOfTests.swift; sourceTree = "<group>"; };
 		D430A1701A02B3FE004D8A26 /* Map.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Map.swift; sourceTree = "<group>"; };
 		D430A1761A06341E004D8A26 /* MapTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapTests.swift; sourceTree = "<group>"; };
 		D430A18E1A0D0133004D8A26 /* Filter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Filter.swift; sourceTree = "<group>"; };
@@ -55,7 +52,6 @@
 		D430A1941A0D0719004D8A26 /* FlattenMap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlattenMap.swift; sourceTree = "<group>"; };
 		D430A1961A0D0B20004D8A26 /* FlattenMapTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlattenMapTests.swift; sourceTree = "<group>"; };
 		D430A1981A0D1A9C004D8A26 /* Concat.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Concat.swift; sourceTree = "<group>"; };
-		D430A19A1A0D1B44004D8A26 /* ReducerOf.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReducerOf.swift; sourceTree = "<group>"; };
 		D430A19D1A0D2DC5004D8A26 /* ConcatTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConcatTests.swift; sourceTree = "<group>"; };
 		D430A19F1A0D2F0F004D8A26 /* Convolve.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Convolve.swift; sourceTree = "<group>"; };
 		D430A1A11A0D37D8004D8A26 /* ConvolveTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConvolveTests.swift; sourceTree = "<group>"; };
@@ -102,7 +98,6 @@
 		D430A18D1A0D0122004D8A26 /* Reducers */ = {
 			isa = PBXGroup;
 			children = (
-				D430A19A1A0D1B44004D8A26 /* ReducerOf.swift */,
 				D430A1701A02B3FE004D8A26 /* Map.swift */,
 				D430A18E1A0D0133004D8A26 /* Filter.swift */,
 				D430A1941A0D0719004D8A26 /* FlattenMap.swift */,
@@ -168,7 +163,6 @@
 				D430A1A11A0D37D8004D8A26 /* ConvolveTests.swift */,
 				D45B60E81A0D46CB0009D607 /* JoinTests.swift */,
 				D4D3E32B1A1EBC28001A9ED4 /* SequenceTests.swift */,
-				D408804B1A22677200BB9997 /* ReducerOfTests.swift */,
 				D461ED6519E08F4500DEF5AD /* Supporting Files */,
 			);
 			path = TraversalTests;
@@ -297,7 +291,6 @@
 				D430A1951A0D0719004D8A26 /* FlattenMap.swift in Sources */,
 				D4D3E32A1A1EBA70001A9ED4 /* Sequence.swift in Sources */,
 				D430A18F1A0D0133004D8A26 /* Filter.swift in Sources */,
-				D430A19B1A0D1B44004D8A26 /* ReducerOf.swift in Sources */,
 				D430A1991A0D1A9C004D8A26 /* Concat.swift in Sources */,
 				D4C92F6F19E191F10054F0F6 /* Prelude.swift in Sources */,
 				D462EB9919E4C8F700ADAAC9 /* Stream.swift in Sources */,
@@ -315,7 +308,6 @@
 				D44B19BC19E6FC82005E7526 /* MemoTests.swift in Sources */,
 				D45B60E91A0D46CB0009D607 /* JoinTests.swift in Sources */,
 				D430A1771A06341E004D8A26 /* MapTests.swift in Sources */,
-				D408804C1A22677200BB9997 /* ReducerOfTests.swift in Sources */,
 				D430A1A21A0D37D8004D8A26 /* ConvolveTests.swift in Sources */,
 				D4D3E32C1A1EBC28001A9ED4 /* SequenceTests.swift in Sources */,
 				D430A1971A0D0B20004D8A26 /* FlattenMapTests.swift in Sources */,
