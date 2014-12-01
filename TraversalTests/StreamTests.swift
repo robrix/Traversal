@@ -184,4 +184,12 @@ class StreamTests: XCTestCase {
 		let inner = Stream([1, 2, 3])
 		XCTAssertEqual([Int]() + inner.flattenMap({ _ in inner }), [1, 2, 3, 1, 2, 3, 1, 2, 3])
 	}
+
+	func testFoldLeft() {
+		XCTAssertEqual(Stream([1, 2, 3]).foldLeft("0", { $0 + toString($1) }), "0123")
+	}
+
+	func testFoldRight() {
+		XCTAssertEqual(Stream([1, 2, 3]).foldRight("4", { toString($0) + $1 }), "1234")
+	}
 }
