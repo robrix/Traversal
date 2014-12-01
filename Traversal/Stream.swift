@@ -152,7 +152,7 @@ infix operator ++ {
 public func ++ <T> (left: Stream<T>, right: Stream<T>) -> Stream<T> {
 	return left.destructure().map {
 		.cons($0, Memo($1.value ++ right))
-		} ?? right
+	} ?? right
 }
 
 
