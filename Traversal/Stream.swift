@@ -56,6 +56,11 @@ public enum Stream<T> {
 		return Cons(Box(x), Memo(.Nil))
 	}
 
+	/// Constructs a `Stream` of `reducible`. Unlike the corresponding `init`, this is suitable for function composition.
+	public static func with<R: ReducibleType where R.Element == T>(reducible: R) -> Stream {
+		return Stream(reducible)
+	}
+
 
 	// MARK: Properties
 
