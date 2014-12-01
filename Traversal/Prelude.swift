@@ -68,6 +68,12 @@ public func curry<T, U, V>(f: (T, U) -> V) -> T -> U -> V {
 	return { x in { y in f(x, y) } }
 }
 
+/// Ternary currying.
+public func curry<T, U, V, W>(f: (T, U, V) -> W) -> T -> U -> V -> W {
+	return { x in curry { y, z in f(x, y, z) } }
+}
+
+
 /// Binary uncurrying.
 public func uncurry<T, U, V>(f: T -> U -> V) -> (T, U) -> V {
 	return { x, y in
@@ -75,3 +81,9 @@ public func uncurry<T, U, V>(f: T -> U -> V) -> (T, U) -> V {
 	}
 }
 
+/// Ternary uncurrying.
+public func uncurry<T, U, V, W>(f: T -> U -> V -> W) -> (T, U, V) -> W {
+	return { x, y, z in
+		f(x)(y)(z)
+	}
+}
