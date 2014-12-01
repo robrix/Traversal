@@ -56,6 +56,11 @@ public enum Stream<T> {
 		return Cons(Box(x), Memo(.Nil))
 	}
 
+	/// Constructs a `Stream` of `reducible`. Unlike the corresponding `init`, this is suitable for function composition.
+	public static func with<R: ReducibleType where R.Element == T>(reducible: R) -> Stream {
+		return Stream(reducible)
+	}
+
 
 	// MARK: Properties
 
@@ -105,6 +110,23 @@ public enum Stream<T> {
 	public func map<U>(f: T -> U) -> Stream<U> {
 		return destructure().map { .cons(f($0), $1.value.map(f)) } ?? .Nil
 	}
+
+
+	/// Folds the receiver starting from a given `seed` using the left-associative function `combine`.
+	public func foldLeft<Result>(seed: Result, _ combine: (Result, T) -> Result) -> Result {
+		return destructure().map { $1.value.foldLeft(combine(seed, $0), combine) } ?? seed
+	}
+
+	/// Folds the receiver ending with a given `seed` using the right-associative function `combine`.
+	public func foldRight<Result>(seed: Result, _ combine: (T, Result) -> Result) -> Result {
+		return destructure().map { combine($0, $1.value.foldRight(seed, combine)) } ?? seed
+	}
+
+
+	/// Produces a `Stream` by mapping the elements of the receiver into reducibles and concatenating their elements.
+	public func flattenMap<R: ReducibleType>(f: T -> R) -> Stream<R.Element> {
+		return foldRight(.Nil, curry(++) .. Stream<R.Element>.with .. f)
+	}
 }
 
 
@@ -118,6 +140,19 @@ public func first<T>(stream: Stream<T>) -> T? {
 /// Drops the first element of `stream`.
 public func dropFirst<T>(stream: Stream<T>) -> Stream<T> {
 	return stream.rest
+}
+
+
+infix operator ++ {
+	associativity right
+	precedence 145
+}
+
+/// Produces the concatenation of `left` and `right`.
+public func ++ <T> (left: Stream<T>, right: Stream<T>) -> Stream<T> {
+	return left.destructure().map {
+		.cons($0, Memo($1.value ++ right))
+	} ?? right
 }
 
 

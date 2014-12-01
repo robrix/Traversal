@@ -11,3 +11,58 @@ public func id<T>(x: T) -> T {
 public func fix<A, B>(f: (A -> B) -> A -> B) -> A -> B {
 	return { x in f(fix(f))(x) }
 }
+
+
+// MARK: Composition
+
+infix operator .. { associativity right }
+
+/// Unary function composition.
+public func .. <T, U, V>(f: U -> V, g: T -> U) -> T -> V {
+	return { f(g($0)) }
+}
+
+
+/// Unary/binary function composition (curried).
+public func .. <T, U, V, W>(f: V -> W, g: T -> U -> V) -> (T, U) -> W {
+	return uncurry { f .. g($0) }
+}
+
+/// Binary/unary function composition (curried).
+public func .. <T, U, V, W>(f: U -> V -> W, g: T -> U) -> (T, V) -> W {
+	return uncurry(f .. g)
+}
+
+
+/// Binary/binary function composition (curried, curried).
+public func .. <T, U, V, W, X>(f: V -> W -> X, g: T -> U -> V) -> (T, U, W) -> X {
+	return uncurry { f .. g($0) }
+}
+
+
+// MARK: Currying
+
+/// Binary currying.
+public func curry<T, U, V>(f: (T, U) -> V) -> T -> U -> V {
+	return { x in { y in f(x, y) } }
+}
+
+/// Ternary currying.
+public func curry<T, U, V, W>(f: (T, U, V) -> W) -> T -> U -> V -> W {
+	return { x in curry { y, z in f(x, y, z) } }
+}
+
+
+/// Binary uncurrying.
+public func uncurry<T, U, V>(f: T -> U -> V) -> (T, U) -> V {
+	return { x, y in
+		f(x)(y)
+	}
+}
+
+/// Ternary uncurrying.
+public func uncurry<T, U, V, W>(f: T -> U -> V -> W) -> (T, U, V) -> W {
+	return { x, y, z in
+		f(x)(y)(z)
+	}
+}
