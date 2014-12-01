@@ -137,6 +137,19 @@ public func dropFirst<T>(stream: Stream<T>) -> Stream<T> {
 }
 
 
+infix operator ++ {
+	associativity right
+	precedence 145
+}
+
+/// Produces the concatenation of `left` and `right`.
+public func ++ <T> (left: Stream<T>, right: Stream<T>) -> Stream<T> {
+	return left.destructure().map {
+		.cons($0, Memo($1.value ++ right))
+		} ?? right
+}
+
+
 // MARK: SequenceType conformance.
 
 extension Stream: SequenceType {
