@@ -11,8 +11,8 @@ struct ReducibleOfThree<T>: ReducibleType {
 		var generator2 = GeneratorOfOne(elements.1)
 		var generator3 = GeneratorOfOne(elements.2)
 		return { recur in
-			{ _, initial, combine in
-				(generator1.next() ?? generator2.next() ?? generator3.next()).map { combine(initial, $0).either(id, id) } ?? initial
+			{ reducible, initial, combine in
+				(generator1.next() ?? generator2.next() ?? generator3.next()).map { combine(initial, $0).either(id, { recur(reducible, $0, combine) }) } ?? initial
 			}
 		}
 	}
