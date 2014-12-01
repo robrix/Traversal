@@ -179,4 +179,9 @@ class StreamTests: XCTestCase {
 		let concatenated = Stream([1, 2, 3]) ++ Stream([4, 5, 6])
 		XCTAssertEqual(Traversal.reduce(concatenated, "0", { $0 + toString($1) }), "0123456")
 	}
+
+	func testFlattenMap() {
+		let inner = Stream([1, 2, 3])
+		XCTAssertEqual([Int]() + inner.flattenMap({ _ in inner }), [1, 2, 3, 1, 2, 3, 1, 2, 3])
+	}
 }
