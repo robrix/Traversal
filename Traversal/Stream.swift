@@ -10,10 +10,15 @@ public enum Stream<T> {
 
 	/// Initializes with a ReducibleType.
 	public init<R: ReducibleType where R.Element == T>(_ reducible: R) {
-		let reduce: Reducible<Stream, T>.Enumerator = (reducible.reducer()) { initial, _ in initial }
-		self = reduce(Nil, fix { combine in
-			{ into, each in .right(.cons(each, Memo(reduce(into, combine)))) }
-		})
+		let reducer: Reducible<R, Stream, T>.Enumerator -> Reducible<R, Stream, T>.Enumerator = reducible.reducer()
+		let reduce: Reducible<R, Stream, T>.Enumerator = fix { recur in
+			reducer { reducible, initial, combine in
+				initial.first.map { .cons($0, Memo(recur(reducible, Nil, combine))) } ?? Nil
+			}
+		}
+		self = reduce(reducible, Nil) {
+			.right(.unit($1))
+		}
 	}
 
 
@@ -46,24 +51,29 @@ public enum Stream<T> {
 		return Cons(Box(first), rest)
 	}
 
+	/// Constructs a unary `Stream` of `x`.
+	public static func unit(x: T) -> Stream {
+		return Cons(Box(x), Memo(.Nil))
+	}
+
 
 	// MARK: Properties
 
 	public var first: T? {
-		switch self {
-		case let Cons(x, _):
-			return x.value
-		case Nil:
-			return nil
-		}
+		return destructure()?.0
 	}
 
 	public var rest: Stream {
+		return destructure()?.1.value ?? Nil
+	}
+
+
+	public func destructure() -> (T, Memo<Stream>)? {
 		switch self {
-		case let Cons(_, rest):
-			return rest.value
+		case let Cons(x, rest):
+			return (x.value, rest)
 		case Nil:
-			return Nil
+			return nil
 		}
 	}
 
@@ -76,8 +86,7 @@ public enum Stream<T> {
 	public func take(n: Int) -> Stream {
 		if n <= 0 { return Nil }
 
-		let rest = self.rest
-		return first.map { .cons($0, rest.take(n - 1)) } ?? Nil
+		return destructure().map { .cons($0, $1.value.take(n - 1)) } ?? Nil
 	}
 
 	/// Returns a `Stream` without the first `n` elements of `stream`.
@@ -87,14 +96,14 @@ public enum Stream<T> {
 	/// If `n` <= the length of the receiver, returns the empty `Stream`.
 	public func drop(n: Int) -> Stream {
 		if n <= 0 { return self }
+
 		return rest.drop(n - 1)
 	}
 
 
 	/// Returns a `Stream` produced by mapping the elements of the receiver with `f`.
 	public func map<U>(f: T -> U) -> Stream<U> {
-		let rest = self.rest
-		return first.map { .cons(f($0), rest.map(f)) } ?? Stream<U>.Nil
+		return destructure().map { .cons(f($0), $1.value.map(f)) } ?? .Nil
 	}
 }
 
@@ -118,13 +127,9 @@ extension Stream: SequenceType {
 	public func generate() -> GeneratorOf<T> {
 		var stream = self
 		return GeneratorOf {
-			switch stream {
-			case let Cons(each, rest):
-				stream = rest.value
-				return each.value
-			case Nil:
-				return nil
-			}
+			let first = stream.first
+			stream = stream.rest
+			return first
 		}
 	}
 }
@@ -133,14 +138,11 @@ extension Stream: SequenceType {
 // MARK: ReducibleType conformance.
 
 extension Stream: ReducibleType {
-	public func reducer<Result>() -> Reducible<Result, T>.Enumerator -> Reducible<Result, T>.Enumerator {
-		// Unlike Oleg’s definitions, we don’t use a monadic type and express the sequential control flow via repeated binds. Therefore, we hide a tiny bit of mutable state in here—a variable which we advance manually. I can live with this for now, because I am a monster.
-		var stream = self
+	public func reducer<Result>() -> Reducible<Stream, Result, T>.Enumerator -> Reducible<Stream, Result, T>.Enumerator {
 		return { recur in
-			{ initial, combine in
+			{ stream, initial, combine in
 				stream.first.map {
-					stream = stream.rest
-					return combine(initial, $0).either(id, { recur($0, combine) })
+					combine(initial, $0).either(id, { recur(stream.rest, $0, combine) })
 				} ?? initial
 			}
 		}
