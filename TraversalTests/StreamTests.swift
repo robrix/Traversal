@@ -158,4 +158,25 @@ class StreamTests: XCTestCase {
 	func testMap() {
 		XCTAssertEqual(Array(fibonacci.map { $0 * $0 }.take(3)), [1, 4, 9])
 	}
+
+	func testConcatenationOfNilAndNilIsNil() {
+		XCTAssertEqual([Int]() + (Stream<Int>.Nil ++ Stream<Int>.Nil), [])
+	}
+
+	func testConcatenationOfNilAndXIsX() {
+		XCTAssertEqual([Int]() + (Stream.Nil ++ Stream.unit(0)), [0])
+	}
+
+	func testConcatenationOfXAndNilIsX() {
+		XCTAssertEqual([Int]() + (Stream.unit(0) ++ Stream.Nil), [0])
+	}
+
+	func testConcatenationOfXAndyIsXY() {
+		XCTAssertEqual([Int]() + (Stream.unit(0) ++ Stream.unit(1)), [0, 1])
+	}
+
+	func testConcatenation() {
+		let concatenated = Stream([1, 2, 3]) ++ Stream([4, 5, 6])
+		XCTAssertEqual(Traversal.reduce(concatenated, "0", { $0 + toString($1) }), "0123456")
+	}
 }
