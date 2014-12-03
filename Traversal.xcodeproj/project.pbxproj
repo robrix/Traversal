@@ -30,6 +30,10 @@
 		D462EB9919E4C8F700ADAAC9 /* Stream.swift in Sources */ = {isa = PBXBuildFile; fileRef = D462EB9819E4C8F700ADAAC9 /* Stream.swift */; };
 		D470AC6019E87B54003DA6C6 /* Box.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D470AC5F19E87B54003DA6C6 /* Box.framework */; };
 		D470AC6119E87B80003DA6C6 /* Box.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D470AC5F19E87B54003DA6C6 /* Box.framework */; };
+		D4BAF0521A2E898D006E25DF /* Either.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4BAF0501A2E898D006E25DF /* Either.framework */; };
+		D4BAF0531A2E898D006E25DF /* Prelude.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4BAF0511A2E898D006E25DF /* Prelude.framework */; };
+		D4BAF0541A2E89D8006E25DF /* Either.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4BAF0501A2E898D006E25DF /* Either.framework */; };
+		D4BAF0551A2E89D8006E25DF /* Prelude.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4BAF0511A2E898D006E25DF /* Prelude.framework */; };
 		D4C92F6F19E191F10054F0F6 /* Prelude.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C92F6E19E191F10054F0F6 /* Prelude.swift */; };
 		D4D3E32A1A1EBA70001A9ED4 /* Sequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4D3E3291A1EBA70001A9ED4 /* Sequence.swift */; };
 		D4D3E32C1A1EBC28001A9ED4 /* SequenceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4D3E32B1A1EBC28001A9ED4 /* SequenceTests.swift */; };
@@ -72,6 +76,8 @@
 		D461ED7B19E0923800DEF5AD /* ReducibleType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReducibleType.swift; sourceTree = "<group>"; };
 		D462EB9819E4C8F700ADAAC9 /* Stream.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Stream.swift; sourceTree = "<group>"; };
 		D470AC5F19E87B54003DA6C6 /* Box.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Box.framework; path = "../../../../Library/Developer/Xcode/DerivedData/Traversal-dlyjhvwonwhswzdbfpsuoweyfpdp/Build/Products/Debug/Box.framework"; sourceTree = "<group>"; };
+		D4BAF0501A2E898D006E25DF /* Either.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Either.framework; path = "../../../../Library/Developer/Xcode/DerivedData/Traversal-dlyjhvwonwhswzdbfpsuoweyfpdp/Build/Products/Debug/Either.framework"; sourceTree = "<group>"; };
+		D4BAF0511A2E898D006E25DF /* Prelude.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Prelude.framework; path = "../../../../Library/Developer/Xcode/DerivedData/Traversal-dlyjhvwonwhswzdbfpsuoweyfpdp/Build/Products/Debug/Prelude.framework"; sourceTree = "<group>"; };
 		D4C92F6E19E191F10054F0F6 /* Prelude.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Prelude.swift; sourceTree = "<group>"; };
 		D4D3E3291A1EBA70001A9ED4 /* Sequence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sequence.swift; sourceTree = "<group>"; };
 		D4D3E32B1A1EBC28001A9ED4 /* SequenceTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SequenceTests.swift; sourceTree = "<group>"; };
@@ -83,6 +89,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D4BAF0521A2E898D006E25DF /* Either.framework in Frameworks */,
+				D4BAF0531A2E898D006E25DF /* Prelude.framework in Frameworks */,
 				D470AC6019E87B54003DA6C6 /* Box.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -91,6 +99,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D4BAF0541A2E89D8006E25DF /* Either.framework in Frameworks */,
+				D4BAF0551A2E89D8006E25DF /* Prelude.framework in Frameworks */,
 				D470AC6119E87B80003DA6C6 /* Box.framework in Frameworks */,
 				D461ED6119E08F4500DEF5AD /* Traversal.framework in Frameworks */,
 			);
@@ -116,9 +126,11 @@
 		D461ED4B19E08F4500DEF5AD = {
 			isa = PBXGroup;
 			children = (
-				D470AC5F19E87B54003DA6C6 /* Box.framework */,
 				D461ED5719E08F4500DEF5AD /* Traversal */,
 				D461ED6419E08F4500DEF5AD /* TraversalTests */,
+				D470AC5F19E87B54003DA6C6 /* Box.framework */,
+				D4BAF0501A2E898D006E25DF /* Either.framework */,
+				D4BAF0511A2E898D006E25DF /* Prelude.framework */,
 				D461ED5619E08F4500DEF5AD /* Products */,
 			);
 			sourceTree = "<group>";
