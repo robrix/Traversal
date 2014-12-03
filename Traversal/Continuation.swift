@@ -37,8 +37,8 @@ public struct Continuation<Result, A> {
 	}
 
 	/// Calls `f` with the current continuation.
-	public static func callCC<Result, A, B>(f: (A -> Continuation<Result, B>) -> Continuation<Result, A>) -> Continuation<Result, A> {
-		return Continuation<Result, A> { c in
+	public static func callCC<B>(f: (A -> Continuation<Result, B>) -> Continuation) -> Continuation {
+		return Continuation { c in
 			f { a in
 				Continuation<Result, B> { _ in
 					c(a)
