@@ -1,5 +1,6 @@
 //  Copyright (c) 2014 Rob Rix. All rights reserved.
 
+import Prelude
 import Traversal
 import XCTest
 
@@ -11,8 +12,8 @@ struct ReducibleOfThree<T>: ReducibleType {
 		var generator2 = GeneratorOfOne(elements.1)
 		var generator3 = GeneratorOfOne(elements.2)
 		return { recur in
-			{ _, initial, combine in
-				(generator1.next() ?? generator2.next() ?? generator3.next()).map { combine(initial, $0).either(id, id) } ?? initial
+			{ reducible, initial, combine in
+				(generator1.next() ?? generator2.next() ?? generator3.next()).map { combine(initial, $0).either(id, { recur(reducible, $0, combine) }) } ?? initial
 			}
 		}
 	}
@@ -157,5 +158,39 @@ class StreamTests: XCTestCase {
 
 	func testMap() {
 		XCTAssertEqual(Array(fibonacci.map { $0 * $0 }.take(3)), [1, 4, 9])
+	}
+
+	func testConcatenationOfNilAndNilIsNil() {
+		XCTAssertEqual([Int]() + (Stream<Int>.Nil ++ Stream<Int>.Nil), [])
+	}
+
+	func testConcatenationOfNilAndXIsX() {
+		XCTAssertEqual([Int]() + (Stream.Nil ++ Stream.unit(0)), [0])
+	}
+
+	func testConcatenationOfXAndNilIsX() {
+		XCTAssertEqual([Int]() + (Stream.unit(0) ++ Stream.Nil), [0])
+	}
+
+	func testConcatenationOfXAndyIsXY() {
+		XCTAssertEqual([Int]() + (Stream.unit(0) ++ Stream.unit(1)), [0, 1])
+	}
+
+	func testConcatenation() {
+		let concatenated = Stream([1, 2, 3]) ++ Stream([4, 5, 6])
+		XCTAssertEqual(Traversal.reduce(concatenated, "0", { $0 + toString($1) }), "0123456")
+	}
+
+	func testFlattenMap() {
+		let inner = Stream([1, 2, 3])
+		XCTAssertEqual([Int]() + inner.flattenMap({ _ in inner }), [1, 2, 3, 1, 2, 3, 1, 2, 3])
+	}
+
+	func testFoldLeft() {
+		XCTAssertEqual(Stream([1, 2, 3]).foldLeft("0", { $0 + toString($1) }), "0123")
+	}
+
+	func testFoldRight() {
+		XCTAssertEqual(Stream([1, 2, 3]).foldRight("4", { toString($0) + $1 }), "1234")
 	}
 }
