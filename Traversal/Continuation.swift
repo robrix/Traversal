@@ -40,12 +40,15 @@ public struct Continuation<Result, A> {
 	public static func callCC<B>(f: (A -> Continuation<Result, B>) -> Continuation) -> Continuation {
 		return Continuation { c in
 			f { a in
-				Continuation<Result, B> { _ in
-					c(a)
-				}
+				Continuation<Result, B>(const(c(a)))
 			}.run(c)
 		}
 	}
 
 	// todo: delimited continuations with shift & reset: http://okmij.org/ftp/continuations/#tutorial
 }
+
+
+// MARK: Imports
+
+import Prelude
