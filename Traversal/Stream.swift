@@ -125,7 +125,7 @@ public enum Stream<T> {
 
 	/// Produces a `Stream` by mapping the elements of the receiver into reducibles and concatenating their elements.
 	public func flattenMap<R: ReducibleType>(f: T -> R) -> Stream<R.Element> {
-		return foldRight(.Nil, curry(++) .. Stream<R.Element>.with .. f)
+		return foldRight(.Nil, f >>> Stream<R.Element>.with >>> (++))
 	}
 }
 
@@ -238,3 +238,4 @@ public func != <T: Equatable> (lhs: Stream<T>, rhs: Stream<T>) -> Bool {
 // MARK: Imports
 
 import Box
+import Prelude
