@@ -7,3 +7,6 @@
 [submodule "External/Either"]
 	path = External/Either
 	url = https://github.com/robrix/Either.git
+[submodule "External/Memo"]
+	path = External/Memo
+	url = https://github.com/robrix/Memo.git
