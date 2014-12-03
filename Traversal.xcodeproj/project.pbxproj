@@ -25,7 +25,6 @@
 		D45B60E91A0D46CB0009D607 /* JoinTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45B60E81A0D46CB0009D607 /* JoinTests.swift */; };
 		D461ED5B19E08F4500DEF5AD /* Traversal.h in Headers */ = {isa = PBXBuildFile; fileRef = D461ED5A19E08F4500DEF5AD /* Traversal.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D461ED6119E08F4500DEF5AD /* Traversal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D461ED5519E08F4500DEF5AD /* Traversal.framework */; };
-		D461ED7A19E091F400DEF5AD /* Either.swift in Sources */ = {isa = PBXBuildFile; fileRef = D461ED7919E091F400DEF5AD /* Either.swift */; };
 		D461ED7C19E0923800DEF5AD /* ReducibleType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D461ED7B19E0923800DEF5AD /* ReducibleType.swift */; };
 		D462EB9919E4C8F700ADAAC9 /* Stream.swift in Sources */ = {isa = PBXBuildFile; fileRef = D462EB9819E4C8F700ADAAC9 /* Stream.swift */; };
 		D470AC6019E87B54003DA6C6 /* Box.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D470AC5F19E87B54003DA6C6 /* Box.framework */; };
@@ -72,7 +71,6 @@
 		D461ED5A19E08F4500DEF5AD /* Traversal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Traversal.h; sourceTree = "<group>"; };
 		D461ED6019E08F4500DEF5AD /* TraversalTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TraversalTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D461ED6619E08F4500DEF5AD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		D461ED7919E091F400DEF5AD /* Either.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Either.swift; sourceTree = "<group>"; };
 		D461ED7B19E0923800DEF5AD /* ReducibleType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReducibleType.swift; sourceTree = "<group>"; };
 		D462EB9819E4C8F700ADAAC9 /* Stream.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Stream.swift; sourceTree = "<group>"; };
 		D470AC5F19E87B54003DA6C6 /* Box.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Box.framework; path = "../../../../Library/Developer/Xcode/DerivedData/Traversal-dlyjhvwonwhswzdbfpsuoweyfpdp/Build/Products/Debug/Box.framework"; sourceTree = "<group>"; };
@@ -149,7 +147,6 @@
 			children = (
 				D461ED5A19E08F4500DEF5AD /* Traversal.h */,
 				D461ED7B19E0923800DEF5AD /* ReducibleType.swift */,
-				D461ED7919E091F400DEF5AD /* Either.swift */,
 				D4C92F6E19E191F10054F0F6 /* Prelude.swift */,
 				D462EB9819E4C8F700ADAAC9 /* Stream.swift */,
 				D44B19B519E6F3A7005E7526 /* Memo.swift */,
@@ -305,7 +302,6 @@
 				D461ED7C19E0923800DEF5AD /* ReducibleType.swift in Sources */,
 				D430A1711A02B3FE004D8A26 /* Map.swift in Sources */,
 				D45B60E61A0D43680009D607 /* Join.swift in Sources */,
-				D461ED7A19E091F400DEF5AD /* Either.swift in Sources */,
 				D430A1951A0D0719004D8A26 /* FlattenMap.swift in Sources */,
 				D4D3E32A1A1EBA70001A9ED4 /* Sequence.swift in Sources */,
 				D430A18F1A0D0133004D8A26 /* Filter.swift in Sources */,
