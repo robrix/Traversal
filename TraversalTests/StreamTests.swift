@@ -196,7 +196,7 @@ class StreamTests: XCTestCase {
 
 	func testUnfold() {
 		let fib = Stream.unfold((0, 1)) { x, y in
-			((y, x + y), x + y)
+			(x + y, (y, x + y))
 		}
 		XCTAssertEqual([Int]() + fib.take(5), [1, 2, 3, 5, 8])
 	}

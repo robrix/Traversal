@@ -124,8 +124,8 @@ public enum Stream<T> {
 
 
 	/// Unfolds a new `Stream` starting from the initial state `state` and producing pairs of new states and values with `unspool`.
-	public static func unfold<State>(state: State, unspool: State -> (State, T)?) -> Stream {
-		return unspool(state).map { self.cons($1, self.unfold($0, unspool)) } ?? Nil
+	public static func unfold<State>(state: State, unspool: State -> (T, State)?) -> Stream {
+		return unspool(state).map { value, next in self.cons(value, self.unfold(next, unspool)) } ?? Nil
 	}
 
 
