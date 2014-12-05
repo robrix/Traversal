@@ -2,7 +2,12 @@
 
 /// An iterable stream.
 public enum Stream<T>: NilLiteralConvertible {
+	/// A `Stream` of a `T` and the lazily memoized rest of the `Stream`.
+	///
+	/// Avoid using this directly; instead, use `Stream.cons`. It doesn’t require you to `Box`, it comes in `@autoclosure` and `Memo` varieties, and it is usable as a first-class function.
 	case Cons(Box<T>, Memo<Stream<T>>)
+
+	/// The empty `Stream`.
 	case Nil
 
 
