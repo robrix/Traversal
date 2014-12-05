@@ -123,6 +123,12 @@ public enum Stream<T> {
 	}
 
 
+	/// Unfolds a new `Stream` starting from the initial state `state` and producing pairs of new states and values with `unspool`.
+	public static func unfold<State>(state: State, unspool: State -> (State, T)?) -> Stream {
+		return unspool(state).map { self.cons($1, self.unfold($0, unspool)) } ?? Nil
+	}
+
+
 	/// Produces a `Stream` by mapping the elements of the receiver into reducibles and concatenating their elements.
 	public func flattenMap<R: ReducibleType>(f: T -> R) -> Stream<R.Element> {
 		return foldRight(.Nil, f >>> Stream<R.Element>.with >>> (++))
