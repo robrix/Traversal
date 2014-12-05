@@ -193,4 +193,16 @@ class StreamTests: XCTestCase {
 	func testFoldRight() {
 		XCTAssertEqual(Stream([1, 2, 3]).foldRight("4", { toString($0) + $1 }), "1234")
 	}
+
+	func testUnfoldRight() {
+		let fib = Stream.unfoldRight((0, 1)) { x, y in
+			(x + y, (y, x + y))
+		}
+		XCTAssertEqual([Int]() + fib.take(5), [1, 2, 3, 5, 8])
+	}
+
+	func testUnfoldLeft() {
+		let stream = Stream.unfoldLeft(5) { n in n >= 0 ? (n - 1, n) : nil }
+		XCTAssertEqual([Int]() + stream, [0, 1, 2, 3, 4, 5])
+	}
 }

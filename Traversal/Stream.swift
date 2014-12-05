@@ -123,6 +123,30 @@ public enum Stream<T> {
 	}
 
 
+	/// Unfolds a new `Stream` starting from the initial state `state` and producing pairs of new states and values with `unspool`.
+	///
+	/// This is dual to `foldRight`. Where `foldRight` takes a right-associative combine function which takes the current value and the current accumulator and returns the next accumulator, `unfoldRight` takes the current state and returns the current value and the next state.
+	public static func unfoldRight<State>(state: State, unspool: State -> (T, State)?) -> Stream {
+		return unspool(state).map { value, next in self.cons(value, self.unfoldRight(next, unspool)) } ?? Nil
+	}
+
+	/// Unfolds a new `Stream` starting from the initial state `state` and producing pairs of new states and values with `unspool`.
+	///
+	/// Since this unfolds to the left, it produces an eager `Stream` and thus is unsuitable for infinite `Stream`s.
+	///
+	/// This is dual to `foldLeft`. Where `foldLeft` takes a right-associative combine function which takes the current value and the current accumulator and returns the next accumulator, `unfoldLeft` takes the current state and returns the current value and the next state.
+	public static func unfoldLeft<State>(state: State, unspool: State -> (State, T)?) -> Stream {
+		// An alternative implementation replaced the cons in `unfoldRight`’s definition with the concatenation of recurrence and the value. While quite elegant, it ended up being a third slower.
+		//
+		// This would be a recursive function definition, except that local functions are disallowed from recurring.
+		return fix { prepend in
+			{ state, stream in
+				unspool(state).map { next, value in prepend(next, self.cons(value, stream)) } ?? stream
+			}
+		} (state, Nil)
+	}
+
+
 	/// Produces a `Stream` by mapping the elements of the receiver into reducibles and concatenating their elements.
 	public func flattenMap<R: ReducibleType>(f: T -> R) -> Stream<R.Element> {
 		return foldRight(.Nil, f >>> Stream<R.Element>.with >>> (++))
