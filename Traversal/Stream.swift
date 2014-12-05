@@ -1,7 +1,7 @@
 //  Copyright (c) 2014 Rob Rix. All rights reserved.
 
 /// An iterable stream.
-public enum Stream<T> {
+public enum Stream<T>: NilLiteralConvertible {
 	case Cons(Box<T>, Memo<Stream<T>>)
 	case Nil
 
@@ -150,6 +150,14 @@ public enum Stream<T> {
 	/// Produces a `Stream` by mapping the elements of the receiver into reducibles and concatenating their elements.
 	public func flattenMap<R: ReducibleType>(f: T -> R) -> Stream<R.Element> {
 		return foldRight(.Nil, f >>> Stream<R.Element>.with >>> (++))
+	}
+
+
+	// MARK: NilLiteralConvertible
+
+	/// Constructs a `Nil` `Stream`.
+	public init(nilLiteral: ()) {
+		self = Nil
 	}
 }
 
