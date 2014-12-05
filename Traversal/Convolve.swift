@@ -9,7 +9,7 @@ public func convolve<R0: ReducibleType, R1: ReducibleType>(r0: R0, r1: R1) -> St
 	case let (.Cons(x, xs), .Cons(y, ys)):
 		return .cons((x.value, y.value), (convolve(xs.value, ys.value)))
 	default:
-		return .Nil
+		return nil
 	}
 }
 
@@ -23,7 +23,7 @@ public func convolve<R0: ReducibleType, R1: ReducibleType, R2: ReducibleType>(r0
 	case let (.Cons(x, xs), .Cons(y, ys), .Cons(z, zs)):
 		return .cons((x.value, y.value, z.value), (convolve(xs.value, ys.value, zs.value)))
 	default:
-		return .Nil
+		return nil
 	}
 }
 
