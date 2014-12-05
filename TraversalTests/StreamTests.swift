@@ -194,8 +194,8 @@ class StreamTests: XCTestCase {
 		XCTAssertEqual(Stream([1, 2, 3]).foldRight("4", { toString($0) + $1 }), "1234")
 	}
 
-	func testUnfold() {
-		let fib = Stream.unfold((0, 1)) { x, y in
+	func testUnfoldRight() {
+		let fib = Stream.unfoldRight((0, 1)) { x, y in
 			(x + y, (y, x + y))
 		}
 		XCTAssertEqual([Int]() + fib.take(5), [1, 2, 3, 5, 8])
