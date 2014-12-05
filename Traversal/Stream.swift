@@ -124,6 +124,8 @@ public enum Stream<T> {
 
 
 	/// Unfolds a new `Stream` starting from the initial state `state` and producing pairs of new states and values with `unspool`.
+	///
+	/// This is dual to `foldRight`. Where `foldRight` takes a right-associative combine function which takes the current value and the current accumulator and returns the next accumulator, `unfold` takes the current state and returns the current value and the next state.
 	public static func unfold<State>(state: State, unspool: State -> (T, State)?) -> Stream {
 		return unspool(state).map { value, next in self.cons(value, self.unfold(next, unspool)) } ?? Nil
 	}
