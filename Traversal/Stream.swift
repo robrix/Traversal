@@ -119,7 +119,7 @@ public enum Stream<T>: NilLiteralConvertible {
 
 	/// Folds the receiver starting from a given `seed` using the left-associative function `combine`.
 	public func foldLeft<Result>(seed: Result, _ combine: (Result, T) -> Result) -> Result {
-		return uncons().map { $1.value.foldLeft(combine(seed, $0), combine) } ?? seed
+		return foldLeft(seed, combine >>> Either.right)
 	}
 
 	/// Folds the receiver starting from a given `seed` using the left-associative function `combine`.
