@@ -15,7 +15,7 @@ infix operator ++ {
 
 /// Returns a reducer concatenating the elements of `lhs` and `rhs`.
 public func ++ <R1: ReducibleType, R2: ReducibleType where R1.Element == R2.Element> (lhs: R1, rhs: R2) -> Stream<R1.Element> {
-	return Stream(lhs).destructure().map { x, xs in
+	return Stream(lhs).uncons().map { x, xs in
 		.cons(x, (xs.value ++ rhs))
 	} ?? Stream(rhs)
 }
