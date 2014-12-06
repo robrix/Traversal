@@ -1,6 +1,7 @@
 //  Copyright (c) 2014 Rob Rix. All rights reserved.
 
 import Either
+import Memo
 import Prelude
 import Traversal
 import XCTest
@@ -197,6 +198,10 @@ class StreamTests: XCTestCase {
 
 	func testFoldRight() {
 		XCTAssertEqual(Stream([1, 2, 3]).foldRight("4", { toString($0) + $1 }), "1234")
+	}
+
+	func testFoldRightWithEarlyTermination() {
+		XCTAssertEqual(Stream([1, 2, 3]).foldRight("4", { (each: Int, rest: Memo<String>) in toString(each) }), "1")
 	}
 
 	func testUnfoldRight() {
