@@ -1,8 +1,13 @@
 //  Copyright (c) 2014 Rob Rix. All rights reserved.
 
 /// An iterable stream.
-public enum Stream<T> {
+public enum Stream<T>: NilLiteralConvertible {
+	/// A `Stream` of a `T` and the lazily memoized rest of the `Stream`.
+	///
+	/// Avoid using this directly; instead, use `Stream.cons`. It doesn’t require you to `Box`, it comes in `@autoclosure` and `Memo` varieties, and it is usable as a first-class function.
 	case Cons(Box<T>, Memo<Stream<T>>)
+
+	/// The empty `Stream`.
 	case Nil
 
 
@@ -13,10 +18,10 @@ public enum Stream<T> {
 		let reducer: Reducible<R, Stream, T>.Enumerator -> Reducible<R, Stream, T>.Enumerator = reducible.reducer()
 		let reduce: Reducible<R, Stream, T>.Enumerator = fix { recur in
 			reducer { reducible, initial, combine in
-				initial.first.map { .cons($0, recur(reducible, Nil, combine)) } ?? Nil
+				initial.first.map { .cons($0, recur(reducible, nil, combine)) } ?? nil
 			}
 		}
-		self = reduce(reducible, Nil) {
+		self = reduce(reducible, nil) {
 			.right(.unit($1))
 		}
 	}
@@ -37,7 +42,7 @@ public enum Stream<T> {
 	/// Maps a generator of `T?` into a generator of `Stream`.
 	public static func construct(generate: () -> T?) -> () -> Stream<T> {
 		return fix { recur in
-			{ generate().map { self.cons($0, recur()) } ?? Nil }
+			{ generate().map { self.cons($0, recur()) } ?? nil }
 		}
 	}
 
@@ -53,7 +58,7 @@ public enum Stream<T> {
 
 	/// Constructs a unary `Stream` of `x`.
 	public static func unit(x: T) -> Stream {
-		return Cons(Box(x), Memo(.Nil))
+		return Cons(Box(x), Memo(nil))
 	}
 
 	/// Constructs a `Stream` of `reducible`. Unlike the corresponding `init`, this is suitable for function composition.
@@ -65,15 +70,15 @@ public enum Stream<T> {
 	// MARK: Properties
 
 	public var first: T? {
-		return destructure()?.0
+		return uncons()?.0
 	}
 
 	public var rest: Stream {
-		return destructure()?.1.value ?? Nil
+		return uncons()?.1.value ?? nil
 	}
 
 
-	public func destructure() -> (T, Memo<Stream>)? {
+	public func uncons() -> (T, Memo<Stream>)? {
 		switch self {
 		case let Cons(x, rest):
 			return (x.value, rest)
@@ -89,9 +94,9 @@ public enum Stream<T> {
 	///
 	/// If `n` <= 0, returns the empty `Stream`.
 	public func take(n: Int) -> Stream {
-		if n <= 0 { return Nil }
+		if n <= 0 { return nil }
 
-		return destructure().map { .cons($0, $1.value.take(n - 1)) } ?? Nil
+		return uncons().map { .cons($0, $1.value.take(n - 1)) } ?? nil
 	}
 
 	/// Returns a `Stream` without the first `n` elements of `stream`.
@@ -108,31 +113,79 @@ public enum Stream<T> {
 
 	/// Returns a `Stream` produced by mapping the elements of the receiver with `f`.
 	public func map<U>(f: T -> U) -> Stream<U> {
-		return destructure().map { .cons(f($0), $1.value.map(f)) } ?? .Nil
+		return uncons().map { .cons(f($0), $1.value.map(f)) } ?? nil
 	}
 
 
 	/// Folds the receiver starting from a given `seed` using the left-associative function `combine`.
 	public func foldLeft<Result>(seed: Result, _ combine: (Result, T) -> Result) -> Result {
-		return destructure().map { $1.value.foldLeft(combine(seed, $0), combine) } ?? seed
+		return foldLeft(seed, combine >>> Either.right)
+	}
+
+	/// Folds the receiver starting from a given `seed` using the left-associative function `combine`.
+	///
+	/// `combine` should return `.Left(x)` to terminate the fold with `x`, or `.Right(x)` to continue the fold.
+	public func foldLeft<Result>(seed: Result, _ combine: (Result, T) -> Either<Result, Result>) -> Result {
+		return uncons().map { first, rest in
+			combine(seed, first).either(id, { rest.value.foldLeft($0, combine) })
+		} ?? seed
 	}
 
 	/// Folds the receiver ending with a given `seed` using the right-associative function `combine`.
 	public func foldRight<Result>(seed: Result, _ combine: (T, Result) -> Result) -> Result {
-		return destructure().map { combine($0, $1.value.foldRight(seed, combine)) } ?? seed
+		return uncons().map { combine($0, $1.value.foldRight(seed, combine)) } ?? seed
+	}
+
+	/// Folds the receiver ending with a given `seed` using the right-associative function `combine`.
+	///
+	/// `combine` receives the accumulator as a lazily memoized value. Thus, `combine` may terminate the fold simply by not evaluating the memoized accumulator.
+	public func foldRight<Result>(seed: Result, _ combine: (T, Memo<Result>) -> Result) -> Result {
+		return uncons().map { combine($0, $1.map { $0.foldRight(seed, combine) }) } ?? seed
+	}
+
+
+	/// Unfolds a new `Stream` starting from the initial state `state` and producing pairs of new states and values with `unspool`.
+	///
+	/// This is dual to `foldRight`. Where `foldRight` takes a right-associative combine function which takes the current value and the current accumulator and returns the next accumulator, `unfoldRight` takes the current state and returns the current value and the next state.
+	public static func unfoldRight<State>(state: State, unspool: State -> (T, State)?) -> Stream {
+		return unspool(state).map { value, next in self.cons(value, self.unfoldRight(next, unspool)) } ?? nil
+	}
+
+	/// Unfolds a new `Stream` starting from the initial state `state` and producing pairs of new states and values with `unspool`.
+	///
+	/// Since this unfolds to the left, it produces an eager `Stream` and thus is unsuitable for infinite `Stream`s.
+	///
+	/// This is dual to `foldLeft`. Where `foldLeft` takes a right-associative combine function which takes the current value and the current accumulator and returns the next accumulator, `unfoldLeft` takes the current state and returns the current value and the next state.
+	public static func unfoldLeft<State>(state: State, unspool: State -> (State, T)?) -> Stream {
+		// An alternative implementation replaced the cons in `unfoldRight`’s definition with the concatenation of recurrence and the value. While quite elegant, it ended up being a third slower.
+		//
+		// This would be a recursive function definition, except that local functions are disallowed from recurring.
+		return fix { prepend in
+			{ state, stream in
+				unspool(state).map { next, value in prepend(next, self.cons(value, stream)) } ?? stream
+			}
+		} (state, nil)
 	}
 
 
 	/// Produces a `Stream` by mapping the elements of the receiver into reducibles and concatenating their elements.
 	public func flattenMap<R: ReducibleType>(f: T -> R) -> Stream<R.Element> {
-		return foldRight(.Nil, f >>> Stream<R.Element>.with >>> (++))
+		return foldRight(nil, f >>> Stream<R.Element>.with >>> (++))
+	}
+
+
+	// MARK: NilLiteralConvertible
+
+	/// Constructs a `Nil` `Stream`.
+	public init(nilLiteral: ()) {
+		self = Nil
 	}
 }
 
 
 // MARK: API
 
-/// Returns the first element of `stream`, or `nil` if `stream` is `Nil`.
+/// Returns the first element of `stream`, or `nil` if `stream` is empty.
 public func first<T>(stream: Stream<T>) -> T? {
 	return stream.first
 }
@@ -150,7 +203,7 @@ infix operator ++ {
 
 /// Produces the concatenation of `left` and `right`.
 public func ++ <T> (left: Stream<T>, right: Stream<T>) -> Stream<T> {
-	return left.destructure().map {
+	return left.uncons().map {
 		.cons($0, Memo($1.value ++ right))
 	} ?? right
 }
@@ -238,5 +291,6 @@ public func != <T: Equatable> (lhs: Stream<T>, rhs: Stream<T>) -> Bool {
 // MARK: Imports
 
 import Box
+import Either
 import Memo
 import Prelude

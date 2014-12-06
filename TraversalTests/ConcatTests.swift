@@ -47,15 +47,15 @@ class ConcatTests: XCTestCase {
 	}
 
 	func testInfixConcatenationOfNilAndNilIsNil() {
-		XCTAssertEqual([Int]() + (Stream<Int>.Nil ++ Stream<Int>.Nil), [])
+		XCTAssertEqual([Int]() + (nil ++ nil), [])
 	}
 
 	func testInfixConcatenationOfNilAndXIsX() {
-		XCTAssertEqual([Int]() + (Stream.Nil ++ Stream.unit(0)), [0])
+		XCTAssertEqual([Int]() + (nil ++ Stream.unit(0)), [0])
 	}
 
 	func testInfixConcatenationOfXAndNilIsX() {
-		XCTAssertEqual([Int]() + (Stream.unit(0) ++ Stream.Nil), [0])
+		XCTAssertEqual([Int]() + (Stream.unit(0) ++ nil), [0])
 	}
 
 	func testInfixConcatenationOfXAndyIsXY() {

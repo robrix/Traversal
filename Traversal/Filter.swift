@@ -3,7 +3,7 @@
 /// Returns a reducer filtering out any elements of `reducible` which are not matched by `predicate`.
 public func filter<Base: ReducibleType>(reducible: Base, predicate: Base.Element -> Bool) -> ReducerOf<Base, Stream<Base.Element>> {
 	return flattenMap(reducible) {
-		predicate($0) ? .unit($0) : .Nil
+		predicate($0) ? .unit($0) : nil
 	}
 }
 

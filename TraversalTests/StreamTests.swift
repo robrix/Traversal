@@ -1,5 +1,7 @@
 //  Copyright (c) 2014 Rob Rix. All rights reserved.
 
+import Either
+import Memo
 import Prelude
 import Traversal
 import XCTest
@@ -90,11 +92,11 @@ class StreamTests: XCTestCase {
 
 	func testStreamReductionIsLeftReduce() {
 		XCTAssertEqual(Traversal.reduce(Stream(["1", "2", "3"]), "0", +), "0123")
-		XCTAssertEqual(Traversal.reduce(Stream.cons("1", Stream.cons("2", Stream.cons("3", Stream.Nil))), "0", +), "0123")
+		XCTAssertEqual(Traversal.reduce(Stream.cons("1", Stream.cons("2", Stream.unit("3"))), "0", +), "0123")
 	}
 
 	func testConstructsNilFromGeneratorOfConstantNil() {
-		XCTAssertTrue(Stream<Int> { nil } == Stream<Int>.Nil)
+		XCTAssertTrue(Stream<Int> { nil } == nil)
 	}
 
 	func testConstructsConsFromGeneratorOfConstantNonNil() {
@@ -117,9 +119,9 @@ class StreamTests: XCTestCase {
 	}
 
 	func testCons() {
-		let stream = Stream.cons(0, Stream.Nil)
+		let stream = Stream.unit(0)
 		XCTAssertEqual(first(stream) ?? -1, 0)
-		XCTAssert(dropFirst(stream) == Stream.Nil)
+		XCTAssert(dropFirst(stream) == nil)
 	}
 
 	let fibonacci: Stream<Int> = fix { fib in
@@ -133,12 +135,12 @@ class StreamTests: XCTestCase {
 
 	func testTakeOfZeroIsNil() {
 		let stream = fibonacci.take(0)
-		XCTAssertTrue(stream == .Nil)
+		XCTAssertTrue(stream == nil)
 	}
 
 	func testTakeOfNegativeIsNil() {
 		let stream = fibonacci.take(-1)
-		XCTAssertTrue(stream == .Nil)
+		XCTAssertTrue(stream == nil)
 	}
 
 	func testDrop() {
@@ -161,15 +163,15 @@ class StreamTests: XCTestCase {
 	}
 
 	func testConcatenationOfNilAndNilIsNil() {
-		XCTAssertEqual([Int]() + (Stream<Int>.Nil ++ Stream<Int>.Nil), [])
+		XCTAssertEqual([Int]() + (nil ++ nil), [])
 	}
 
 	func testConcatenationOfNilAndXIsX() {
-		XCTAssertEqual([Int]() + (Stream.Nil ++ Stream.unit(0)), [0])
+		XCTAssertEqual([Int]() + (nil ++ Stream.unit(0)), [0])
 	}
 
 	func testConcatenationOfXAndNilIsX() {
-		XCTAssertEqual([Int]() + (Stream.unit(0) ++ Stream.Nil), [0])
+		XCTAssertEqual([Int]() + (Stream.unit(0) ++ nil), [0])
 	}
 
 	func testConcatenationOfXAndyIsXY() {
@@ -190,7 +192,27 @@ class StreamTests: XCTestCase {
 		XCTAssertEqual(Stream([1, 2, 3]).foldLeft("0", { $0 + toString($1) }), "0123")
 	}
 
+	func testFoldLeftWithEarlyTermination() {
+		XCTAssertEqual(Stream([1, 2, 3]).foldLeft("0", { $0 + toString($1) } >>> Either.left), "01")
+	}
+
 	func testFoldRight() {
 		XCTAssertEqual(Stream([1, 2, 3]).foldRight("4", { toString($0) + $1 }), "1234")
+	}
+
+	func testFoldRightWithEarlyTermination() {
+		XCTAssertEqual(Stream([1, 2, 3]).foldRight("4", { (each: Int, rest: Memo<String>) in toString(each) }), "1")
+	}
+
+	func testUnfoldRight() {
+		let fib = Stream.unfoldRight((0, 1)) { x, y in
+			(x + y, (y, x + y))
+		}
+		XCTAssertEqual([Int]() + fib.take(5), [1, 2, 3, 5, 8])
+	}
+
+	func testUnfoldLeft() {
+		let stream = Stream.unfoldLeft(5) { n in n >= 0 ? (n - 1, n) : nil }
+		XCTAssertEqual([Int]() + stream, [0, 1, 2, 3, 4, 5])
 	}
 }

@@ -15,7 +15,7 @@ class FlattenMapTests: XCTestCase {
 		let sequence = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 		let reducible = Stream(sequence)
 		let filtered = flattenMap(reducible) {
-			$0 % 2 == 0 ? Stream.Nil : Stream.cons($0, Stream.Nil)
+			$0 % 2 == 0 ? nil : Stream.unit($0)
 		}
 		XCTAssertEqual(reduce(filtered, 0, +), 25)
 	}
@@ -24,7 +24,7 @@ class FlattenMapTests: XCTestCase {
 		let sequence = [1, 2, 3, 4]
 		let reducible = Stream(sequence)
 		let mapped = flattenMap(reducible) {
-			Stream.cons($0 * 2, Stream.Nil)
+			Stream.unit($0 * 2)
 		}
 		XCTAssertEqual(reduce(mapped, 0, +), 20)
 	}
