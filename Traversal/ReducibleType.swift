@@ -26,7 +26,7 @@ public func reduce<R: ReducibleType, Result>(collection: R, initial: Result, com
 ///
 /// Unlike the version above, this version takes a function returning Result instead of Either<Result, Result>. As such, it may be more convenient for cases not needing early termination.
 public func reduce<R: ReducibleType, Result>(collection: R, initial: Result, combine: Reducible<R, Result, R.Element>.Combine) -> Result {
-	return reduce(collection, initial) { .Right(Box(combine($0, $1))) }
+	return reduce(collection, initial, combine >>> Either.right)
 }
 
 

@@ -70,15 +70,15 @@ public enum Stream<T>: NilLiteralConvertible {
 	// MARK: Properties
 
 	public var first: T? {
-		return destructure()?.0
+		return uncons()?.0
 	}
 
 	public var rest: Stream {
-		return destructure()?.1.value ?? nil
+		return uncons()?.1.value ?? nil
 	}
 
 
-	public func destructure() -> (T, Memo<Stream>)? {
+	public func uncons() -> (T, Memo<Stream>)? {
 		switch self {
 		case let Cons(x, rest):
 			return (x.value, rest)
@@ -96,7 +96,7 @@ public enum Stream<T>: NilLiteralConvertible {
 	public func take(n: Int) -> Stream {
 		if n <= 0 { return nil }
 
-		return destructure().map { .cons($0, $1.value.take(n - 1)) } ?? nil
+		return uncons().map { .cons($0, $1.value.take(n - 1)) } ?? nil
 	}
 
 	/// Returns a `Stream` without the first `n` elements of `stream`.
@@ -113,18 +113,34 @@ public enum Stream<T>: NilLiteralConvertible {
 
 	/// Returns a `Stream` produced by mapping the elements of the receiver with `f`.
 	public func map<U>(f: T -> U) -> Stream<U> {
-		return destructure().map { .cons(f($0), $1.value.map(f)) } ?? nil
+		return uncons().map { .cons(f($0), $1.value.map(f)) } ?? nil
 	}
 
 
 	/// Folds the receiver starting from a given `seed` using the left-associative function `combine`.
 	public func foldLeft<Result>(seed: Result, _ combine: (Result, T) -> Result) -> Result {
-		return destructure().map { $1.value.foldLeft(combine(seed, $0), combine) } ?? seed
+		return foldLeft(seed, combine >>> Either.right)
+	}
+
+	/// Folds the receiver starting from a given `seed` using the left-associative function `combine`.
+	///
+	/// `combine` should return `.Left(x)` to terminate the fold with `x`, or `.Right(x)` to continue the fold.
+	public func foldLeft<Result>(seed: Result, _ combine: (Result, T) -> Either<Result, Result>) -> Result {
+		return uncons().map { first, rest in
+			combine(seed, first).either(id, { rest.value.foldLeft($0, combine) })
+		} ?? seed
 	}
 
 	/// Folds the receiver ending with a given `seed` using the right-associative function `combine`.
 	public func foldRight<Result>(seed: Result, _ combine: (T, Result) -> Result) -> Result {
-		return destructure().map { combine($0, $1.value.foldRight(seed, combine)) } ?? seed
+		return uncons().map { combine($0, $1.value.foldRight(seed, combine)) } ?? seed
+	}
+
+	/// Folds the receiver ending with a given `seed` using the right-associative function `combine`.
+	///
+	/// `combine` receives the accumulator as a lazily memoized value. Thus, `combine` may terminate the fold simply by not evaluating the memoized accumulator.
+	public func foldRight<Result>(seed: Result, _ combine: (T, Memo<Result>) -> Result) -> Result {
+		return uncons().map { combine($0, $1.map { $0.foldRight(seed, combine) }) } ?? seed
 	}
 
 
@@ -187,7 +203,7 @@ infix operator ++ {
 
 /// Produces the concatenation of `left` and `right`.
 public func ++ <T> (left: Stream<T>, right: Stream<T>) -> Stream<T> {
-	return left.destructure().map {
+	return left.uncons().map {
 		.cons($0, Memo($1.value ++ right))
 	} ?? right
 }
@@ -275,5 +291,6 @@ public func != <T: Equatable> (lhs: Stream<T>, rhs: Stream<T>) -> Bool {
 // MARK: Imports
 
 import Box
+import Either
 import Memo
 import Prelude
