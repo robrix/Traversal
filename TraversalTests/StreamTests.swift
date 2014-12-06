@@ -1,5 +1,6 @@
 //  Copyright (c) 2014 Rob Rix. All rights reserved.
 
+import Either
 import Prelude
 import Traversal
 import XCTest
@@ -188,6 +189,10 @@ class StreamTests: XCTestCase {
 
 	func testFoldLeft() {
 		XCTAssertEqual(Stream([1, 2, 3]).foldLeft("0", { $0 + toString($1) }), "0123")
+	}
+
+	func testFoldLeftWithEarlyTermination() {
+		XCTAssertEqual(Stream([1, 2, 3]).foldLeft("0", { $0 + toString($1) } >>> Either.left), "01")
 	}
 
 	func testFoldRight() {
