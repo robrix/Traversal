@@ -122,6 +122,15 @@ public enum Stream<T>: NilLiteralConvertible {
 		return destructure().map { $1.value.foldLeft(combine(seed, $0), combine) } ?? seed
 	}
 
+	/// Folds the receiver starting from a given `seed` using the left-associative function `combine`.
+	///
+	/// `combine` should return `.Left(x)` to terminate the fold with `x`, or `.Right(x)` to continue the fold.
+	public func foldLeft<Result>(seed: Result, _ combine: (Result, T) -> Either<Result, Result>) -> Result {
+		return destructure().map { first, rest in
+			combine(seed, first).either(id, { rest.value.foldLeft($0, combine) })
+		} ?? seed
+	}
+
 	/// Folds the receiver ending with a given `seed` using the right-associative function `combine`.
 	public func foldRight<Result>(seed: Result, _ combine: (T, Result) -> Result) -> Result {
 		return destructure().map { combine($0, $1.value.foldRight(seed, combine)) } ?? seed
@@ -275,5 +284,6 @@ public func != <T: Equatable> (lhs: Stream<T>, rhs: Stream<T>) -> Bool {
 // MARK: Imports
 
 import Box
+import Either
 import Memo
 import Prelude
