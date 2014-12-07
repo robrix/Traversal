@@ -1,11 +1,5 @@
 //  Copyright (c) 2014 Rob Rix. All rights reserved.
 
-infix operator ++ {
-	associativity right
-	precedence 145
-}
-
-
 /// A reducible over other reducibles.
 ///
 /// This is a meta-reducer used to implement `flattenMap`, `map`, `filter`, and `concat`.
@@ -43,6 +37,14 @@ public struct ReducerOf<T>: ReducibleType {
 	}
 
 	private let stream: Stream<Stream<T>>
+}
+
+
+// MARK: Operators
+
+infix operator ++ {
+	associativity right
+	precedence 145
 }
 
 

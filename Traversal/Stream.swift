@@ -1,15 +1,7 @@
 //  Copyright (c) 2014 Rob Rix. All rights reserved.
 
 /// An iterable stream.
-public enum Stream<T>: ArrayLiteralConvertible, NilLiteralConvertible {
-	/// A `Stream` of a `T` and the lazily memoized rest of the `Stream`.
-	///
-	/// Avoid using this directly; instead, use `Stream.cons`. It doesn’t require you to `Box`, it comes in `@autoclosure` and `Memo` varieties, and it is usable as a first-class function.
-	case Cons(Box<T>, Memo<Stream<T>>)
-
-	/// The empty `Stream`.
-	case Nil
-
+public enum Stream<T>: ArrayLiteralConvertible, NilLiteralConvertible, Printable, ReducibleType {
 
 	// MARK: Lifecycle
 
@@ -69,15 +61,20 @@ public enum Stream<T>: ArrayLiteralConvertible, NilLiteralConvertible {
 
 	// MARK: Properties
 
+	/// The first element of the receiver, or `nil` if the receiver is the empty stream.
 	public var first: T? {
 		return uncons()?.0
 	}
 
+	/// The remainder of the receiver after its first element. If the receiver is the empty stream, this will return the empty stream.
 	public var rest: Stream {
 		return uncons()?.1.value ?? nil
 	}
 
 
+	/// Unpacks the receiver into an optional tuple of its first element and the memoized remainder.
+	///
+	/// Returns `nil` if the receiver is the empty stream.
 	public func uncons() -> (T, Memo<Stream>)? {
 		switch self {
 		case let Cons(x, rest):
@@ -187,53 +184,10 @@ public enum Stream<T>: ArrayLiteralConvertible, NilLiteralConvertible {
 	public init(nilLiteral: ()) {
 		self = Nil
 	}
-}
 
 
-// MARK: API
+	// MARK: Printable
 
-/// Returns the first element of `stream`, or `nil` if `stream` is empty.
-public func first<T>(stream: Stream<T>) -> T? {
-	return stream.first
-}
-
-/// Drops the first element of `stream`.
-public func dropFirst<T>(stream: Stream<T>) -> Stream<T> {
-	return stream.rest
-}
-
-
-infix operator ++ {
-	associativity right
-	precedence 145
-}
-
-/// Produces the concatenation of `left` and `right`.
-public func ++ <T> (left: Stream<T>, right: Stream<T>) -> Stream<T> {
-	return left.uncons().map {
-		.cons($0, Memo($1.value ++ right))
-	} ?? right
-}
-
-
-// MARK: ReducibleType conformance.
-
-extension Stream: ReducibleType {
-	public func reducer<Result>() -> Reducible<Stream, Result, T>.Enumerator -> Reducible<Stream, Result, T>.Enumerator {
-		return { recur in
-			{ stream, initial, combine in
-				stream.first.map {
-					combine(initial, $0).either(id, { recur(stream.rest, $0, combine) })
-				} ?? initial
-			}
-		}
-	}
-}
-
-
-// MARK: Printable conformance.
-
-extension Stream: Printable {
 	public var description: String {
 		let internalDescription: Stream -> [String] = fix { internalDescription in {
 				switch $0 {
@@ -246,6 +200,47 @@ extension Stream: Printable {
 		}
 		return "(" + join(" ", internalDescription(self)) + ")"
 	}
+
+
+	// MARK: ReducibleType
+
+	public func reducer<Result>() -> Reducible<Stream, Result, T>.Enumerator -> Reducible<Stream, Result, T>.Enumerator {
+		return { recur in
+			{ stream, initial, combine in
+				stream.first.map {
+					combine(initial, $0).either(id, { recur(stream.rest, $0, combine) })
+				} ?? initial
+			}
+		}
+	}
+
+
+	// MARK: Cases
+
+	/// A `Stream` of a `T` and the lazily memoized rest of the `Stream`.
+	///
+	/// Avoid using this directly; instead, use `Stream.cons()` or `Stream.unit()` to construct streams, and `stream.first`, `stream.rest`, and `stream.uncons()` to deconstruct them: they don’t require you to `Box` or unbox, `Stream.cons()` comes in `@autoclosure` and `Memo` varieties, and `Stream.unit()`, `Stream.cons()`, and `stream.uncons()` are all usable as first-class functions.
+	case Cons(Box<T>, Memo<Stream<T>>)
+
+	/// The empty `Stream`.
+	///
+	/// Avoid using this directly; instead, use `nil`: `Stream` conforms to `NilLiteralConvertible`, and `nil` has better properties with respect to type inferencing.
+	case Nil
+}
+
+
+// MARK: Concatenation
+
+infix operator ++ {
+	associativity right
+	precedence 145
+}
+
+/// Produces the concatenation of `left` and `right`.
+public func ++ <T> (left: Stream<T>, right: Stream<T>) -> Stream<T> {
+	return left.uncons().map {
+		.cons($0, Memo($1.value ++ right))
+	} ?? right
 }
 
 

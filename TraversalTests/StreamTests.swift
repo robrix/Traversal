@@ -41,11 +41,11 @@ class StreamTests: XCTestCase {
 		let seq = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 		let stream = Stream(seq)
 
-		XCTAssertEqual(first(stream) ?? -1, 1)
-		XCTAssertEqual(first(stream) ?? -1, 1)
-		XCTAssertEqual(first(dropFirst(stream)) ?? -1, 2)
-		XCTAssertEqual(first(dropFirst(stream)) ?? -1, 2)
-		XCTAssertEqual(first(dropFirst(dropFirst(dropFirst(stream)))) ?? -1, 4)
+		XCTAssertEqual(stream.first ?? -1, 1)
+		XCTAssertEqual(stream.first ?? -1, 1)
+		XCTAssertEqual(stream.rest.first ?? -1, 2)
+		XCTAssertEqual(stream.rest.first ?? -1, 2)
+		XCTAssertEqual(stream.rest.rest.rest.first ?? -1, 4)
 
 		var n = 0
 		for (a, b) in Zip2(sequence(stream), seq) {
@@ -74,18 +74,18 @@ class StreamTests: XCTestCase {
 		let stream = Stream(seq)
 		XCTAssertEqual(effects, 1)
 
-		first(stream)
+		let _ = stream.first
 		XCTAssertEqual(effects, 1)
 
-		first(dropFirst(stream))
+		let _ = stream.rest.first
 		XCTAssertEqual(effects, 2)
 
 		for each in sequence(stream) {}
 		XCTAssertEqual(effects, 5)
 
-		XCTAssertEqual(first(stream) ?? -1, 1)
-		XCTAssertEqual(first(dropFirst(dropFirst(dropFirst(dropFirst(stream))))) ?? -1, 5)
-		XCTAssertNil(first(dropFirst(dropFirst(dropFirst(dropFirst(dropFirst(stream)))))))
+		XCTAssertEqual(stream.first ?? -1, 1)
+		XCTAssertEqual(stream.rest.rest.rest.rest.first ?? -1, 5)
+		XCTAssertNil(stream.rest.rest.rest.rest.rest.first)
 		XCTAssertEqual(effects, 5)
 	}
 
@@ -123,8 +123,8 @@ class StreamTests: XCTestCase {
 
 	func testCons() {
 		let stream = Stream.unit(0)
-		XCTAssertEqual(first(stream) ?? -1, 0)
-		XCTAssert(dropFirst(stream) == nil)
+		XCTAssertEqual(stream.first ?? -1, 0)
+		XCTAssert(stream.rest == nil)
 	}
 
 	let fibonacci: Stream<Int> = fix { fib in
