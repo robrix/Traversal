@@ -218,4 +218,9 @@ class StreamTests: XCTestCase {
 		let stream = Stream.unfoldLeft(5) { n in n >= 0 ? (n - 1, n) : nil }
 		XCTAssertEqual([Int]() + stream, [0, 1, 2, 3, 4, 5])
 	}
+
+	func testArrayLiteralConvertible() {
+		let stream: Stream<Int> = [1, 2, 3, 4, 5]
+		XCTAssertEqual([Int]() + stream, [1, 2, 3, 4, 5])
+	}
 }

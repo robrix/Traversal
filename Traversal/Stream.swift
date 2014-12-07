@@ -1,7 +1,7 @@
 //  Copyright (c) 2014 Rob Rix. All rights reserved.
 
 /// An iterable stream.
-public enum Stream<T>: NilLiteralConvertible {
+public enum Stream<T>: ArrayLiteralConvertible, NilLiteralConvertible {
 	/// A `Stream` of a `T` and the lazily memoized rest of the `Stream`.
 	///
 	/// Avoid using this directly; instead, use `Stream.cons`. It doesn’t require you to `Box`, it comes in `@autoclosure` and `Memo` varieties, and it is usable as a first-class function.
@@ -171,6 +171,13 @@ public enum Stream<T>: NilLiteralConvertible {
 	/// Produces a `Stream` by mapping the elements of the receiver into reducibles and concatenating their elements.
 	public func flattenMap<R: ReducibleType>(f: T -> R) -> Stream<R.Element> {
 		return foldRight(nil, f >>> Stream<R.Element>.with >>> (++))
+	}
+
+
+	// MARK: ArrayLiteralConvertible
+
+	public init(arrayLiteral elements: T...) {
+		self.init(elements)
 	}
 
 
