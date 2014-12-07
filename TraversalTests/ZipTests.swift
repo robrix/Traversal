@@ -3,10 +3,10 @@
 import Traversal
 import XCTest
 
-class ConvolveTests: XCTestCase {
-	func testConvolutionOfTwoParameters() {
+class ZipTests: XCTestCase {
+	func testZipOfTwoParameters() {
 		let r = Stream([1, 2, 3])
-		let zipped = convolve(r, r)
+		let zipped = zip(r, r)
 		let mapped = Traversal.map(zipped, +)
 		XCTAssertEqual(reduce(mapped, 0, +), 12)
 	}
