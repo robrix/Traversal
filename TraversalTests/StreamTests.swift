@@ -174,7 +174,7 @@ class StreamTests: XCTestCase {
 		XCTAssertEqual([Int]() + (Stream.unit(0) ++ nil), [0])
 	}
 
-	func testConcatenationOfXAndyIsXY() {
+	func testConcatenationOfXAndYIsXY() {
 		XCTAssertEqual([Int]() + (Stream.unit(0) ++ Stream.unit(1)), [0, 1])
 	}
 
