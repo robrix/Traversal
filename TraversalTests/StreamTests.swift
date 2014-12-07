@@ -38,8 +38,8 @@ class StreamTests: XCTestCase {
 	}
 
 	func testStreams() {
-		let sequence = [1, 2, 3, 4, 5, 6, 7, 8, 9]
-		let stream = Stream(sequence)
+		let seq = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+		let stream = Stream(seq)
 
 		XCTAssertEqual(first(stream) ?? -1, 1)
 		XCTAssertEqual(first(stream) ?? -1, 1)
@@ -48,18 +48,18 @@ class StreamTests: XCTestCase {
 		XCTAssertEqual(first(dropFirst(dropFirst(dropFirst(stream)))) ?? -1, 4)
 
 		var n = 0
-		for (a, b) in Zip2(stream, sequence) {
+		for (a, b) in Zip2(sequence(stream), seq) {
 			n++
 			XCTAssertEqual(a, b)
 			XCTAssertEqual(n, a)
 		}
-		XCTAssertEqual(Array(stream), sequence)
-		XCTAssertEqual(n, sequence.count)
+		XCTAssertEqual(Array(sequence(stream)), seq)
+		XCTAssertEqual(n, seq.count)
 	}
 
 	func testEffectfulStreams() {
 		var effects = 0
-		let sequence = SequenceOf<Int> {
+		let seq = SequenceOf<Int> {
 			GeneratorOf {
 				if effects < 5 {
 					effects++
@@ -71,7 +71,7 @@ class StreamTests: XCTestCase {
 
 		XCTAssertEqual(effects, 0)
 
-		let stream = Stream(sequence)
+		let stream = Stream(seq)
 		XCTAssertEqual(effects, 1)
 
 		first(stream)
@@ -80,7 +80,7 @@ class StreamTests: XCTestCase {
 		first(dropFirst(stream))
 		XCTAssertEqual(effects, 2)
 
-		for each in stream {}
+		for each in sequence(stream) {}
 		XCTAssertEqual(effects, 5)
 
 		XCTAssertEqual(first(stream) ?? -1, 1)
@@ -108,10 +108,10 @@ class StreamTests: XCTestCase {
 	}
 
 	func testConstructsFiniteStreamFromGeneratorOfFiniteSequence() {
-		let sequence = [1, 2, 3]
-		var generator = sequence.generate()
+		let seq = [1, 2, 3]
+		var generator = seq.generate()
 		let stream = Stream { generator.next() }
-		XCTAssertEqual(Array(stream), sequence)
+		XCTAssertEqual(Array(sequence(stream)), seq)
 		XCTAssertEqual(Traversal.reduce(stream, 0, +), 6)
 		XCTAssertEqual(Traversal.reduce(map(stream, toString), "0", +), "0123")
 	}
@@ -162,7 +162,7 @@ class StreamTests: XCTestCase {
 	}
 
 	func testMap() {
-		XCTAssertEqual(Array(fibonacci.map { $0 * $0 }.take(3)), [1, 4, 9])
+		XCTAssertEqual(Array(sequence(fibonacci.map { $0 * $0 }.take(3))), [1, 4, 9])
 	}
 
 	func testConcatenationOfNilAndNilIsNil() {
