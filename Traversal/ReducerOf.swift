@@ -40,3 +40,47 @@ public struct ReducerOf<Base: ReducibleType, T: ReducibleType>: ReducibleType, P
 	private let reducible: Base
 	private let map: Base.Element -> T
 }
+
+
+infix operator ++ {
+	associativity right
+	precedence 145
+}
+
+public struct Reducer<T>: ReducibleType {
+	// MARK: Lifecycle
+
+	public init<Base: ReducibleType, Mapped: ReducibleType where Mapped.Element == T>(_ reducible: Base, _ map: Base.Element -> Mapped) {
+		self.init(Stream(reducible).map(map >>> Stream.with))
+	}
+
+
+	// MARK: ReducibleType
+
+	public func reducer<Result>() -> Reducible<Reducer, Result, T>.Enumerator -> Reducible<Reducer, Result, T>.Enumerator {
+		return { recur in
+			{ collection, initial, combine in
+				collection.stream.uncons().map { inner, outer in
+					(inner.reducer()) { inner, initial, combine in
+						recur(Reducer(Stream.unit(inner) ++ outer.value), initial, combine)
+					} (inner, initial, combine)
+				} ?? initial
+			}
+		}
+	}
+
+
+	// MARK: Private
+
+	private init(_ stream: Stream<Stream<T>>) {
+		self.stream = stream
+	}
+
+	private let stream: Stream<Stream<T>>
+}
+
+
+// MARK: Imports
+
+import Memo
+import Prelude
