@@ -8,10 +8,10 @@ public protocol IntegratorType {
 	func integrate(differential: Differential) -> Self
 }
 
-public func integrate<Into: IntegratorType, R: ReducibleType where R.Element == Into.Differential>(initial: Into, from: R) -> Into {
+public func integrate<Into: IntegratorType, R: ReducibleType where R.Element == Into.Differential>(initial: Into, from: R) -> Into.Integral {
 	return reduce(from, initial) { into, each in
 		into.integrate(each)
-	}
+	}.integral
 }
 
 public struct IntegratorOf<Integral, Differential>: IntegratorType {

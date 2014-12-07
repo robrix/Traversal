@@ -9,6 +9,6 @@ final class IntegratorTests: XCTestCase {
 			into.append(each)
 			return into
 		}
-		XCTAssertEqual(integrate(integrable, Stream([1, 2, 3])).integral, [1, 2, 3])
+		XCTAssertEqual(integrate(integrable, Stream([1, 2, 3])), [1, 2, 3])
 	}
 }
