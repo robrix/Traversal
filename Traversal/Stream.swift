@@ -223,6 +223,8 @@ public enum Stream<T>: ArrayLiteralConvertible, NilLiteralConvertible, Printable
 	case Cons(Box<T>, Memo<Stream<T>>)
 
 	/// The empty `Stream`.
+	///
+	/// Avoid using this directly; instead, use `nil`: `Stream` conforms to `NilLiteralConvertible`, and `nil` has better properties with respect to type inferencing.
 	case Nil
 }
 
