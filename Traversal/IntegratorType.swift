@@ -7,6 +7,7 @@ public func += <E: ExtensibleCollectionType, R: ReducibleType where R.Element ==
 	}
 }
 
+/// Returns a copy of `left` with the elements of `right` appended onto it.
 public func + <E: ExtensibleCollectionType, R: ReducibleType where R.Element == E.Generator.Element> (left: E, right: R) -> E {
 	return reduce(right, left) { $0 + [$1] }
 }
