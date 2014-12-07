@@ -206,19 +206,6 @@ public enum Stream<T>: ArrayLiteralConvertible, NilLiteralConvertible, Printable
 }
 
 
-// MARK: API
-
-/// Returns the first element of `stream`, or `nil` if `stream` is empty.
-public func first<T>(stream: Stream<T>) -> T? {
-	return stream.first
-}
-
-/// Drops the first element of `stream`.
-public func dropFirst<T>(stream: Stream<T>) -> Stream<T> {
-	return stream.rest
-}
-
-
 infix operator ++ {
 	associativity right
 	precedence 145
