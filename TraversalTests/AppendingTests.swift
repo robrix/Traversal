@@ -3,7 +3,7 @@
 import Traversal
 import XCTest
 
-final class IntegratorTests: XCTestCase {
+final class AppendingTests: XCTestCase {
 	func testExtending() {
 		var extensible = [Int]()
 		extensible += Stream([1, 2, 3])
