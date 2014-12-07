@@ -1,7 +1,7 @@
 //  Copyright (c) 2014 Rob Rix. All rights reserved.
 
 /// An iterable stream.
-public enum Stream<T>: ArrayLiteralConvertible, NilLiteralConvertible {
+public enum Stream<T>: ArrayLiteralConvertible, NilLiteralConvertible, Printable {
 	/// A `Stream` of a `T` and the lazily memoized rest of the `Stream`.
 	///
 	/// Avoid using this directly; instead, use `Stream.cons`. It doesn’t require you to `Box`, it comes in `@autoclosure` and `Memo` varieties, and it is usable as a first-class function.
@@ -187,6 +187,22 @@ public enum Stream<T>: ArrayLiteralConvertible, NilLiteralConvertible {
 	public init(nilLiteral: ()) {
 		self = Nil
 	}
+
+
+	// MARK: Printable
+
+	public var description: String {
+		let internalDescription: Stream -> [String] = fix { internalDescription in {
+				switch $0 {
+				case let Cons(x, rest):
+					return [toString(x.value)] + internalDescription(rest.value)
+				default:
+					return []
+				}
+			}
+		}
+		return "(" + join(" ", internalDescription(self)) + ")"
+	}
 }
 
 
@@ -227,24 +243,6 @@ extension Stream: ReducibleType {
 				} ?? initial
 			}
 		}
-	}
-}
-
-
-// MARK: Printable conformance.
-
-extension Stream: Printable {
-	public var description: String {
-		let internalDescription: Stream -> [String] = fix { internalDescription in {
-				switch $0 {
-				case let Cons(x, rest):
-					return [toString(x.value)] + internalDescription(rest.value)
-				default:
-					return []
-				}
-			}
-		}
-		return "(" + join(" ", internalDescription(self)) + ")"
 	}
 }
 
