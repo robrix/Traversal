@@ -17,8 +17,8 @@
 		D430A1991A0D1A9C004D8A26 /* Concat.swift in Sources */ = {isa = PBXBuildFile; fileRef = D430A1981A0D1A9C004D8A26 /* Concat.swift */; };
 		D430A19B1A0D1B44004D8A26 /* ReducerOf.swift in Sources */ = {isa = PBXBuildFile; fileRef = D430A19A1A0D1B44004D8A26 /* ReducerOf.swift */; };
 		D430A19E1A0D2DC5004D8A26 /* ConcatTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D430A19D1A0D2DC5004D8A26 /* ConcatTests.swift */; };
-		D430A1A01A0D2F0F004D8A26 /* Convolve.swift in Sources */ = {isa = PBXBuildFile; fileRef = D430A19F1A0D2F0F004D8A26 /* Convolve.swift */; };
-		D430A1A21A0D37D8004D8A26 /* ConvolveTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D430A1A11A0D37D8004D8A26 /* ConvolveTests.swift */; };
+		D430A1A01A0D2F0F004D8A26 /* Zip.swift in Sources */ = {isa = PBXBuildFile; fileRef = D430A19F1A0D2F0F004D8A26 /* Zip.swift */; };
+		D430A1A21A0D37D8004D8A26 /* ZipTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D430A1A11A0D37D8004D8A26 /* ZipTests.swift */; };
 		D45B60E61A0D43680009D607 /* Join.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45B60E51A0D43670009D607 /* Join.swift */; };
 		D45B60E91A0D46CB0009D607 /* JoinTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45B60E81A0D46CB0009D607 /* JoinTests.swift */; };
 		D461ED5B19E08F4500DEF5AD /* Traversal.h in Headers */ = {isa = PBXBuildFile; fileRef = D461ED5A19E08F4500DEF5AD /* Traversal.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -59,8 +59,8 @@
 		D430A1981A0D1A9C004D8A26 /* Concat.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Concat.swift; sourceTree = "<group>"; };
 		D430A19A1A0D1B44004D8A26 /* ReducerOf.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReducerOf.swift; sourceTree = "<group>"; };
 		D430A19D1A0D2DC5004D8A26 /* ConcatTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConcatTests.swift; sourceTree = "<group>"; };
-		D430A19F1A0D2F0F004D8A26 /* Convolve.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Convolve.swift; sourceTree = "<group>"; };
-		D430A1A11A0D37D8004D8A26 /* ConvolveTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConvolveTests.swift; sourceTree = "<group>"; };
+		D430A19F1A0D2F0F004D8A26 /* Zip.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Zip.swift; sourceTree = "<group>"; };
+		D430A1A11A0D37D8004D8A26 /* ZipTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZipTests.swift; sourceTree = "<group>"; };
 		D45B60E51A0D43670009D607 /* Join.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Join.swift; sourceTree = "<group>"; };
 		D45B60E81A0D46CB0009D607 /* JoinTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JoinTests.swift; sourceTree = "<group>"; };
 		D461ED5519E08F4500DEF5AD /* Traversal.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Traversal.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -114,7 +114,7 @@
 				D430A18E1A0D0133004D8A26 /* Filter.swift */,
 				D430A1941A0D0719004D8A26 /* FlattenMap.swift */,
 				D430A1981A0D1A9C004D8A26 /* Concat.swift */,
-				D430A19F1A0D2F0F004D8A26 /* Convolve.swift */,
+				D430A19F1A0D2F0F004D8A26 /* Zip.swift */,
 				D45B60E51A0D43670009D607 /* Join.swift */,
 			);
 			name = Reducers;
@@ -171,10 +171,10 @@
 				D430A1921A0D038F004D8A26 /* FilterTests.swift */,
 				D430A1961A0D0B20004D8A26 /* FlattenMapTests.swift */,
 				D430A19D1A0D2DC5004D8A26 /* ConcatTests.swift */,
-				D430A1A11A0D37D8004D8A26 /* ConvolveTests.swift */,
 				D45B60E81A0D46CB0009D607 /* JoinTests.swift */,
 				D4D3E32B1A1EBC28001A9ED4 /* SequenceTests.swift */,
 				D408804B1A22677200BB9997 /* ReducerOfTests.swift */,
+				D430A1A11A0D37D8004D8A26 /* ZipTests.swift */,
 				D461ED6519E08F4500DEF5AD /* Supporting Files */,
 			);
 			path = TraversalTests;
@@ -304,7 +304,7 @@
 				D430A19B1A0D1B44004D8A26 /* ReducerOf.swift in Sources */,
 				D430A1991A0D1A9C004D8A26 /* Concat.swift in Sources */,
 				D462EB9919E4C8F700ADAAC9 /* Stream.swift in Sources */,
-				D430A1A01A0D2F0F004D8A26 /* Convolve.swift in Sources */,
+				D430A1A01A0D2F0F004D8A26 /* Zip.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -318,7 +318,7 @@
 				D45B60E91A0D46CB0009D607 /* JoinTests.swift in Sources */,
 				D430A1771A06341E004D8A26 /* MapTests.swift in Sources */,
 				D408804C1A22677200BB9997 /* ReducerOfTests.swift in Sources */,
-				D430A1A21A0D37D8004D8A26 /* ConvolveTests.swift in Sources */,
+				D430A1A21A0D37D8004D8A26 /* ZipTests.swift in Sources */,
 				D4D3E32C1A1EBC28001A9ED4 /* SequenceTests.swift in Sources */,
 				D430A1971A0D0B20004D8A26 /* FlattenMapTests.swift in Sources */,
 			);
