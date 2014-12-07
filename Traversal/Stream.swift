@@ -80,6 +80,9 @@ public enum Stream<T>: ArrayLiteralConvertible, NilLiteralConvertible, Printable
 	}
 
 
+	/// Unpacks the receiver into an optional tuple of its first element and the memoized remainder.
+	///
+	/// Returns `nil` if the receiver is the empty stream.
 	public func uncons() -> (T, Memo<Stream>)? {
 		switch self {
 		case let Cons(x, rest):
