@@ -1,7 +1,7 @@
 //  Copyright (c) 2014 Rob Rix. All rights reserved.
 
 /// An iterable stream.
-public enum Stream<T>: ArrayLiteralConvertible, NilLiteralConvertible, Printable {
+public enum Stream<T>: ArrayLiteralConvertible, NilLiteralConvertible, Printable, ReducibleType {
 	/// A `Stream` of a `T` and the lazily memoized rest of the `Stream`.
 	///
 	/// Avoid using this directly; instead, use `Stream.cons`. It doesn’t require you to `Box`, it comes in `@autoclosure` and `Memo` varieties, and it is usable as a first-class function.
@@ -203,6 +203,19 @@ public enum Stream<T>: ArrayLiteralConvertible, NilLiteralConvertible, Printable
 		}
 		return "(" + join(" ", internalDescription(self)) + ")"
 	}
+
+
+	// MARK: ReducibleType
+
+	public func reducer<Result>() -> Reducible<Stream, Result, T>.Enumerator -> Reducible<Stream, Result, T>.Enumerator {
+		return { recur in
+			{ stream, initial, combine in
+				stream.first.map {
+					combine(initial, $0).either(id, { recur(stream.rest, $0, combine) })
+				} ?? initial
+			}
+		}
+	}
 }
 
 
@@ -216,21 +229,6 @@ public func ++ <T> (left: Stream<T>, right: Stream<T>) -> Stream<T> {
 	return left.uncons().map {
 		.cons($0, Memo($1.value ++ right))
 	} ?? right
-}
-
-
-// MARK: ReducibleType conformance.
-
-extension Stream: ReducibleType {
-	public func reducer<Result>() -> Reducible<Stream, Result, T>.Enumerator -> Reducible<Stream, Result, T>.Enumerator {
-		return { recur in
-			{ stream, initial, combine in
-				stream.first.map {
-					combine(initial, $0).either(id, { recur(stream.rest, $0, combine) })
-				} ?? initial
-			}
-		}
-	}
 }
 
 
