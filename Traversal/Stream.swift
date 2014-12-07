@@ -219,7 +219,7 @@ public enum Stream<T>: ArrayLiteralConvertible, NilLiteralConvertible, Printable
 
 	/// A `Stream` of a `T` and the lazily memoized rest of the `Stream`.
 	///
-	/// Avoid using this directly; instead, use `Stream.cons`. It doesn’t require you to `Box`, it comes in `@autoclosure` and `Memo` varieties, and it is usable as a first-class function.
+	/// Avoid using this directly; instead, use `Stream.cons()` or `Stream.unit()` to construct streams, and `stream.first`, `stream.rest`, and `stream.uncons()` to deconstruct them: they don’t require you to `Box` or unbox, `Stream.cons()` comes in `@autoclosure` and `Memo` varieties, and `Stream.unit()`, `Stream.cons()`, and `stream.uncons()` are all usable as first-class functions.
 	case Cons(Box<T>, Memo<Stream<T>>)
 
 	/// The empty `Stream`.
