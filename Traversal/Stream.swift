@@ -69,6 +69,7 @@ public enum Stream<T>: ArrayLiteralConvertible, NilLiteralConvertible, Printable
 
 	// MARK: Properties
 
+	/// The first element of the receiver, or `nil` if the receiver is the empty stream.
 	public var first: T? {
 		return uncons()?.0
 	}
