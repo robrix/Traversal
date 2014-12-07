@@ -35,5 +35,5 @@ func whatsYourName(name: String) -> String {
 	return Continuation<String, String>.callCC { exit in // calling exit will escape from the computation with the passed value instead of continuing on
 		validateName(name, exit)
 			.bind { _ in .unit("Welcome, \(name)!") } // if the name was validated, return a greeting
-		}.run(id) // extract the value from the continuation
+	}.run(id) // extract the value from the continuation
 }
