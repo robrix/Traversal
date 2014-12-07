@@ -1,9 +1,9 @@
 //  Copyright (c) 2014 Rob Rix. All rights reserved.
 
 /// Returns a reducer filtering out any elements of `reducible` which are not matched by `predicate`.
-public func filter<Base: ReducibleType>(reducible: Base, predicate: Base.Element -> Bool) -> ReducerOf<Base, Stream<Base.Element>> {
+public func filter<Base: ReducibleType>(reducible: Base, predicate: Base.Element -> Bool) -> ReducerOf<Base.Element> {
 	return flattenMap(reducible) {
-		predicate($0) ? .unit($0) : nil
+		predicate($0) ? Stream.unit($0) : nil
 	}
 }
 

@@ -5,7 +5,7 @@ import XCTest
 
 final class ReducerOfTests: XCTestCase {
 	let reducible = Stream([[1, 4], [2, 5], [3, 6]])
-	lazy var reducer: ReducerOf<Stream<[Int]>, Stream<Int>> = {
+	lazy var reducer: ReducerOf<Int> = {
 		return ReducerOf(self.reducible) {
 			Stream($0)
 		}

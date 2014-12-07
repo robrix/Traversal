@@ -1,11 +1,12 @@
 //  Copyright (c) 2014 Rob Rix. All rights reserved.
 
 /// Returns a reducer interleaving the elements of `reducible` with `separator`.
-public func join<R: ReducibleType>(separator: R.Element, reducible: R) -> ReducerOf<R, Stream<R.Element>> {
+public func join<R: ReducibleType>(separator: R.Element, reducible: R) -> ReducerOf<R.Element> {
 	var firstIteration = true
-	return flattenMap(reducible) {
-		let sequence = SequenceOf(firstIteration ? [$0] : [separator, $0])
+	let x = flattenMap(reducible) { each -> Stream<R.Element> in
+		let stream: Stream<R.Element> = firstIteration ? Stream.unit(each) : Stream([separator, each])
 		firstIteration = false
-		return Stream(sequence)
+		return stream
 	}
+	return x
 }
