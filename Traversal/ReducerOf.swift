@@ -59,12 +59,16 @@ public struct Reducer<T>: ReducibleType {
 
 	public func reducer<Result>() -> Reducible<Reducer, Result, T>.Enumerator -> Reducible<Reducer, Result, T>.Enumerator {
 		return { recur in
-			{ collection, initial, combine in
-				collection.stream.uncons().map { inner, outer in
-					(inner.reducer()) { inner, initial, combine in
-						recur(Reducer(Stream.unit(inner) ++ outer.value), initial, combine)
-					} (inner, initial, combine)
-				} ?? initial
+			fix { next in
+				{ collection, initial, combine in
+					collection.stream.uncons().map { inner, outer in
+						inner.uncons().map { _ in
+							(inner.reducer()) { inner, initial, combine in
+								recur(Reducer(Stream.unit(inner) ++ outer.value), initial, combine)
+							} (inner, initial, combine)
+						} ?? next(Reducer(outer.value), initial, combine)
+					} ?? initial
+				}
 			}
 		}
 	}
