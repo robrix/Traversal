@@ -31,6 +31,8 @@
 		D4BAF0531A2E898D006E25DF /* Prelude.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4BAF0511A2E898D006E25DF /* Prelude.framework */; };
 		D4BAF0541A2E89D8006E25DF /* Either.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4BAF0501A2E898D006E25DF /* Either.framework */; };
 		D4BAF0551A2E89D8006E25DF /* Prelude.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4BAF0511A2E898D006E25DF /* Prelude.framework */; };
+		D4C9A11D1A34E26D009C6CD3 /* Appending.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C9A11C1A34E26D009C6CD3 /* Appending.swift */; };
+		D4C9A11F1A34FCC2009C6CD3 /* AppendingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C9A11E1A34FCC2009C6CD3 /* AppendingTests.swift */; };
 		D4D3E32A1A1EBA70001A9ED4 /* Sequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4D3E3291A1EBA70001A9ED4 /* Sequence.swift */; };
 		D4D3E32C1A1EBC28001A9ED4 /* SequenceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4D3E32B1A1EBC28001A9ED4 /* SequenceTests.swift */; };
 		D4D9A4D31A2ECA2D000D9C23 /* Memo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4D9A4D21A2ECA2D000D9C23 /* Memo.framework */; };
@@ -73,6 +75,8 @@
 		D470AC5F19E87B54003DA6C6 /* Box.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Box.framework; path = "../../../../Library/Developer/Xcode/DerivedData/Traversal-dlyjhvwonwhswzdbfpsuoweyfpdp/Build/Products/Debug/Box.framework"; sourceTree = "<group>"; };
 		D4BAF0501A2E898D006E25DF /* Either.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Either.framework; path = "../../../../Library/Developer/Xcode/DerivedData/Traversal-dlyjhvwonwhswzdbfpsuoweyfpdp/Build/Products/Debug/Either.framework"; sourceTree = "<group>"; };
 		D4BAF0511A2E898D006E25DF /* Prelude.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Prelude.framework; path = "../../../../Library/Developer/Xcode/DerivedData/Traversal-dlyjhvwonwhswzdbfpsuoweyfpdp/Build/Products/Debug/Prelude.framework"; sourceTree = "<group>"; };
+		D4C9A11C1A34E26D009C6CD3 /* Appending.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Appending.swift; sourceTree = "<group>"; };
+		D4C9A11E1A34FCC2009C6CD3 /* AppendingTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppendingTests.swift; sourceTree = "<group>"; };
 		D4D3E3291A1EBA70001A9ED4 /* Sequence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sequence.swift; sourceTree = "<group>"; };
 		D4D3E32B1A1EBC28001A9ED4 /* SequenceTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SequenceTests.swift; sourceTree = "<group>"; };
 		D4D9A4D21A2ECA2D000D9C23 /* Memo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Memo.framework; path = "../../../../Library/Developer/Xcode/DerivedData/Traversal-dlyjhvwonwhswzdbfpsuoweyfpdp/Build/Products/Debug/Memo.framework"; sourceTree = "<group>"; };
@@ -149,6 +153,7 @@
 				D461ED7B19E0923800DEF5AD /* ReducibleType.swift */,
 				D462EB9819E4C8F700ADAAC9 /* Stream.swift */,
 				D4D3E3291A1EBA70001A9ED4 /* Sequence.swift */,
+				D4C9A11C1A34E26D009C6CD3 /* Appending.swift */,
 				D430A18D1A0D0122004D8A26 /* Reducers */,
 				D461ED5819E08F4500DEF5AD /* Supporting Files */,
 			);
@@ -175,6 +180,7 @@
 				D4D3E32B1A1EBC28001A9ED4 /* SequenceTests.swift */,
 				D408804B1A22677200BB9997 /* ReducerOfTests.swift */,
 				D430A1A11A0D37D8004D8A26 /* ZipTests.swift */,
+				D4C9A11E1A34FCC2009C6CD3 /* AppendingTests.swift */,
 				D461ED6519E08F4500DEF5AD /* Supporting Files */,
 			);
 			path = TraversalTests;
@@ -303,6 +309,7 @@
 				D430A18F1A0D0133004D8A26 /* Filter.swift in Sources */,
 				D430A19B1A0D1B44004D8A26 /* ReducerOf.swift in Sources */,
 				D430A1991A0D1A9C004D8A26 /* Concat.swift in Sources */,
+				D4C9A11D1A34E26D009C6CD3 /* Appending.swift in Sources */,
 				D462EB9919E4C8F700ADAAC9 /* Stream.swift in Sources */,
 				D430A1A01A0D2F0F004D8A26 /* Zip.swift in Sources */,
 			);
@@ -314,6 +321,7 @@
 			files = (
 				D430A19E1A0D2DC5004D8A26 /* ConcatTests.swift in Sources */,
 				D430A1931A0D038F004D8A26 /* FilterTests.swift in Sources */,
+				D4C9A11F1A34FCC2009C6CD3 /* AppendingTests.swift in Sources */,
 				D4E2C50F19E6385700A4C55A /* StreamTests.swift in Sources */,
 				D45B60E91A0D46CB0009D607 /* JoinTests.swift in Sources */,
 				D430A1771A06341E004D8A26 /* MapTests.swift in Sources */,
