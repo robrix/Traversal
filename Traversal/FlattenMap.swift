@@ -3,6 +3,6 @@
 /// Returns a reducer concatenating the results of applying `map` to the elements of `reducible`.
 ///
 /// `map` must return a type conforming to `ReducibleType`.
-public func flattenMap<Base: ReducibleType, T: ReducibleType>(reducible: Base, map: Base.Element -> T) -> ReducerOf<Base, T> {
+public func flattenMap<Base: ReducibleType, T: ReducibleType>(reducible: Base, map: Base.Element -> T) -> ReducerOf<T.Element> {
 	return ReducerOf(reducible, map)
 }
