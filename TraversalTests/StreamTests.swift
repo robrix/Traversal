@@ -23,10 +23,10 @@ struct ReducibleOfThree<T>: ReducibleType {
 
 class StreamTests: XCTestCase {
 	func testConstructionWithReducibleType() {
-		let stream = Stream(ReducibleOfThree(elements: (Stream([1, 2]), Stream([2, 3]), Stream([3, 4]))))
+		let stream = Stream(ReducibleOfThree(elements: (Stream([1, 4]), Stream([2, 5]), Stream([3, 6]))))
 		XCTAssertEqual(Traversal.reduce(stream, "0") { into, each in
 			Traversal.reduce(each, into) { $0 + toString($1) }
-		}, "0122334")
+		}, "0142536")
 	}
 
 	func testConstructionWithReducerOf() {
