@@ -5,7 +5,8 @@ import XCTest
 
 final class IntegratorTests: XCTestCase {
 	func testAppendIntegration() {
-		let appended = append([], Stream([1, 2, 3]))
-		XCTAssertEqual(appended, [1, 2, 3])
+		var extensible = [Int]()
+		extensible += Stream([1, 2, 3])
+		XCTAssertEqual(extensible, [1, 2, 3])
 	}
 }
