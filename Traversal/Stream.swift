@@ -216,20 +216,6 @@ public func ++ <T> (left: Stream<T>, right: Stream<T>) -> Stream<T> {
 }
 
 
-// MARK: SequenceType conformance.
-
-extension Stream: SequenceType {
-	public func generate() -> GeneratorOf<T> {
-		var stream = self
-		return GeneratorOf {
-			let first = stream.first
-			stream = stream.rest
-			return first
-		}
-	}
-}
-
-
 // MARK: ReducibleType conformance.
 
 extension Stream: ReducibleType {
