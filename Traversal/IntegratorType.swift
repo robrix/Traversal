@@ -8,6 +8,12 @@ public protocol IntegratorType {
 	func integrate(differential: Differential) -> Self
 }
 
+
+/// Appends the elements of a `reducible` into a `collection`.
+public func append<E: ExtensibleCollectionType, R: ReducibleType where R.Element == E.Generator.Element>(collection: E, reducible: R) -> E {
+	return reduce(reducible, collection) { $0 + [$1] }
+}
+
 public func integrate<Into: IntegratorType, R: ReducibleType where R.Element == Into.Differential>(initial: Into, from: R) -> Into.Integral {
 	return reduce(from, initial) { into, each in
 		into.integrate(each)
