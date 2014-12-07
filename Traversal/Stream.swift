@@ -219,6 +219,8 @@ public enum Stream<T>: ArrayLiteralConvertible, NilLiteralConvertible, Printable
 }
 
 
+// MARK: Concatenation
+
 infix operator ++ {
 	associativity right
 	precedence 145
