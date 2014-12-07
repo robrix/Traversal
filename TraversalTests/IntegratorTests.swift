@@ -4,7 +4,7 @@ import Traversal
 import XCTest
 
 final class IntegratorTests: XCTestCase {
-	func testAppendIntegration() {
+	func testExtending() {
 		var extensible = [Int]()
 		extensible += Stream([1, 2, 3])
 		XCTAssertEqual(extensible, [1, 2, 3])
