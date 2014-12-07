@@ -74,6 +74,7 @@ public enum Stream<T>: ArrayLiteralConvertible, NilLiteralConvertible, Printable
 		return uncons()?.0
 	}
 
+	/// The remainder of the receiver after its first element. If the receiver is the empty stream, this will return the empty stream.
 	public var rest: Stream {
 		return uncons()?.1.value ?? nil
 	}
