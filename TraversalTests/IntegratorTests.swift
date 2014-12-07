@@ -9,4 +9,9 @@ final class IntegratorTests: XCTestCase {
 		extensible += Stream([1, 2, 3])
 		XCTAssertEqual(extensible, [1, 2, 3])
 	}
+
+	func testAppending() {
+		let array = [0] + Stream([1, 2, 3])
+		XCTAssertEqual(array, [0, 1, 2, 3])
+	}
 }

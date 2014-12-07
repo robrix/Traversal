@@ -6,3 +6,7 @@ public func += <E: ExtensibleCollectionType, R: ReducibleType where R.Element ==
 		left.append($1)
 	}
 }
+
+public func + <E: ExtensibleCollectionType, R: ReducibleType where R.Element == E.Generator.Element> (left: E, right: R) -> E {
+	return reduce(right, left) { $0 + [$1] }
+}
