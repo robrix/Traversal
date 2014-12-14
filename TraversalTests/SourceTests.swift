@@ -15,7 +15,7 @@ final class SourceTests: XCTestCase {
 		var results = [0]
 		reduce(mapped, [], { into, each -> Either<[Int], [Int]> in
 			results.append(each)
-			return .left(into)
+			return .right(into)
 		})
 
 		XCTAssertEqual(results, [0])
