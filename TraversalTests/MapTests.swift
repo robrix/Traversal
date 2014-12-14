@@ -20,6 +20,6 @@ class MapTests: XCTestCase {
 	}
 
 	func testStreamsOfMaps() {
-		XCTAssertEqual(reduce(Traversal.map(Stream([1, 2, 3, 4]), toString), "0", +), "01234")
+		XCTAssertEqual(reduce(Stream(Traversal.map(Stream([1, 2, 3, 4]), toString)), "0", +), "01234")
 	}
 }
