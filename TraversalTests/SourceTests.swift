@@ -15,7 +15,7 @@ final class SourceTests: XCTestCase {
 	}
 
 	func testCallsCombineWithEachValue() {
-		let mapped = Traversal.map(source) { $0.value * 2 }
+		let mapped = map(source) { $0.value * 2 }
 
 		var results = [0]
 		reduce(mapped, [], { into, each -> Either<[Int], [Int]> in
