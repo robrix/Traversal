@@ -6,10 +6,15 @@ import Traversal
 import XCTest
 
 final class SourceTests: XCTestCase {
-	func testCallsCombineWithEachValue() {
-		var effects = 0
-		let source = Source { ++effects }
+	var effects = 0
+	var source: Source<Int>!
 
+	override func setUp() {
+		effects = 0
+		source = Source { ++self.effects }
+	}
+
+	func testCallsCombineWithEachValue() {
 		let mapped = Traversal.map(source) { $0.value * 2 }
 
 		var results = [0]
