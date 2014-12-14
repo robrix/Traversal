@@ -18,4 +18,8 @@ class MapTests: XCTestCase {
 		let mapped = Traversal.map(reducible) { [$0] }
 		XCTAssertEqual(reduce(mapped, []) { $0 + $1 }, sequence)
 	}
+
+	func testStreamsOfMaps() {
+		XCTAssertEqual(reduce(Traversal.map(Stream([1, 2, 3, 4]), toString), "0", +), "01234")
+	}
 }
