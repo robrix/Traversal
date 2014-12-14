@@ -23,7 +23,7 @@ public struct Map<Base: ReducibleType, T>: ReducibleType {
 		return { recur in
 			{ collection, initial, combine in
 				(collection.reducible.reducer()) { reducible, initial, _ in
-					recur(Map(reducible, self.map), initial, combine)
+					recur(Map(reducible, collection.map), initial, combine)
 				} (collection.reducible, initial) {
 					combine($0, collection.map($1))
 				}
