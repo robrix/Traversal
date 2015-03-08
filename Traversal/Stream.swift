@@ -267,7 +267,7 @@ public struct StreamIndex<T>: ForwardIndexType {
 	// MARK: ForwardIndexType
 
 	public func successor() -> StreamIndex {
-		return StreamIndex(stream: stream.rest, index: index + 1)
+		return StreamIndex(stream: stream.rest, index: stream.rest.isEmpty ? -1 : index + 1)
 	}
 }
 
