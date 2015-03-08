@@ -10,6 +10,11 @@ final class CollectionTests: XCTestCase {
 		let stream: Stream<Int> = [ 1, 2, 3 ]
 		XCTAssertEqual(count(indices(stream)), 3)
 	}
+
+	func testFindOverFiniteStreams() {
+		let stream: Stream<Int> = [ 1, 2, 3 ]
+		XCTAssertTrue(find(stream, 2) != nil)
+	}
 }
 
 
