@@ -3,6 +3,7 @@
 final class CollectionTests: XCTestCase {
 	let empty: Stream<Int> = nil
 	let finite: Stream<Int> = [ 1, 2, 3 ]
+	let infinite: Stream<Int> = Stream { 0 }
 
 	func testCountingFiniteStreams() {
 		XCTAssertEqual(count(finite), 3)
@@ -12,8 +13,13 @@ final class CollectionTests: XCTestCase {
 		XCTAssertEqual(count(empty), 0)
 	}
 
-	func testCanConstructRangesOverFiniteStreams() {
+	func testRangesOverFiniteStreams() {
 		XCTAssertEqual(count(indices(finite)), 3)
+	}
+
+	func testRangesOverInfiniteStreams() {
+		let i = indices(infinite)
+		XCTAssertEqual(i.endIndex, i.endIndex.successor())
 	}
 
 	func testFindOverFiniteStreams() {
