@@ -1,24 +1,23 @@
 //  Copyright (c) 2015 Rob Rix. All rights reserved.
 
 final class CollectionTests: XCTestCase {
+	let empty: Stream<Int> = nil
+	let finite: Stream<Int> = [ 1, 2, 3 ]
+
 	func testCountingFiniteStreams() {
-		let stream: Stream<Int> = [ 1, 2, 3 ]
-		XCTAssertEqual(count(stream), 3)
+		XCTAssertEqual(count(finite), 3)
 	}
 
 	func testCanConstructRangesOverFiniteStreams() {
-		let stream: Stream<Int> = [ 1, 2, 3 ]
-		XCTAssertEqual(count(indices(stream)), 3)
+		XCTAssertEqual(count(indices(finite)), 3)
 	}
 
 	func testFindOverFiniteStreams() {
-		let stream: Stream<Int> = [ 1, 2, 3 ]
-		XCTAssertTrue(find(stream, 2) != nil)
+		XCTAssertTrue(find(finite, 2) != nil)
 	}
 
 	func testIsEmptyOverEmptyStreams() {
-		let stream: Stream<Int> = nil
-		XCTAssertTrue(isEmpty(stream))
+		XCTAssertTrue(isEmpty(empty))
 	}
 }
 
