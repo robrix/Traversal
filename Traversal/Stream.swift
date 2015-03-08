@@ -39,7 +39,7 @@ public enum Stream<T>: ArrayLiteralConvertible, NilLiteralConvertible, Printable
 	}
 
 	/// Constructs a `Stream` from `first` and its `@autoclosure`’d continuation.
-	public static func cons(first: T, _ rest: @autoclosure () -> Stream) -> Stream {
+	public static func cons(first: T, @autoclosure(escaping) _ rest: () -> Stream) -> Stream {
 		return Cons(Box(first), Memo(unevaluated: rest))
 	}
 
