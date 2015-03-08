@@ -1,7 +1,7 @@
 //  Copyright (c) 2014 Rob Rix. All rights reserved.
 
 /// An iterable stream.
-public enum Stream<T>: ArrayLiteralConvertible, NilLiteralConvertible, Printable, ReducibleType {
+public enum Stream<T>: ArrayLiteralConvertible, CollectionType, NilLiteralConvertible, Printable, ReducibleType {
 
 	// MARK: Lifecycle
 
@@ -180,6 +180,21 @@ public enum Stream<T>: ArrayLiteralConvertible, NilLiteralConvertible, Printable
 	}
 
 
+	// MARK: CollectionType
+
+	public var startIndex: StreamIndex<T> {
+		return StreamIndex(stream: Memo(evaluated: self), index: 0)
+	}
+
+	public var endIndex: StreamIndex<T> {
+		return StreamIndex(stream: Memo(evaluated: nil), index: -1)
+	}
+
+	public subscript (index: StreamIndex<T>) -> T {
+		return index.stream.value.first!
+	}
+
+
 	// MARK: NilLiteralConvertible
 
 	/// Constructs a `Nil` `Stream`.
@@ -216,6 +231,13 @@ public enum Stream<T>: ArrayLiteralConvertible, NilLiteralConvertible, Printable
 				} ?? initial
 			}
 		}
+	}
+
+
+	// MARK: SequenceType
+
+	public func generate() -> IndexingGenerator<Stream> {
+		return IndexingGenerator(self)
 	}
 
 
