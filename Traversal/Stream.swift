@@ -124,7 +124,9 @@ public enum Stream<T>: ArrayLiteralConvertible, NilLiteralConvertible, Printable
 	/// `combine` should return `.Left(x)` to terminate the fold with `x`, or `.Right(x)` to continue the fold.
 	public func foldLeft<Result>(seed: Result, _ combine: (Result, T) -> Either<Result, Result>) -> Result {
 		return uncons().map { first, rest in
-			combine(seed, first).either(id, { rest.value.foldLeft($0, combine) })
+			combine(seed, first).either(
+				ifLeft: id,
+				ifRight: { rest.value.foldLeft($0, combine) })
 		} ?? seed
 	}
 
@@ -208,7 +210,9 @@ public enum Stream<T>: ArrayLiteralConvertible, NilLiteralConvertible, Printable
 		return { recur in
 			{ stream, initial, combine in
 				stream.first.map {
-					combine(initial, $0).either(id, { recur(stream.rest, $0, combine) })
+					combine(initial, $0).either(
+						ifLeft: id,
+						ifRight: { recur(stream.rest, $0, combine) })
 				} ?? initial
 			}
 		}
