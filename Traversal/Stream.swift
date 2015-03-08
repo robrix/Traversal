@@ -242,8 +242,8 @@ infix operator ++ {
 
 /// Produces the concatenation of `left` and `right`.
 public func ++ <T> (left: Stream<T>, right: Stream<T>) -> Stream<T> {
-	return left.uncons().map {
-		.cons($0, Memo { $1.value ++ right })
+	return left.uncons().map { first, rest in
+		.cons(first, Memo { rest.value ++ right })
 	} ?? right
 }
 
