@@ -50,7 +50,7 @@ public enum Stream<T>: ArrayLiteralConvertible, NilLiteralConvertible, Printable
 
 	/// Constructs a unary `Stream` of `x`.
 	public static func unit(x: T) -> Stream {
-		return Cons(Box(x), Memo(nil))
+		return Cons(Box(x), Memo { nil })
 	}
 
 	/// Constructs a `Stream` of `reducible`. Unlike the corresponding `init`, this is suitable for function composition.
@@ -239,7 +239,7 @@ infix operator ++ {
 /// Produces the concatenation of `left` and `right`.
 public func ++ <T> (left: Stream<T>, right: Stream<T>) -> Stream<T> {
 	return left.uncons().map {
-		.cons($0, Memo($1.value ++ right))
+		.cons($0, Memo { $1.value ++ right })
 	} ?? right
 }
 
