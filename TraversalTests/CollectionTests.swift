@@ -15,6 +15,11 @@ final class CollectionTests: XCTestCase {
 		let stream: Stream<Int> = [ 1, 2, 3 ]
 		XCTAssertTrue(find(stream, 2) != nil)
 	}
+
+	func testIsEmptyOverEmptyStreams() {
+		let stream: Stream<Int> = nil
+		XCTAssertTrue(isEmpty(stream))
+	}
 }
 
 

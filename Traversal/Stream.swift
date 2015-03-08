@@ -188,7 +188,7 @@ public enum Stream<T>: ArrayLiteralConvertible, CollectionType, NilLiteralConver
 	// MARK: CollectionType
 
 	public var startIndex: StreamIndex<T> {
-		return StreamIndex(stream: self, index: 0)
+		return StreamIndex(stream: self, index: isEmpty ? -1 : 0)
 	}
 
 	public var endIndex: StreamIndex<T> {
