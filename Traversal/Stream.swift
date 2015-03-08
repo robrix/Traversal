@@ -232,6 +232,22 @@ public enum Stream<T>: ArrayLiteralConvertible, NilLiteralConvertible, Printable
 	case Nil
 }
 
+public struct StreamIndex<T>: ForwardIndexType {
+	let stream: Memo<Stream<T>>
+	let index: Int
+
+
+	// MARK: ForwardIndexType
+
+	public func successor() -> StreamIndex {
+		return StreamIndex(stream: stream.map { $0.rest }, index: index + 1)
+	}
+}
+
+public func == <T> (left: StreamIndex<T>, right: StreamIndex<T>) -> Bool {
+	return left.index == right.index
+}
+
 
 // MARK: Concatenation
 
