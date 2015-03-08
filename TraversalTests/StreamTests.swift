@@ -104,7 +104,8 @@ class StreamTests: XCTestCase {
 
 	func testConstructsConsFromGeneratorOfConstantNonNil() {
 		let x: Int? = 1
-		XCTAssertEqual(Stream { x }.first ?? -1, 1)
+		let stream = Stream { x }
+		XCTAssertEqual(stream.first ?? -1, 1)
 	}
 
 	func testConstructsFiniteStreamFromGeneratorOfFiniteSequence() {
