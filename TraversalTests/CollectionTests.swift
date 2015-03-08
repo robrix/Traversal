@@ -8,6 +8,10 @@ final class CollectionTests: XCTestCase {
 		XCTAssertEqual(count(finite), 3)
 	}
 
+	func testCountingEmptyStreams() {
+		XCTAssertEqual(count(empty), 0)
+	}
+
 	func testCanConstructRangesOverFiniteStreams() {
 		XCTAssertEqual(count(indices(finite)), 3)
 	}
