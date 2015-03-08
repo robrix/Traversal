@@ -188,15 +188,15 @@ public enum Stream<T>: ArrayLiteralConvertible, CollectionType, NilLiteralConver
 	// MARK: CollectionType
 
 	public var startIndex: StreamIndex<T> {
-		return StreamIndex(stream: Memo(evaluated: self), index: 0)
+		return StreamIndex(stream: self, index: 0)
 	}
 
 	public var endIndex: StreamIndex<T> {
-		return StreamIndex(stream: Memo(evaluated: nil), index: -1)
+		return StreamIndex(stream: nil, index: -1)
 	}
 
 	public subscript (index: StreamIndex<T>) -> T {
-		return index.stream.value.first!
+		return index.stream.first!
 	}
 
 
@@ -260,14 +260,14 @@ public enum Stream<T>: ArrayLiteralConvertible, CollectionType, NilLiteralConver
 }
 
 public struct StreamIndex<T>: ForwardIndexType {
-	let stream: Memo<Stream<T>>
+	let stream: Stream<T>
 	let index: Int
 
 
 	// MARK: ForwardIndexType
 
 	public func successor() -> StreamIndex {
-		return StreamIndex(stream: stream.map { $0.rest }, index: index + 1)
+		return StreamIndex(stream: stream.rest, index: index + 1)
 	}
 }
 
