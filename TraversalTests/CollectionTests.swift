@@ -5,6 +5,11 @@ final class CollectionTests: XCTestCase {
 		let stream: Stream<Int> = [ 1, 2, 3 ]
 		XCTAssertEqual(count(stream), 3)
 	}
+
+	func testCanConstructRangesOverFiniteStreams() {
+		let stream: Stream<Int> = [ 1, 2, 3 ]
+		XCTAssertEqual(count(indices(stream)), 3)
+	}
 }
 
 
