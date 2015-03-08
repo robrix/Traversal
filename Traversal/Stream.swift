@@ -71,6 +71,11 @@ public enum Stream<T>: ArrayLiteralConvertible, CollectionType, NilLiteralConver
 		return uncons()?.1.value ?? nil
 	}
 
+	/// Is this the empty stream?
+	public var isEmpty: Bool {
+		return uncons() == nil
+	}
+
 
 	/// Unpacks the receiver into an optional tuple of its first element and the memoized remainder.
 	///
