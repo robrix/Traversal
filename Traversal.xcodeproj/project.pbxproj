@@ -38,6 +38,7 @@
 		D4D9A4D31A2ECA2D000D9C23 /* Memo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4D9A4D21A2ECA2D000D9C23 /* Memo.framework */; };
 		D4D9A4D41A2ECA59000D9C23 /* Memo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4D9A4D21A2ECA2D000D9C23 /* Memo.framework */; };
 		D4E2C50F19E6385700A4C55A /* StreamTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4E2C50E19E6385700A4C55A /* StreamTests.swift */; };
+		D4EC19041AACFD7C003733D4 /* CollectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4EC19031AACFD7C003733D4 /* CollectionTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -81,6 +82,7 @@
 		D4D3E32B1A1EBC28001A9ED4 /* SequenceTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SequenceTests.swift; sourceTree = "<group>"; };
 		D4D9A4D21A2ECA2D000D9C23 /* Memo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Memo.framework; path = "../../../../Library/Developer/Xcode/DerivedData/Traversal-dlyjhvwonwhswzdbfpsuoweyfpdp/Build/Products/Debug/Memo.framework"; sourceTree = "<group>"; };
 		D4E2C50E19E6385700A4C55A /* StreamTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StreamTests.swift; sourceTree = "<group>"; };
+		D4EC19031AACFD7C003733D4 /* CollectionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -172,6 +174,7 @@
 			isa = PBXGroup;
 			children = (
 				D4E2C50E19E6385700A4C55A /* StreamTests.swift */,
+				D4EC19031AACFD7C003733D4 /* CollectionTests.swift */,
 				D430A1761A06341E004D8A26 /* MapTests.swift */,
 				D430A1921A0D038F004D8A26 /* FilterTests.swift */,
 				D430A1961A0D0B20004D8A26 /* FlattenMapTests.swift */,
@@ -324,6 +327,7 @@
 				D4C9A11F1A34FCC2009C6CD3 /* AppendingTests.swift in Sources */,
 				D4E2C50F19E6385700A4C55A /* StreamTests.swift in Sources */,
 				D45B60E91A0D46CB0009D607 /* JoinTests.swift in Sources */,
+				D4EC19041AACFD7C003733D4 /* CollectionTests.swift in Sources */,
 				D430A1771A06341E004D8A26 /* MapTests.swift in Sources */,
 				D408804C1A22677200BB9997 /* ReducerOfTests.swift in Sources */,
 				D430A1A21A0D37D8004D8A26 /* ZipTests.swift in Sources */,

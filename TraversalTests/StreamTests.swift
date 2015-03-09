@@ -15,7 +15,7 @@ struct ReducibleOfThree<T>: ReducibleType {
 		var generator3 = GeneratorOfOne(elements.2)
 		return { recur in
 			{ reducible, initial, combine in
-				(generator1.next() ?? generator2.next() ?? generator3.next()).map { combine(initial, $0).either(id, { recur(reducible, $0, combine) }) } ?? initial
+				(generator1.next() ?? generator2.next() ?? generator3.next()).map { combine(initial, $0).either(ifLeft: id, ifRight: { recur(reducible, $0, combine) }) } ?? initial
 			}
 		}
 	}
@@ -104,7 +104,8 @@ class StreamTests: XCTestCase {
 
 	func testConstructsConsFromGeneratorOfConstantNonNil() {
 		let x: Int? = 1
-		XCTAssertEqual(Stream { x }.first ?? -1, 1)
+		let stream = Stream { x }
+		XCTAssertEqual(stream.first ?? -1, 1)
 	}
 
 	func testConstructsFiniteStreamFromGeneratorOfFiniteSequence() {
